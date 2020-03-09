@@ -1,55 +1,74 @@
 import React from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner'
+import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { RNCamera as Camera } from 'react-native-camera'
+import { Icon} from 'react-native-elements'
+
+import { colors, container } from '../styles'
 
 class QrScanner extends React.Component {
+    state = {
+        flash : 0
+    }
+
     onSuccess = (e) => {
-    // Linking
-    //   .openURL(e.data)
-    //   .catch(err => console.error('An error occured', err));
         console.log(e.data)
     }
+
+    handleFlash = () => {
+        this.setState({ flash : this.state.flash ? 0 : 1})
+    }
+
     render () {
+        const { flash } = this.state
         return (
-            <QRCodeScanner
-                onRead={this.onSuccess}
-                flashMode={Camera.Constants.FlashMode.auto}   
-                reactivate = {true}
-                reactivateTimeout = {5000}   
-                topContent={
-                    <Text style={styles.centerText}>
-                        Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
-                    </Text>
-                }
-                bottomContent={
-                    <TouchableOpacity style={styles.buttonTouchable}>
-                        <Text style={styles.buttonText}>OK. Got it!</Text>
-                    </TouchableOpacity>
-                }
-            />
+            <View style ={{ flex : 1, backgroundColor : colors.main.white}}>
+                <TouchableWithoutFeedback onPress = {() => this.props.navigation.goBack()}>
+                    <View style = {styles.buttonBack}>
+                        <Icon name = 'arrow-back'/>
+                    </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress = {this.handleFlash}>
+                    <View style = {styles.flashButton}>
+                        <Icon name = {flash ? 'flash-on' : 'flash-off'}/>
+                    </View>
+                </TouchableWithoutFeedback>
+                <View style = {{ height : '75%', overflow : 'hidden'}}>
+                    <QRCodeScanner
+                        onRead = {this.onSuccess}
+                        flashMode = { flash ? Camera.Constants.FlashMode.torch 
+                            : Camera.Constants.FlashMode.off}   
+                        reactivate = {true}
+                        reactivateTimeout = {5000}
+                    />
+                </View>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    centerText: {
-      flex: 1,
-      fontSize: 18,
-      padding: 32,
-      color: '#777',
+    buttonBack : {
+        height : 50,
+        width : 50,
+        backgroundColor : colors.main.white,
+        borderRadius : 25,
+        ...container.center,
+        position : 'absolute',
+        top : 15, left : 15,
+        zIndex : 5
     },
-    textBold: {
-      fontWeight: '500',
-      color: '#000',
-    },
-    buttonText: {
-      fontSize: 21,
-      color: 'rgb(0,122,255)',
-    },
-    buttonTouchable: {
-      padding: 16,
-    },
+    flashButton : {
+        height : 50,
+        width : 50,
+        borderRadius : 25,
+        backgroundColor : colors.main.white,
+        ...container.center,
+        position : 'absolute',
+        top : 15,
+        right : 15,
+        zIndex : 5
+    }
 })
 
 export default QrScanner

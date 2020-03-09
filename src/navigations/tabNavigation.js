@@ -10,7 +10,11 @@ const Tabs = createBottomTabNavigator()
 
 const TabNavigation = () => {
     return(
-        <Tabs.Navigator>
+        <Tabs.Navigator
+            screenOptions = {({ route }) => ({
+                tabBarVisible : route.name === 'qr-scanner' ? false : true
+            })}
+        >
             <Tabs.Screen name = 'feed-navigation' component = {FeedNavigation}/>
             <Tabs.Screen name = 'qr-scanner' component = {QrScanner}/>
             <Tabs.Screen name = 'setting-navigation' component = {SettingNavigation}/>
