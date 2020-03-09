@@ -49,19 +49,19 @@ class QrScanner extends React.Component {
 
 const styles = StyleSheet.create({
     buttonBack : {
-        height : 50,
-        width : 50,
+        height : 40,
+        width : 40,
         backgroundColor : colors.main.white,
-        borderRadius : 25,
+        borderRadius : 20,
         ...container.center,
         position : 'absolute',
         top : 15, left : 15,
         zIndex : 5
     },
     flashButton : {
-        height : 50,
-        width : 50,
-        borderRadius : 25,
+        height : 40,
+        width : 40,
+        borderRadius : 20,
         backgroundColor : colors.main.white,
         ...container.center,
         position : 'absolute',
