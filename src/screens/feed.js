@@ -6,7 +6,8 @@ import { View,
     StatusBar, 
     ScrollView, 
     TouchableWithoutFeedback,
-    Image 
+    Image,
+    Linking
 } from 'react-native'
 import { Header, Avatar, Icon } from 'react-native-elements'
 
@@ -18,7 +19,6 @@ import { colors, typography, container } from '../styles'
 
 // import components
 import FeedCard from '../components/feedCard'
-import News from '../components/newsCard'
 
 // import icon
 import Medal from '../assets/medal.svg'
@@ -28,14 +28,19 @@ class Feed extends React.Component {
         this.props.getNews()
     }
 
+    hanldeNews = (url) => {
+        Linking.openURL(url)
+        .catch(err => console.log(err))
+    }
+
     renderNews = () => {
         return this.props.news.map((item, index) => {
             return (
-                <TouchableWithoutFeedback key = {index}>
+                <TouchableWithoutFeedback key = {index} onPress = {() => this.hanldeNews(item.url)}>
                     <View style = {{
                         flex : 1, 
                         // backgroundColor : 'yellow', 
-                        marginBottom : 15,
+                        marginBottom : 20,
                         borderRadius : 15,
                         overflow : 'hidden',
                         ...container.depth(4)
@@ -100,7 +105,7 @@ class Feed extends React.Component {
                     <View style = {styles.card}>
                         <FeedCard/>
                     </View>
-                    <Text style = {{ fontSize : 24, ...typography.bold, marginVertical : 10}}>
+                    <Text style = {{ fontSize : 24, ...typography.bold, marginTop : 20}}>
                         Features
                     </Text>
                     <View style = {styles.menu}>
@@ -185,12 +190,14 @@ const styles = StyleSheet.create ({
         alignContent : 'center'
     },
     menuIcon : {
-        height : 70,
-        width : 70,
+        height : 65,
+        width : 65,
         backgroundColor : colors.main.flatRed,
         ...container.center,
         borderRadius : 20,
-        marginVertical : 10,
+        marginVertical : 15,
+        // margin : 3,
+        // marginHorizontal : 4,
         ...container.depth(4)
     },
     news : {
