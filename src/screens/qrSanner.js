@@ -44,6 +44,12 @@ class QrScanner extends React.Component {
                             : Camera.Constants.FlashMode.off}   
                         reactivate = {true}
                         reactivateTimeout = {5000}
+                        showMarker
+                        customMarker = {() => (
+                            <View style = {{ height : 300, width : 300, borderWidth : 2.5, borderColor : colors.main.flatRed}}>
+
+                            </View>
+                        )}
                     />
                 </View>
                 <View style = {styles.footer}>

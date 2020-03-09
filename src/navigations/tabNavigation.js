@@ -24,7 +24,7 @@ const TabNavigation = () => {
             tabBarOptions = {{
                 showLabel : false,
                 style : {
-                    height : 55
+                    height : 60
                 }
             }}
             screenOptions = {({ route }) => ({
