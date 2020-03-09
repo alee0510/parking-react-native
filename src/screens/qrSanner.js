@@ -2,9 +2,13 @@ import React from 'react'
 import QRCodeScanner from 'react-native-qrcode-scanner'
 import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { RNCamera as Camera } from 'react-native-camera'
-import { Icon} from 'react-native-elements'
+import { Icon, Text } from 'react-native-elements'
 
-import { colors, container } from '../styles'
+// import style
+import { colors, container, typography } from '../styles'
+
+// import svg file
+import Barcode from '../assets/barcode.svg'
 
 class QrScanner extends React.Component {
     state = {
@@ -42,6 +46,19 @@ class QrScanner extends React.Component {
                         reactivateTimeout = {5000}
                     />
                 </View>
+                <View style = {styles.footer}>
+                    <View style = {{ height : '100%', width : 20, borderBottomWidth : 1, borderLeftColor : 'black'}}></View>
+                    <View style = {styles.note}>
+                        <Text style = {{ fontSize : 16, ...typography.bold, paddingBottom : 5 }}>Note : </Text>
+                        <Text>
+                            Please hold your phone and align to scan qr-code. 
+                            If proccess failed, it will automatically scan after 5s.
+                        </Text>
+                    </View>
+                    <View style = {styles.icon}>
+                        <Barcode height = {100}/>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -68,6 +85,22 @@ const styles = StyleSheet.create({
         top : 15,
         right : 15,
         zIndex : 5
+    },
+    footer : {
+        flex : 1,
+        flexDirection : 'row',
+        zIndex : 5
+    },
+    note : {
+        width : '50%', height : '100%',
+        // backgroundColor : 'pink',
+        paddingHorizontal : 20,
+        paddingVertical : 25,
+    },
+    icon : {
+        width : '50%', height : '100%',
+        // backgroundColor : 'yellow',
+        padding : '10%'
     }
 })
 
