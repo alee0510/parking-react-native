@@ -1,19 +1,64 @@
 import React from 'react'
-import { View, Text, StyleSheet, StatusBar, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { connect } from 'react-redux'
+import { View, 
+    Text, 
+    StyleSheet, 
+    StatusBar, 
+    ScrollView, 
+    TouchableWithoutFeedback,
+    Image 
+} from 'react-native'
 import { Header, Avatar, Icon } from 'react-native-elements'
+
+// import actions
+import { getNews } from '../actions'
 
 // import style
 import { colors, typography, container } from '../styles'
 
 // import components
 import FeedCard from '../components/feedCard'
+import News from '../components/newsCard'
 
 // import icon
-import Discount from '../assets/discount.svg'
 import Medal from '../assets/medal.svg'
 
 class Feed extends React.Component {
+    componentDidMount () {
+        this.props.getNews()
+    }
+
+    renderNews = () => {
+        return this.props.news.map((item, index) => {
+            return (
+                <TouchableWithoutFeedback key = {index}>
+                    <View style = {{
+                        flex : 1, 
+                        // backgroundColor : 'yellow', 
+                        marginBottom : 15,
+                        borderRadius : 15,
+                        overflow : 'hidden',
+                        ...container.depth(4)
+                    }}>
+                        <View style = {{ backgroundColor : colors.main.white, padding : 10}}>
+                            <Text style = {{fontSize : 18, ...typography.bold}}>
+                                {item.title}
+                            </Text>
+                        </View>
+                        <Image source = {{uri : item.urlToImage}} style = {{ width : '100%', height : 200}}/>
+                        <View style = {{flex : 1, backgroundColor : colors.main.white}}>
+                            <Text style = {{ padding : 10, fontSize : 14, ...typography.regular}}>
+                                {item.description}
+                            </Text>
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            )
+        })
+    }
+
     render () {
+        // console.log(this.props.news)
         return (
             <View style = {styles.container}>
                 <StatusBar backgroundColor = {colors.neutrals.gray10} barStyle = 'dark-content'/>
@@ -26,7 +71,7 @@ class Feed extends React.Component {
                                 size = {60} 
                                 overlayContainerStyle = {{ backgroundColor : colors.main.flatRed}}
                             />
-                            <View style = {{ marginLeft : 10, height : '100%',...container.center}}>
+                            <View style = {{ marginLeft : 10, height : '100%', width : '100%', justifyContent : 'center'}}>
                                 <Text style = {{ fontSize : 24, ...typography.bold}}>
                                     Hello,
                                 </Text>
@@ -56,7 +101,7 @@ class Feed extends React.Component {
                         <FeedCard/>
                     </View>
                     <Text style = {{ fontSize : 24, ...typography.bold, marginVertical : 10}}>
-                        Feature
+                        Features
                     </Text>
                     <View style = {styles.menu}>
                         <TouchableWithoutFeedback >
@@ -86,16 +131,26 @@ class Feed extends React.Component {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback >
+                            <View style = {styles.menuIcon}>
+                                <Icon name = 'ios-car' 
+                                    type = 'ionicon'
+                                    size = {40}
+                                    color = {colors.main.white}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback style = {styles.menuIcon}>
                             <View style = {styles.menuIcon}>
                                 <Medal height = {40} width = {40} fill = {colors.main.white}/>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback>
-                            <View style = {styles.menuIcon}>
-                                <Discount height = {40} width = {450} fill = {colors.main.white}/>
-                            </View>
-                        </TouchableWithoutFeedback>
+                    </View>
+                    <Text style = {{ fontSize : 24, ...typography.bold, marginVertical : 15}}>
+                        Stories
+                    </Text>
+                    <View style = {styles.news}>
+                        {this.renderNews()}
                     </View>
                 </ScrollView>
             </View>
@@ -130,14 +185,30 @@ const styles = StyleSheet.create ({
         alignContent : 'center'
     },
     menuIcon : {
-        height : 80,
-        width : 80,
+        height : 70,
+        width : 70,
         backgroundColor : colors.main.flatRed,
         ...container.center,
         borderRadius : 20,
         marginVertical : 10,
-        ...container.depth(3)
+        ...container.depth(4)
+    },
+    news : {
+        width : '100%',
+        // backgroundColor : 'red',
     }
 })
 
-export default Feed
+const mapStore = ({ news }) => {
+    return {
+        news : news.data
+    }
+}
+
+const mapDispatch = () => {
+    return {
+        getNews
+    }
+}
+
+export default connect(mapStore, mapDispatch())(Feed)
