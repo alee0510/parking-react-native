@@ -12,7 +12,7 @@ const Stack = createStackNavigator()
 
 const SettingNavigation = () => {
     return (
-        <Stack.Navigator headerMode = 'none' initialRouteName = 'password'>
+        <Stack.Navigator headerMode = 'none' initialRouteName = 'setting'>
             <Stack.Screen name = 'setting' component = {Setting} />
             <Stack.Screen name = 'profile' component = {Profile} />
             <Stack.Screen name = 'username' component = {Username} />
