@@ -41,10 +41,10 @@ const TabNavigation = () => {
                     }
                 }
             })}
-        >
+            >
+            <Tabs.Screen name = 'setting-navigation' component = {SettingNavigation}/>
             <Tabs.Screen name = 'feed-navigation' component = {FeedNavigation}/>
             <Tabs.Screen name = 'qr-scanner' component = {QrScanner}/>
-            <Tabs.Screen name = 'setting-navigation' component = {SettingNavigation}/>
         </Tabs.Navigator>
     )
 }

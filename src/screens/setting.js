@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { Avatar, Icon, Button } from 'react-native-elements'
+import { Avatar, Icon } from 'react-native-elements'
 
 // import styles
 import { colors, typography, container } from '../styles'
@@ -37,7 +37,7 @@ class Setting extends React.Component {
                         </Text>
                         <Text>+6285722286349</Text>
                     </View>
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress = { _ => this.props.navigation.navigate('profile')}>
                         <View>
                             <Icon name = 'edit'/>
                         </View>
@@ -85,7 +85,7 @@ class Setting extends React.Component {
                         </View>
                     </View>
                 </View>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback style = {{height : 70}}>
                     <View style = {styles.logOutButton}>
                         <Icon name = 'exit-to-app' size = {30} color = {colors.main.white}/>
                         <Text style = {{
@@ -161,7 +161,8 @@ const styles = StyleSheet.create ({
         marginTop : 10,
         borderRadius : 50,
         // justifyContent : 'center',
-        alignItems : 'center'
+        alignItems : 'center',
+        ...container.depth(2)
     }
 })
 
