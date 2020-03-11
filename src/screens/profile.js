@@ -1,6 +1,9 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableWithoutFeedback, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { Icon, Button, Avatar, Input } from 'react-native-elements'
+
+// import component
+import Header from '../components/header'
 
 // import styles
 import { colors, typography, container } from '../styles'
@@ -11,48 +14,33 @@ class Profile extends React.Component {
         inputDisable : false
     }
     render () {
+        const { iconEdit, inputDisable } = this.state
         return (
             <View style = {styles.container}>
-                <View style = {styles.headerTitle}>
-                    <TouchableWithoutFeedback onPress = { _ => this.props.navigation.goBack()}>
-                        <View>
-                            <Icon name = 'arrow-back' size = {30}/>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <Text 
-                        style = {{
-                            fontSize : 28, 
-                            ...typography.bold, 
-                            marginLeft : 10,
-                            flex : 1
-                        }}
-                    >
-                        Profile
-                    </Text>
-                    <Button
-                        icon={{
-                            name: this.state.iconEdit ? 'check' : 'edit',
-                            size: 30,
-                            color: 'black'
-                        }}
-                        buttonStyle = {{
-                            backgroundColor : 'none'
-                        }}
-                        loading = {false}
-                        onPress = { _ => this.setState({ iconEdit : this.state.iconEdit ? 0 : 1})}
-                    />
-                </View>
+                <Header
+                    title = 'Profile'
+                    edit = {iconEdit}
+                    handleEdit = { _ => this.setState({ iconEdit : iconEdit ? 0 : 1})}
+                    handleBack = { _ => this.props.navigation.goBack()}
+                />
                 <ScrollView>
-                    <View style = {styles.profileImage}>
-                        <Avatar 
-                            rounded 
-                            size = {100} 
-                            title = 'A' 
-                            overlayContainerStyle = {{ 
-                                backgroundColor : colors.main.flatRed, 
-                                ...container.depth(5)
-                            }}
-                        />
+                    <View style = {styles.imageContainer}>
+                        <View style = {styles.avatar}>
+                            <Avatar 
+                                rounded 
+                                size = {125} 
+                                title = 'A' 
+                                overlayContainerStyle = {{ 
+                                    backgroundColor : colors.main.flatRed, 
+                                    ...container.depth(5)
+                                }}
+                            />
+                            <TouchableOpacity>
+                                <View style = {styles.cameraIcon}>
+                                    <Icon name = 'camera-alt' color = 'white'/>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View style = {styles.input}>
                         <Input
@@ -95,18 +83,21 @@ const styles = StyleSheet.create({
         flex : 1,
         backgroundColor : colors.neutrals.gray10
     },
-    headerTitle : {
-        flexDirection : 'row',
-        paddingHorizontal : 20,
-        paddingVertical : 15,
-        backgroundColor : colors.main.white,
+    imageContainer : {
         alignItems : 'center',
-        ...container.depth(5)
+        paddingVertical : 20,
     },
-    profileImage : {
-        // backgroundColor : 'yellow',
-        alignItems : 'center',
-        paddingVertical : 20
+    avatar : {
+        position : 'relative'
+    },
+    cameraIcon : {
+        height : 40, width : 40,
+        borderRadius : 20,
+        backgroundColor : colors.main.yellow,
+        ...container.center,
+        position : 'absolute',
+        bottom : 0,
+        right : 0
     },
     input : {
         paddingHorizontal : 30

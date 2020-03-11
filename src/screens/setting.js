@@ -8,6 +8,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 class Setting extends React.Component {
     render () {
+        const { navigation } = this.props
         return (
             <View style = {styles.container}>
                 <Text style = {styles.title}>Settings</Text>
@@ -38,7 +39,7 @@ class Setting extends React.Component {
                             </Text>
                             <Text>+6285722286349</Text>
                         </View>
-                        <TouchableWithoutFeedback onPress = { _ => this.props.navigation.navigate('profile')}>
+                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('profile')}>
                             <View>
                                 <Icon name = 'edit'/>
                             </View>
@@ -49,24 +50,24 @@ class Setting extends React.Component {
                             <Text style = {{ fontSize : 18, ...typography.bold, paddingVertical : 8 }}>
                                 Account
                             </Text>
-                            <TouchableOpacity onPress = { _ => this.props.navigation.navigate('username')}>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('username')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'account' type = 'material-community' size = {25}/>
                                     <Text style = {styles.optionsText}>username</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = { _ => this.props.navigation.navigate('password')}>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('password')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'lock' size = {25}/>
                                     <Text style = {styles.optionsText}>password</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('vehicle')}>
                                 <View style = {styles.options}>
-                                    <Icon name = 'history' size = {25}/>
-                                    <Text style = {styles.optionsText}>history</Text>
+                                    <Icon name = 'ios-car' type = 'ionicon' size = {25}/>
+                                    <Text style = {styles.optionsText}>vehicle</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
@@ -74,6 +75,13 @@ class Setting extends React.Component {
                                 <View style = {styles.options}>
                                     <Icon name = 'account-balance-wallet' size = {25}/>
                                     <Text style = {styles.optionsText}>wallet</Text>
+                                    <Icon name = 'navigate-next'/>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <View style = {styles.options}>
+                                    <Icon name = 'history' size = {25}/>
+                                    <Text style = {styles.optionsText}>history</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>

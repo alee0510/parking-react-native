@@ -2,41 +2,24 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Button, Icon, Input } from 'react-native-elements'
 
+// import component
+import Header from '../components/header'
+
 // import style
 import { colors, typography, container } from '../styles'
 
 const Password = ({ navigation }) => {
+    const [edit, setEdit] = React.useState(0)
+    const [visible, setVisible] = React.useState(false)
+
     return (
         <View style = {styles.container}>
-            <View style = {styles.headerTitle}>
-                <TouchableWithoutFeedback onPress = { _ => navigation.goBack()}>
-                    <View>
-                        <Icon name = 'arrow-back' size = {30}/>
-                    </View>
-                </TouchableWithoutFeedback>
-                <Text 
-                    style = {{
-                        fontSize : 28, 
-                        ...typography.bold, 
-                        marginLeft : 10,
-                        flex : 1
-                    }}
-                >
-                        Account
-                </Text>
-                <Button
-                    icon={{
-                        name: 'check',
-                        size: 30,
-                        color: 'black'
-                    }}
-                    buttonStyle = {{
-                        backgroundColor : 'none'
-                    }}
-                    loading = {false}
-                    // onPress = { _ => setEdit(edit ? 0 : 1)}
-                />
-            </View>
+            <Header
+                title = 'Password'
+                edit = {edit}
+                handleEdit = { _ => setEdit(edit ? 0 : 1)}
+                handleBack = { _ => navigation.goBack()}
+            />
             <View style = {styles.input}>
                 <Input
                     label = 'old password'
@@ -45,12 +28,12 @@ const Password = ({ navigation }) => {
                     containerStyle = {styles.inputContainer}
                     leftIconContainerStyle = {{paddingRight : 10}}
                     labelStyle = {styles.label}
-                    secureTextEntry = {true}
+                    secureTextEntry = {!visible}
                     placeholder = 'input your password'
                     leftIcon={
                         <Icon 
-                        name = 'visibility'
-                        // onPress = {}
+                            name = {visible ? 'visibility' : 'visibility-off'}
+                            onPress = { _ => setVisible(!visible)}
                         />
                     }
                 />
@@ -61,11 +44,11 @@ const Password = ({ navigation }) => {
                     containerStyle = {styles.inputContainer}
                     leftIconContainerStyle = {{paddingRight : 10}}
                     labelStyle = {styles.label}
-                    secureTextEntry = {true}
+                    secureTextEntry = {!visible}
                     leftIcon={
                         <Icon 
-                        name = 'visibility'
-                        // onPress = {}
+                            name = {visible ? 'visibility' : 'visibility-off'}
+                            onPress = { _ => setVisible(!visible)}
                         />
                     }
                 />
@@ -76,11 +59,11 @@ const Password = ({ navigation }) => {
                     containerStyle = {styles.inputContainer}
                     leftIconContainerStyle = {{paddingRight : 10}}
                     labelStyle = {styles.label}
-                    secureTextEntry = {true}
+                    secureTextEntry = {!visible}
                     leftIcon={
                         <Icon 
-                        name = 'visibility'
-                        // onPress = {}
+                            name = {visible ? 'visibility' : 'visibility-off'}
+                            onPress = { _ => setVisible(!visible)}
                         />
                     }
                 />

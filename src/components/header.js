@@ -1,14 +1,15 @@
 import React from 'react'
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native'
-import { Avatar, Icon } from 'react-native-elements'
+import { Button } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 
 // import styles
-import { colors, container } from '../styles'
+import { colors, container, typography } from '../styles'
 
-const Header = () => {
+const Header = (props) => {
     return (
         <View style = {styles.container}>
-            <TouchableWithoutFeedback onPress = { _ => this.props.navigation.goBack()}>
+            <TouchableWithoutFeedback onPress = {props.handleBack}>
                 <View>
                     <Icon name = 'arrow-back' size = {30}/>
                 </View>
@@ -21,7 +22,7 @@ const Header = () => {
                     flex : 1,
                 }}
             >
-                Profile
+                {props.title}
             </Text>
             <Button
                 icon={{
@@ -30,7 +31,7 @@ const Header = () => {
                     color: 'black'
                 }}
                 buttonStyle = {{
-                            backgroundColor : 'none'
+                    backgroundColor : colors.main.white
                 }}
                 loading = {props.loading}
                 onPress = {props.handleEdit}
