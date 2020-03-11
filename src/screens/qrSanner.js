@@ -37,7 +37,7 @@ class QrScanner extends React.Component {
                         <Icon name = {flash ? 'flash-on' : 'flash-off'}/>
                     </View>
                 </TouchableWithoutFeedback>
-                <View style = {{ height : '75%', overflow : 'hidden'}}>
+                <View style = {{ height : '73%', overflow : 'hidden'}}>
                     <QRCodeScanner
                         onRead = {this.onSuccess}
                         flashMode = { flash ? Camera.Constants.FlashMode.torch 
@@ -53,7 +53,6 @@ class QrScanner extends React.Component {
                     />
                 </View>
                 <View style = {styles.footer}>
-                    <View style = {{ height : '100%', width : 20, borderBottomWidth : 1, borderLeftColor : 'black'}}></View>
                     <View style = {styles.note}>
                         <Text style = {{ fontSize : 16, ...typography.bold, paddingBottom : 5 }}>Note : </Text>
                         <Text>
@@ -99,14 +98,12 @@ const styles = StyleSheet.create({
     },
     note : {
         width : '50%', height : '100%',
-        // backgroundColor : 'pink',
-        paddingHorizontal : 20,
-        paddingVertical : 25,
+        paddingHorizontal : 25,
+        justifyContent : 'center'
     },
     icon : {
         width : '50%', height : '100%',
-        // backgroundColor : 'yellow',
-        padding : '10%'
+        justifyContent : 'center'
     }
 })
 

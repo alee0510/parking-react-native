@@ -101,13 +101,11 @@ class Setting extends React.Component {
                     <TouchableWithoutFeedback>
                         <View style = {styles.logOutButtonContainer}>
                             <View style = {styles.logOutButton}>
-                                <Icon name = 'exit-to-app' size = {30} color = {colors.main.white}/>
+                                {/* <Icon name = 'exit-to-app' size = {30} color = {colors.main.white}/> */}
                                 <Text style = {{
                                     fontSize : 20,
                                     ...typography.semiBold,
-                                    marginLeft : 10,
                                     color : colors.main.white,
-                                    // flex : 1,
                                     textAlign : 'center'
                                 }}>
                                     Log out
@@ -175,12 +173,12 @@ const styles = StyleSheet.create ({
     },
     logOutButton : {
         paddingVertical : 8,
-        paddingHorizontal : 15,
         backgroundColor : colors.main.flatRed,
         flexDirection : 'row',
         marginHorizontal : '20%',
         borderRadius : 50,
         alignItems : 'center',
+        justifyContent : 'center',
         ...container.depth(2)
     }
 })
