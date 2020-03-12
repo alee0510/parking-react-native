@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import { Button } from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 
@@ -8,10 +8,18 @@ import { colors, container, typography } from '../styles'
 
 const Header = (props) => {
     return (
-        <View style = {styles.container}>
+        <View style = {{
+            flexDirection : 'row',
+            paddingHorizontal : 20,
+            paddingVertical : 15,
+            backgroundColor : props.background || colors.main.white,
+            alignItems : 'center',
+            ...container.depth(5)
+        }}
+        >
             <TouchableWithoutFeedback onPress = {props.handleBack}>
                 <View>
-                    <Icon name = 'arrow-back' size = {30}/>
+                    <Icon name = 'arrow-back' size = {30} color = { props.fontColor || 'white'}/>
                 </View>
             </TouchableWithoutFeedback>
             <Text 
@@ -20,6 +28,7 @@ const Header = (props) => {
                     fontSize : 28, 
                     marginLeft : 10,
                     flex : 1,
+                    color : props.fontColor || colors.neutrals.gray220
                 }}
             >
                 {props.title}
@@ -28,10 +37,10 @@ const Header = (props) => {
                 icon={{
                     name: props.edit ? 'check' : 'edit',
                     size: 30,
-                    color: 'black'
+                    color: props.fontColor || 'black'
                 }}
                 buttonStyle = {{
-                    backgroundColor : colors.main.white
+                    backgroundColor : 'transparent'
                 }}
                 loading = {props.loading}
                 onPress = {props.handleEdit}
@@ -39,16 +48,5 @@ const Header = (props) => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container : {
-        flexDirection : 'row',
-        paddingHorizontal : 20,
-        paddingVertical : 15,
-        backgroundColor : colors.main.white,
-        alignItems : 'center',
-        ...container.depth(5)
-    }
-})
 
 export default Header

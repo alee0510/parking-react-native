@@ -7,6 +7,7 @@ import Profile from '../screens/profile'
 import Username from '../screens/username'
 import Password from '../screens/password'
 import Vehicle from '../screens/vehicle'
+import Wallet from '../screens/wallet'
 
 // create stack
 const Stack = createStackNavigator()
@@ -19,6 +20,7 @@ const SettingNavigation = () => {
             <Stack.Screen name = 'username' component = {Username} />
             <Stack.Screen name = 'password' component = {Password} />
             <Stack.Screen name = 'vehicle' component = {Vehicle} />
+            <Stack.Screen name = 'wallet' component = {Wallet} />
         </Stack.Navigator>
     )
 }

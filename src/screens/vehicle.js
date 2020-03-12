@@ -1,17 +1,21 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import {} from 'react-native-elements'
+import { View, Text, StyleSheet, Picker } from 'react-native'
+import { Input } from 'react-native-elements'
 
 // import component
 import Header from '../components/header'
 
+// import styles
+import { typography } from '../styles'
+
 class Vehicle extends React.Component {
     state = {
-        iconEdit : false
+        iconEdit : false,
+        type : 1
     }
 
     render () {
-        const { iconEdit } = this.state
+        const { iconEdit, type } = this.state
         return (
             <View style = {styles.container}>
                 <Header
@@ -20,6 +24,48 @@ class Vehicle extends React.Component {
                     handleEdit = { _ => this.setState({ iconEdit : iconEdit ? 0 : 1 })}
                     handleBack = { _ => this.props.navigation.goBack()}
                 />
+                <View style = {styles.form}>
+                    <Picker
+                        selectedValue={type}
+                        style={{height: 50, width: 150}}
+                        onValueChange = { value => this.setState({ type : value })}
+                    >
+                        <Picker.Item label="Car" value={1}/>
+                        <Picker.Item label="Motorcycle" value={2}/>
+                    </Picker>
+                    <Input
+                        label = 'police no'
+                        value = {'B 1346 BH'}
+                        disabled = {false}
+                        containerStyle = {styles.inputContainer}
+                        labelStyle = {styles.label}
+                    />
+                    <View style = {styles.brand}>
+                        <Picker
+                            selectedValue={type}
+                            style={{height: 50, width: '50%'}}
+                            onValueChange = { value => this.setState({ type : value })}
+                        >
+                            <Picker.Item label="Car" value={1}/>
+                            <Picker.Item label="Motorcycle" value={2}/>
+                        </Picker>
+                        <Picker
+                            selectedValue={type}
+                            style={{height: 50, width: '50%'}}
+                            onValueChange = { value => this.setState({ type : value })}
+                        >
+                            <Picker.Item label="Car" value={1}/>
+                            <Picker.Item label="Motorcycle" value={2}/>
+                        </Picker>
+                    </View>
+                    <Input
+                        label = 'color'
+                        value = {'none'}
+                        disabled = {false}
+                        containerStyle = {styles.inputContainer}
+                        labelStyle = {styles.label}
+                    />
+                </View>
             </View>
         )
     }
@@ -28,6 +74,20 @@ class Vehicle extends React.Component {
 const styles = StyleSheet.create({
     container : {
         flex : 1
+    },
+    form : {
+        paddingHorizontal : 30,
+        marginTop : 20
+    },
+    inputContainer : {
+        marginVertical : 10
+    },
+    label : {
+        ...typography.semiBold, 
+        color : 'black'
+    },
+    brand : {
+        flexDirection : 'row'
     }
 }) 
 

@@ -71,7 +71,7 @@ class Setting extends React.Component {
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('wallet')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'account-balance-wallet' size = {25}/>
                                     <Text style = {styles.optionsText}>wallet</Text>
