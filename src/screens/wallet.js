@@ -3,17 +3,17 @@ import { View, Text, StyleSheet, StatusBar, ScrollView, TouchableWithoutFeedback
 import { Button, Icon } from 'react-native-elements'
 
 // import component
-import Header from '../components/header'
+import TopUp from '../screens/topUp'
 
 // import styles
 import { colors, typography, container } from '../styles'
 
 class Wallet extends React.Component {
     state = {
-        iconEdit : false
+        show : false
     }
     render () {
-        const { iconEdit } = this.state
+        const { show } = this.state
         return (
             <View style = {styles.container}>
                 <StatusBar backgroundColor = {colors.main.flatRed} barStyle = 'light-content'/>
@@ -46,10 +46,10 @@ class Wallet extends React.Component {
                 <View style = {styles.content}>
                     <View style = {styles.box}></View>
                     <View style = {styles.saldoBox}>
-                        <Text style = {{fontSize : 42, ...typography.bold, color : colors.neutrals.gray150}}>
+                        <Text style = {{fontSize : 42, ...typography.bold, color : colors.neutrals.gray130}}>
                             IDR 1000
                         </Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress = { _ => this.setState({show : true})}>
                             <View style = {styles.plus}>
                                 <Icon name = 'add' size = {35} color = 'white'/>
                             </View>
@@ -92,6 +92,7 @@ class Wallet extends React.Component {
                         </ScrollView>
                     </View>
                 </View>
+                <TopUp show = { show } onPress = { _ => this.setState({ show : false })}/>
             </View>
         )
     }
