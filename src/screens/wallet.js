@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, StatusBar, ScrollView, TouchableWithoutFeedback
 import { Button, Icon } from 'react-native-elements'
 
 // import component
-import TopUp from '../screens/topUp'
+import TopUp from '../components/topUp'
 
 // import styles
 import { colors, typography, container } from '../styles'

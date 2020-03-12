@@ -78,7 +78,7 @@ class Setting extends React.Component {
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('history')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'history' size = {25}/>
                                     <Text style = {styles.optionsText}>history</Text>
