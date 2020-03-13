@@ -22,6 +22,7 @@ import FeedCard from '../components/feedCard'
 
 // import icon
 import Medal from '../assets/medal.svg'
+import Ratings from '../components/rating'
 
 class Feed extends React.Component {
     componentDidMount () {
@@ -158,6 +159,7 @@ class Feed extends React.Component {
                         {this.renderNews()}
                     </View>
                 </ScrollView>
+                <Ratings show  = {true}/>
             </View>
         )
     }

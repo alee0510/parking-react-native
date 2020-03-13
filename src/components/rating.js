@@ -13,24 +13,30 @@ const Ratings = (props) => {
             height = {'70%'}
             overlayStyle = {styles.container}
         >
-            <Rating
-                type = 'heart'
-                showRating
-                onFinishRating = { rating => console.log('rating : ' + rating)}
-            />
-            <TextInput 
-                multiline 
-                style = {styles.textArea}
-            />
-            <View style = {{ position : 'absolute', bottom : '5%'}}>
-                <Button 
-                    title = 'Submit' 
-                    buttonStyle = {{
-                        backgroundColor : colors.main.flatRed,
-                        width : 150,
-                        borderRadius : 50
-                    }}
+            <View 
+                style = {{
+                    flex : 1,
+                    ...container.center,
+                }}>
+                <Rating
+                    type = 'heart'
+                    showRating
+                    onFinishRating = { rating => console.log('rating : ' + rating)}
                 />
+                <TextInput 
+                    multiline 
+                    style = {styles.textArea}
+                />
+                <View style = {{ position : 'absolute', bottom : '3%'}}>
+                    <Button 
+                        title = 'Submit' 
+                        buttonStyle = {{
+                            backgroundColor : colors.main.flatRed,
+                            width : 150,
+                            borderRadius : 50
+                        }}
+                    />
+                </View>
             </View>
         </Overlay>
     )
@@ -38,10 +44,7 @@ const Ratings = (props) => {
 
 const styles = StyleSheet.create({
     container : {
-        paddingVertical : 25,
-        paddingHorizontal : 10,
         borderRadius : 15,
-        ...container.center,
     },
     textArea : {
         width : '80%',
