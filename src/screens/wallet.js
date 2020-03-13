@@ -49,11 +49,11 @@ class Wallet extends React.Component {
                         <Text style = {{fontSize : 42, ...typography.bold, color : colors.neutrals.gray130}}>
                             IDR 1000
                         </Text>
-                        <TouchableOpacity onPress = { _ => this.setState({show : true})}>
+                        <TouchableWithoutFeedback onPress = { _ => this.setState({show : true})}>
                             <View style = {styles.plus}>
                                 <Icon name = 'add' size = {35} color = 'white'/>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableWithoutFeedback>
                     </View>
                     <View style = {styles.history}>
                         <Text style ={{

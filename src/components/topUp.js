@@ -35,7 +35,8 @@ const TopUp = (props) => {
 const styles = StyleSheet.create({
     container : {
         justifyContent : 'space-between',
-        paddingVertical : 25
+        paddingVertical : 25,
+        borderRadius : 15
     },
     inputContainer : {
         marginVertical : 10

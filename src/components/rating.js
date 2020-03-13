@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     container : {
         paddingVertical : 25,
         paddingHorizontal : 10,
+        borderRadius : 15,
         ...container.center,
     },
     textArea : {
