@@ -27,8 +27,10 @@ export const main = {
     blue : '#253E81',
     green : '#23A76B',
     yellow : '#FFCA06',
-    flatRed : '#ff7062',
-    white : '#FFFFFF'
+    flatRed : '#f03434',
+    white : '#FFFFFF',
+    red : '#ff7062',
+    scarlet : '#f22613'
 }
 
 export const secondary = {

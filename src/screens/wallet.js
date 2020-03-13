@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, StatusBar, ScrollView, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
-import { Button, Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 
 // import component
 import TopUp from '../components/topUp'
@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
         backgroundColor : colors.main.white,
         position : 'absolute',
         top : '7%',
-        zIndex : 5,
         flexDirection : 'row',
         alignItems : 'center',
         justifyContent : 'space-between',

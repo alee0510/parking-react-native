@@ -19,7 +19,7 @@ const Header = (props) => {
         >
             <TouchableWithoutFeedback onPress = {props.handleBack}>
                 <View>
-                    <Icon name = 'arrow-back' size = {30} color = { props.fontColor || 'white'}/>
+                    <Icon name = 'arrow-back' size = {30} color = { props.fontColor || 'black'}/>
                 </View>
             </TouchableWithoutFeedback>
             <Text 
