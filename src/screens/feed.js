@@ -7,7 +7,8 @@ import { View,
     ScrollView, 
     TouchableWithoutFeedback,
     Image,
-    Linking
+    Linking,
+    TouchableOpacity
 } from 'react-native'
 import { Header, Avatar, Icon } from 'react-native-elements'
 
@@ -88,9 +89,11 @@ class Feed extends React.Component {
                         </View>
                     )}
                     rightComponent={() => (
-                        <View style = {{ height : '100%', ...container.center}}>
-                            <Icon name = 'notifications' size = {37} color = {colors.main.flatRed}/>
-                        </View>
+                        <TouchableOpacity onPress = { _ => this.props.navigation.navigate('2fa')}>
+                            <View style = {{ height : '100%', ...container.center}}>
+                                <Icon name = 'notifications' size = {37} color = {colors.main.flatRed}/>
+                            </View>
+                        </TouchableOpacity>
                     )}
                     containerStyle = {{
                         backgroundColor : colors.neutrals.gray10,
@@ -159,7 +162,7 @@ class Feed extends React.Component {
                         {this.renderNews()}
                     </View>
                 </ScrollView>
-                <Ratings show  = {true}/>
+                {/* <Ratings show  = {true}/> */}
             </View>
         )
     }
