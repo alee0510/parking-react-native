@@ -89,7 +89,7 @@ class Feed extends React.Component {
                         </View>
                     )}
                     rightComponent={() => (
-                        <TouchableOpacity onPress = { _ => this.props.navigation.navigate('2fa')}>
+                        <TouchableOpacity onPress = { _ => this.props.navigation.navigate('notification')}>
                             <View style = {{ height : '100%', ...container.center}}>
                                 <Icon name = 'notifications' size = {37} color = {colors.main.flatRed}/>
                             </View>

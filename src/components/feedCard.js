@@ -9,7 +9,7 @@ import { container, typography, colors } from '../styles'
 const FeedCard = () => {
     return (
         <ImageBackground 
-            source = {require('../assets/mobile-splash-screen.jpg')} 
+            source = {require('../assets/background/mobile_splash.jpg')} 
             style = {styles.image}
         >
             <View 

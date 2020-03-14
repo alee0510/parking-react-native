@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { Overlay } from 'react-native-elements'
 import FingerprintScanner from 'react-native-fingerprint-scanner'
 
 class FingerPrint extends React.Component {
