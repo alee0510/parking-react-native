@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements'
 // import styles
 import { colors, typography, container } from '../styles'
 
-const GreetScreen = () => {
+const GreetScreen = ({ navigation }) => {
     return (
         <View style = {styles.container}>
             <View style = {styles.imageContainer}>
@@ -21,7 +21,7 @@ const GreetScreen = () => {
                 <Text style = {styles.text1}>KI</Text>
                 <Text style = {styles.text2}>NG</Text>
             </View>
-            <TouchableWithoutFeedback onPress = { _ => this.navigation.navigate('logi')}>
+            <TouchableWithoutFeedback onPress = { _ => navigation.navigate('login')}>
                 <View style = {styles.next}>
                     <Icon name = 'navigate-next' size = {30} color = {colors.main.white}/>
                 </View>
