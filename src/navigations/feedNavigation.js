@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 // import screens
 import Feed from '../screens/feed'
 import Notification from '../screens/notification'
+import Map from '../screens/map'
 
 // create stack
 const Stack = createStackNavigator()
@@ -13,6 +14,7 @@ const FeedNavigation = () => {
         <Stack.Navigator headerMode = 'none' initialRouteName = 'feed'>
             <Stack.Screen name = 'feed' component = {Feed}/>
             <Stack.Screen name = 'notification' component = {Notification}/>
+            <Stack.Screen name = 'map' component = {Map}/>
         </Stack.Navigator>
     )
 }

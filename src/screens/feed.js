@@ -66,6 +66,7 @@ class Feed extends React.Component {
 
     render () {
         // console.log(this.props.news)
+        const { navigation } = this.props
         return (
             <View style = {styles.container}>
                 <StatusBar backgroundColor = {colors.neutrals.gray10} barStyle = 'dark-content'/>
@@ -113,7 +114,7 @@ class Feed extends React.Component {
                         Features
                     </Text>
                     <View style = {styles.menu}>
-                        <TouchableWithoutFeedback >
+                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('map')} >
                             <View style = {styles.menuIcon}>
                                 <Icon name = 'map-marker' 
                                     type = 'material-community'

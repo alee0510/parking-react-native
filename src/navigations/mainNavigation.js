@@ -11,7 +11,7 @@ const Stack = createStackNavigator()
 
 const MainNavigation = () => {
     return (
-        <Stack.Navigator headerMode = 'none'>
+        <Stack.Navigator headerMode = 'none' initialRouteName = 'home'>
             <Stack.Screen name = 'greet' component = {GreetScreen}/>
             <Stack.Screen name = 'home' component = {TabNavigation}/>
             <Stack.Screen name = 'login' component = {Login}/>
