@@ -140,8 +140,8 @@ class Feed extends React.Component {
                                     color = {colors.main.white}
                                 />
                             </View>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback >
+                        </TouchableWithoutFeedback >
+                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('setting-navigation', { screen : 'vehicle'})} >
                             <View style = {styles.menuIcon}>
                                 <Icon name = 'ios-car' 
                                     type = 'ionicon'
