@@ -9,9 +9,17 @@ import Map from '../screens/map'
 // create stack
 const Stack = createStackNavigator()
 
-const FeedNavigation = () => {
+const FeedNavigation = ({navigation, route}) => {
+    console.log(route.state)
+    navigation.setOptions({ tabBarVisible : route.state ? route.state.index > 0 ? false : true : null})
     return (
-        <Stack.Navigator headerMode = 'none' initialRouteName = 'feed'>
+        <Stack.Navigator 
+            headerMode = 'none' 
+            initialRouteName = 'feed'
+            screenOptions = {({ route }) => ({
+                tabBarVisible : false
+            })}
+        >
             <Stack.Screen name = 'feed' component = {Feed}/>
             <Stack.Screen name = 'notification' component = {Notification}/>
             <Stack.Screen name = 'map' component = {Map}/>
