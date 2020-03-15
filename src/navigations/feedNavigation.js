@@ -10,7 +10,7 @@ import Map from '../screens/map'
 const Stack = createStackNavigator()
 
 const FeedNavigation = ({navigation, route}) => {
-    console.log(route.state)
+    // console.log(route.state)
     navigation.setOptions({ tabBarVisible : route.state ? route.state.index > 0 ? false : true : null})
     return (
         <Stack.Navigator 

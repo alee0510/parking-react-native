@@ -132,7 +132,7 @@ class Feed extends React.Component {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback >
+                        <TouchableWithoutFeedback  onPress = { _ => navigation.navigate('setting-navigation', { screen : 'wallet'})}>
                             <View style = {styles.menuIcon}>
                                 <Icon name = 'wallet' 
                                     type = 'entypo'
