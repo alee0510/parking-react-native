@@ -145,7 +145,7 @@ const styles = StyleSheet.create ({
     buttonStyle : {
         borderRadius : 50,
         backgroundColor : colors.main.flatRed,
-        fontSize : 20
+        // fontSize : 20
     },
 })
 
