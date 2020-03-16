@@ -30,13 +30,9 @@ class Login extends React.Component {
                         inputContainerStyle = {styles.inputContainerStyle}
                         inputStyle = {styles.inputStyle}
                         leftIcon={
-                            <Icon
-                              name='account-circle'
-                              size={24}
-                              color='black'
-                            />
+                            <Icon name='account-circle' size={24} color='black'/>
                         }
-                        />
+                    />
                     <Input
                         label = 'Password'
                         // value = {'alee0510'}
@@ -45,14 +41,18 @@ class Login extends React.Component {
                         containerStyle = {styles.inputContainer}
                         inputContainerStyle = {styles.inputContainerStyle}
                         inputStyle = {styles.inputStyle}
-                        leftIcon={
-                            <Icon
-                              name='lock'
-                              size={24}
-                              color='black'
-                            />
+                        leftIcon = {
+                            <TouchableWithoutFeedback 
+                                onPress = { _ => this.setState({ visible : !visible})}
+                            >
+                                <Icon
+                                  name = {visible ? 'visibility' : 'visibility-off'}
+                                  size={24} color='black'
+                                />
+                            </TouchableWithoutFeedback>
+                                
                         }
-                        />
+                    />
                     <Button 
                         title = 'Login' 
                         containerStyle = {styles.button}
