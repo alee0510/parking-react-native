@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, StatusBar, TouchableWithoutFeedback } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -11,6 +11,7 @@ import SmartPhone from '../assets/message-on-phone.svg'
 
 class SendOTP extends React.Component {
     render () {
+        const { navigation } = this.props
         return (
             <View style = {styles.container}>
                 <StatusBar backgroundColor = {'#d73535'} barStyle = 'light-content'/>
@@ -42,9 +43,11 @@ class SendOTP extends React.Component {
                         We will send you One Time Password via SMS message. 
                         Carrier rates may apply.
                     </Text>
-                    <View style = {styles.buttonNext}>
-                        <Icon name = 'navigate-next' size = {25} color = {colors.main.white}/>
-                    </View>
+                    <TouchableWithoutFeedback onPress = { _ => navigation.navigate('verify-otp')}>
+                        <View style = {styles.buttonNext}>
+                            <Icon name = 'navigate-next' size = {25} color = {colors.main.white}/>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
             </View>
         )

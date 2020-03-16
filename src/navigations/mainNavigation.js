@@ -14,7 +14,7 @@ const Stack = createStackNavigator()
 
 const MainNavigation = () => {
     return (
-        <Stack.Navigator headerMode = 'none' initialRouteName = 'verify-otp'>
+        <Stack.Navigator headerMode = 'none' initialRouteName = 'greet'>
             <Stack.Screen name = 'greet' component = {GreetScreen}/>
             <Stack.Screen name = 'login' component = {Login}/>
             <Stack.Screen name = 'register' component = {Register}/>

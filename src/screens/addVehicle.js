@@ -14,6 +14,7 @@ class AddVehicle extends React.Component {
     }
     render () {
         const { type, police, brand, brandName } = this.state
+        const { navigation } = this.props
         return (
             <View style = {styles.container}>
                 <View style = {{width : '80%'}}>
@@ -80,7 +81,7 @@ class AddVehicle extends React.Component {
                         containerStyle = {styles.button}
                         buttonStyle = {styles.buttonStyle}
                         titleStyle = {{ fontSize : 20, ...typography.bold}}
-                        onPress = { _ => navigation.navigate('add-vehicle')}
+                        onPress = { _ => navigation.navigate('sent-otp')}
                     />
                 </View>
             </View>
@@ -102,7 +103,6 @@ const styles = StyleSheet.create({
     typeBox : {
         flexDirection : 'row',
         alignItems : 'center',
-        // backgroundColor : 'yellow',
         paddingHorizontal : 15,
         justifyContent : 'space-between'
     },
