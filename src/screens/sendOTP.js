@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, StatusBar } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -13,6 +13,7 @@ class SendOTP extends React.Component {
     render () {
         return (
             <View style = {styles.container}>
+                <StatusBar backgroundColor = {'#d73535'} barStyle = 'light-content'/>
                 <View style = {{ flex : 1.6 }}>
                     <LinearGradient 
                         colors = {['#ff7171', '#d73535', '#c93636']}
