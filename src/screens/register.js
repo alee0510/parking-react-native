@@ -11,7 +11,7 @@ class Register extends React.Component {
     }
     render () {
         const { visible } = this.state
-        const { navigation } = this.state
+        const { navigation } = this.props
         return (
             <View style = {styles.container}>
                 <ScrollView style = {{paddingVertical : '10%', width : '85%'}}>
@@ -97,6 +97,7 @@ class Register extends React.Component {
                             containerStyle = {styles.button}
                             buttonStyle = {styles.buttonStyle}
                             titleStyle = {{ fontSize : 20, ...typography.bold}}
+                            onPress = { _ => navigation.navigate('add-vehicle')}
                         />
                     </View>
                 </ScrollView>
