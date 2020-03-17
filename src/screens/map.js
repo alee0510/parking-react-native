@@ -24,10 +24,12 @@ class Map extends React.Component {
         return (
             <View style = {styles.container}>
                 <MapView
-                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                    style={styles.map}
+                    // remove if not using Google Maps
+                    provider = {PROVIDER_GOOGLE} 
+                    style = {styles.map}
+                    showsUserLocation = {true}
                     // define initial positiom
-                    region={{
+                    region = {{
                         latitude: -7.1358475730352975,
                         longitude: 111.165600682721834,
                         latitudeDelta: 0.015, // this define ratio of map that will be visible
@@ -45,8 +47,6 @@ class Map extends React.Component {
                                 }} style={{width: 200, height: 200}}/>
                                 <Text>My Home</Text>
                             </Callout>
-                            {/* we can also change marker using custom image */}
-                            {/* <Image source = {{uri : '....}}/> */}
                         </Marker>
                     </MapView>
                     <TouchableWithoutFeedback onPress = { _ => navigation.goBack()}>
