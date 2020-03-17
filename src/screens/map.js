@@ -1,25 +1,58 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
-import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
+import { View, Text, StyleSheet, Image, TouchableWithoutFeedback, Alert } from 'react-native'
 import { Icon } from 'react-native-elements'
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
+import { request, PERMISSIONS } from 'react-native-permissions'
+import Geolocation from '@react-native-community/geolocation'
 
 // import styles
 import { colors, typography, container } from '../styles'
 
 class Map extends React.Component {
     state = {
-        coordinates : [
-            {name : '', lat : '', long : ''},
-            {name : '', lat : '', long : ''},
-            {name : '', lat : '', long : ''},
-            {name : '', lat : '', long : ''},
-            {name : '', lat : '', long : ''},
-            {name : '', lat : '', long : ''},
-            {name : '', lat : '', long : ''}
-        ]
+        initialPosition : null
     }
+
+    componentDidMount () {
+        this.requestLocationPermission()
+    }
+
+    requestLocationPermission = async () => {
+        try {
+            var response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+            console.log('request status : ', response)
+            if (response === 'granted') {
+                this.getCurrentLocation()
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    getCurrentLocation = () => {
+        Geolocation.getCurrentPosition(
+            // if succes :
+            position => {
+                console.log(JSON.stringify(position))
+                const initialPosition = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    latitudeDelta: 0.015, // this define ratio of map that will be visible
+                    longitudeDelta: 0.0121,
+                }
+                this.setState({ initialPosition })
+            },
+            // if error
+            error => Alert.alert(error.message),
+            // options
+            { enableHighAccuracy : true, timeout : 10000, maximumAge : 1000 }
+        )
+    }
+
     render () {
-        const { coordinates } = this.state
+        const { initialPosition } = this.state
         const { navigation } = this.props
         return (
             <View style = {styles.container}>
@@ -27,16 +60,10 @@ class Map extends React.Component {
                     // remove if not using Google Maps
                     provider = {PROVIDER_GOOGLE} 
                     style = {styles.map}
+                    ref = { map => this._map = map}
                     showsUserLocation = {true}
-                    // define initial positiom
-                    region = {{
-                        latitude: -7.1358475730352975,
-                        longitude: 111.165600682721834,
-                        latitudeDelta: 0.015, // this define ratio of map that will be visible
-                        longitudeDelta: 0.0121,
-                    }}
+                    initialRegion = { initialPosition }
                     >
-                        {/* create marker, when we click, we will see title */}
                         <Marker
                             coordinate = {{latitude : -7.1358475730352975, longitude : 111.165600682721834}}
                         >
