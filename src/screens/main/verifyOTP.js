@@ -5,7 +5,7 @@ import VirtualKeyboard from 'react-native-virtual-keyboard'
 import LinearGradient from 'react-native-linear-gradient'
 
 // import styles
-import { colors, typography, container} from '../styles'
+import { colors, typography, container} from '../../styles'
 
 class VerifyOTP extends React.Component {
     state = {

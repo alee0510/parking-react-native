@@ -2,9 +2,9 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 // import screens
-import Feed from '../screens/feed'
-import Notification from '../screens/notification'
-import Map from '../screens/map'
+import Feed from '../screens/feed/feed'
+import Notification from '../screens/feed/notification'
+import Map from '../screens/feed/map'
 
 // create stack
 const Stack = createStackNavigator()

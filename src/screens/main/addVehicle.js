@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Picker } from 'react-native'
 import { Input, Icon, Button } from 'react-native-elements'
 
 // import style
-import { colors, container, typography } from '../styles'
+import { colors, container, typography } from '../../styles'
 
 class AddVehicle extends React.Component {
     state = {

@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Button, Icon, Input } from 'react-native-elements'
 
 // import component
-import Header from '../components/header'
+import Header from '../../components/header'
 
 // import style
-import { colors, typography, container } from '../styles'
+import { colors, typography, container } from '../../styles'
 
 const Password = ({ navigation }) => {
     const [edit, setEdit] = React.useState(0)

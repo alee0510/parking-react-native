@@ -2,11 +2,8 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableWithoutFeedback, ScrollView, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements'
 
-// import component
-import Header from '../components/header'
-
 // import styles
-import { colors, container, typography } from '../styles'
+import { colors, container, typography } from '../../styles'
 
 class History extends React.Component {
     state = {

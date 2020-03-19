@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, StatusBar, ScrollView, TouchableWithoutFeedback
 import { Icon } from 'react-native-elements'
 
 // import component
-import TopUp from '../components/topUp'
+import TopUp from '../../components/topUp'
 
 // import styles
-import { colors, typography, container } from '../styles'
+import { colors, typography, container } from '../../styles'
 
 class Wallet extends React.Component {
     state = {

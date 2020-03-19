@@ -2,11 +2,11 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 // import screens
-import Login from '../screens/login'
-import Register from '../screens/register'
-import AddVehicle from '../screens/addVehicle'
-import SendOTP from '../screens/sendOTP'
-import VerifyOTP from '../screens/verifyOTP'
+import Login from '../screens/main/login'
+import Register from '../screens/main/register'
+import AddVehicle from '../screens/main/addVehicle'
+import SendOTP from '../screens/main/sendOTP'
+import VerifyOTP from '../screens/main/verifyOTP'
 import TabNavigation from './tabNavigation'
 import GreetScreen from '../components/greeting'
 

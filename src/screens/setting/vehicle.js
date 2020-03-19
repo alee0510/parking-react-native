@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Picker } from 'react-native'
 import { Input } from 'react-native-elements'
 
 // import component
-import Header from '../components/header'
+import Header from '../../components/header'
 
 // import styles
-import { typography } from '../styles'
+import { typography } from '../../styles'
 
 class Vehicle extends React.Component {
     state = {

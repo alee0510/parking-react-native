@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from 're
 import { Input, Button, Icon } from 'react-native-elements'
 
 // import styles
-import { typography, container, colors } from '../styles'
+import { typography, container, colors } from '../../styles'
 
 class Register extends React.Component {
     state = {

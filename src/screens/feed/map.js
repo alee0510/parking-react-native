@@ -6,7 +6,7 @@ import { request, PERMISSIONS } from 'react-native-permissions'
 import Geolocation from '@react-native-community/geolocation'
 
 // import styles
-import { colors, typography, container } from '../styles'
+import { colors, container } from '../../styles'
 
 class Map extends React.Component {
     state = {

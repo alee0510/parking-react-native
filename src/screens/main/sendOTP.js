@@ -4,10 +4,10 @@ import { Input, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 
 // import styles
-import { colors, typography, container } from '../styles'
+import { colors, typography, container } from '../../styles'
 
 // import assets
-import SmartPhone from '../assets/message-on-phone.svg'
+import SmartPhone from '../../assets/message-on-phone.svg'
 
 class SendOTP extends React.Component {
     render () {

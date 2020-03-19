@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Icon, Input, Button } from 'react-native-elements'
 
 // import custom icon
-import Logo from '../assets/parking_app.svg'
+import Logo from '../../assets/parking_app.svg'
 
 // import styles
-import { colors, typography, container } from '../styles'
+import { colors, typography, container } from '../../styles'
 
 class Login extends React.Component {
     state = {

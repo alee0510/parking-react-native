@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, 
+import { 
+    View, 
     Text, 
     StyleSheet, 
     StatusBar, 
@@ -13,17 +14,16 @@ import { View,
 import { Header, Avatar, Icon } from 'react-native-elements'
 
 // import actions
-import { getNews } from '../actions'
+import { getNews } from '../../actions'
 
 // import style
-import { colors, typography, container } from '../styles'
+import { colors, typography, container } from '../../styles'
 
 // import components
-import FeedCard from '../components/feedCard'
+import FeedCard from '../../components/feedCard'
 
 // import icon
-import Medal from '../assets/medal.svg'
-import Ratings from '../components/rating'
+import Medal from '../../assets/medal.svg'
 
 class Feed extends React.Component {
     componentDidMount () {
@@ -163,7 +163,6 @@ class Feed extends React.Component {
                         {this.renderNews()}
                     </View>
                 </ScrollView>
-                {/* <Ratings show  = {true}/> */}
             </View>
         )
     }

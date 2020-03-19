@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { Icon, Button, Avatar, Input } from 'react-native-elements'
 
 // import component
-import Header from '../components/header'
+import Header from '../../components/header'
 
 // import styles
-import { colors, typography, container } from '../styles'
+import { colors, typography, container } from '../../styles'
 
 class Profile extends React.Component {
     state = {

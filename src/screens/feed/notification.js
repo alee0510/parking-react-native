@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Icon } from 'react-native-elements'
 
 // import styles
-import { colors, container, typography } from '../styles'
+import { colors, container, typography } from '../../styles'
 
 class Notification extends React.Component {
     render () {

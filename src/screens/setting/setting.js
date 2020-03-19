@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { Avatar, Icon } from 'react-native-elements'
 
 // import styles
-import { colors, typography, container } from '../styles'
+import { colors, typography, container } from '../../styles'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 class Setting extends React.Component {
