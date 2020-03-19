@@ -6,7 +6,7 @@ import { container, typography, colors } from '../styles'
 
 // import icon
 
-const FeedCard = () => {
+const FeedCard = (props) => {
     return (
         <ImageBackground 
             source = {require('../assets/background/mobile_splash.jpg')} 
@@ -19,8 +19,8 @@ const FeedCard = () => {
                     ...container.center
                 }}
             >
-                <Text style = {styles.saldo}>IDR 1000</Text>
-                <Text style = {styles.member}>Ali Muksin</Text>
+                <Text style = {styles.saldoStyle}>{`IDR ${props.saldo}`}</Text>
+                <Text style = {styles.member}>{props.fullname || 'full name'}</Text>
             </View>
         </ImageBackground>
     )
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         borderRadius : 15,
         justifyContent : 'center',
     },
-    saldo : {
+    saldoStyle : {
         ...typography.extraBold,
         fontSize : 50,
         color : colors.main.white,
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         color : colors.main.white,
         position : 'absolute',
         left : 20,
-        bottom : 15
+        bottom : 15,
+        textTransform : 'capitalize'
     },
 })
 

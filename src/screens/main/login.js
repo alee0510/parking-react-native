@@ -11,7 +11,7 @@ import { LogIn } from '../../actions'
 
 // import styles
 import { typography } from '../../styles'
-import { loginStyles } from '../../styles/feed'
+import { loginStyles } from '../../styles/main'
 
 class Login extends React.Component {
     state = {
@@ -39,19 +39,19 @@ class Login extends React.Component {
         const { navigation } = this.props
 
         return (
-            <View style = {loginStyles.styles.container}>
+            <View style = {loginStyles.container}>
                 <View style = {{marginVertical : 20}}>
                     <Logo width = {95} height = {95}/>
                 </View>
-                <View style = {loginStyles.styles.form}>
+                <View style = {loginStyles.form}>
                     <Input
                         label = 'Username'
                         value = {username}
                         disabled = {false}
-                        labelStyle = {loginStyles.styles.label}
-                        containerStyle = {loginStyles.styles.inputContainer}
-                        inputContainerStyle = {loginStyles.styles.inputContainerStyle}
-                        inputStyle = {loginStyles.styles.inputStyle}
+                        labelStyle = {loginStyles.label}
+                        containerStyle = {loginStyles.inputContainer}
+                        inputContainerStyle = {loginStyles.inputContainerStyle}
+                        inputStyle = {loginStyles.inputStyle}
                         onChangeText = { value => this.setState({ username : value })}
                         leftIcon={
                             <Icon name='account-circle' size={24} color='black'/>
@@ -61,10 +61,10 @@ class Login extends React.Component {
                         label = 'Password'
                         value = {password}
                         disabled = {false}
-                        labelStyle = {loginStyles.styles.label}
-                        containerStyle = {loginStyles.styles.inputContainer}
-                        inputContainerStyle = {loginStyles.styles.inputContainerStyle}
-                        inputStyle = {loginStyles.styles.inputStyle}
+                        labelStyle = {loginStyles.label}
+                        containerStyle = {loginStyles.inputContainer}
+                        inputContainerStyle = {loginStyles.inputContainerStyle}
+                        inputStyle = {loginStyles.inputStyle}
                         onChangeText = { value => this.setState({password : value })}
                         secureTextEntry = {visible}
                         errorMessage = {this.props.error}
@@ -83,15 +83,15 @@ class Login extends React.Component {
                     />
                     <Button 
                         title = 'Login' 
-                        containerStyle = {loginStyles.styles.button}
-                        buttonStyle = {loginStyles.styles.buttonStyle}
+                        containerStyle = {loginStyles.button}
+                        buttonStyle = {loginStyles.buttonStyle}
                         titleStyle = {{ fontSize : 20, ...typography.bold}}
                         onPress = {this.onButtonLogin}
                         loading = {this.props.loading}
                     />
-                    <Text style = {loginStyles.styles.textOr}>OR</Text>
+                    <Text style = {loginStyles.textOr}>OR</Text>
                     <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Register')}>
-                        <Text style = {loginStyles.styles.textRegister}>
+                        <Text style = {loginStyles.textRegister}>
                             Create your new account ?
                         </Text>
                     </TouchableWithoutFeedback>

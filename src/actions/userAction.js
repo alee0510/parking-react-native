@@ -1,13 +1,16 @@
 import Axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
-import { API_URL } from '../helpers/API_URL'
+import { API_URL, API_URL_MOBILE } from '../helpers/API_URL'
 import { 
     LOG_IN_START,
     LOG_IN_END,
     LOG_IN,
     LOG_IN_ERROR, 
     LOG_OUT,
-    STAY_LOGIN,
+    CHECK_LOGIN,
+    CHECK_LOGIN_START,
+    CHECK_LOGIN_END,
+    GET_PROFILE,
 } from '../helpers/actionTypes'
 
 export const LogIn = (body) => {
@@ -16,6 +19,7 @@ export const LogIn = (body) => {
             console.log('do request login')
             console.log('body', body)
             dispatch({ type : LOG_IN_START })
+
             // ruequest login
             const { data, headers } = await Axios.post(API_URL + '/user/login', body)
             console.log('data : ', data)
@@ -24,6 +28,7 @@ export const LogIn = (body) => {
 
             console.log('set local storage')
             // set local storage
+            await AsyncStorage.setItem('id', data.id.toString())
             await AsyncStorage.setItem('token', headers['auth-token'])
             dispatch({ type : LOG_IN_END })
         } catch (err) {
@@ -47,10 +52,11 @@ export const LogOut = () => {
     }
 }
 
-export const StayLogin = () => {
+export const CheckLogin = () => {
     return async (dispatch) => {
         try {
             console.log('check token')
+            dispatch({ type : CHECK_LOGIN_START })
             // get token
             const token = await AsyncStorage.getItem('token')
             if (!token) throw 'invalid token.'
@@ -59,25 +65,27 @@ export const StayLogin = () => {
             // ruequest get user account
             const options = { headers : {'Auth-Token' : token} }
             const { data } = await Axios.get(API_URL + `/user/staylogin`, options)
-            dispatch({ type : STAY_LOGIN, payload : data })
+            console.log('staylogin data : ', data)
+            dispatch({ type : CHECK_LOGIN, payload : data })
 
+            dispatch({ type : CHECK_LOGIN_END })
         } catch (err) {
-            dispatch({ 
-                type : LOG_IN_ERROR, 
-                payload : err.response ? err.response.data : err
-            })
+            dispatch({ type : CHECK_LOGIN_END })
             console.log(err.response ? err.response.data : err)
         }
     }
 }
 
-export const Register = (body) => {
+export const getProfile = (id) => {
     return async (dispatch) => {
         try {
-            // do request register
-            await Axios.post(API_URL + `/user/register`, body)
+            console.log('request get profile')
+            const { data } = await Axios.get(API_URL_MOBILE + `/profile/${id}`)
+            console.log('profile : ', data)
+
+            dispatch({ type : GET_PROFILE, payload : data })
         } catch (err) {
-            log(err.response ? err.response.data : err)
+            console.log(err.response ? err.response.data : err)
         }
     }
 }

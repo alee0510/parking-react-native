@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage'
 import { 
     View, 
     Text, 
-    StyleSheet, 
     StatusBar, 
     ScrollView, 
     TouchableWithoutFeedback,
@@ -12,12 +12,14 @@ import {
     TouchableOpacity
 } from 'react-native'
 import { Header, Avatar, Icon } from 'react-native-elements'
+import { URL } from '../../helpers/API_URL'
 
 // import actions
-import { getNews } from '../../actions'
+import { getNews, getProfile, getSaldo } from '../../actions'
 
 // import style
 import { colors, typography, container } from '../../styles'
+import { feedStyles } from '../../styles/feed'
 
 // import components
 import FeedCard from '../../components/feedCard'
@@ -26,8 +28,11 @@ import FeedCard from '../../components/feedCard'
 import Medal from '../../assets/medal.svg'
 
 class Feed extends React.Component {
-    componentDidMount () {
+    async componentDidMount () {
+        const userId = await AsyncStorage.getItem('id')
         this.props.getNews()
+        this.props.getProfile(userId)
+        this.props.getSaldo(userId)
     }
 
     hanldeNews = (url) => {
@@ -41,7 +46,6 @@ class Feed extends React.Component {
                 <TouchableWithoutFeedback key = {index} onPress = {() => this.hanldeNews(item.url)}>
                     <View style = {{
                         flex : 1, 
-                        // backgroundColor : 'yellow', 
                         marginBottom : 20,
                         borderRadius : 15,
                         overflow : 'hidden',
@@ -65,26 +69,35 @@ class Feed extends React.Component {
     }
 
     render () {
-        // console.log(this.props.news)
-        const { navigation } = this.props
+        const { navigation, profile, account, wallet } = this.props
         return (
-            <View style = {styles.container}>
+            <View style = {feedStyles.container}>
                 <StatusBar backgroundColor = {colors.neutrals.gray10} barStyle = 'dark-content'/>
                 <Header
                     leftComponent = {() => (
-                        <View style = {styles.headerLeft}>
-                            <Avatar 
-                                rounded 
-                                title="A" 
-                                size = {60} 
-                                overlayContainerStyle = {{ backgroundColor : colors.main.flatRed}}
-                            />
-                            <View style = {{ marginLeft : 10, height : '100%', width : '100%', justifyContent : 'center'}}>
+                        <View style = {feedStyles.headerLeft}>
+                            {
+                                profile ? 
+                                <Avatar
+                                    rounded
+                                    source = {{ uri : URL + '/' + profile.image}}
+                                    size = {60}
+                                    overlayContainerStyle = {{...container.depth(1)}}
+                                />
+                                :
+                                <Avatar 
+                                    rounded 
+                                    title="A" 
+                                    size = {60} 
+                                    overlayContainerStyle = {{ backgroundColor : colors.main.flatRed}}
+                                />
+                            }
+                            <View style = {{ marginLeft : 10, height : '100%', width : 200, justifyContent : 'center'}}>
                                 <Text style = {{ fontSize : 24, ...typography.bold}}>
                                     Hello,
                                 </Text>
                                 <Text style = {{ fontSize : 16, ...typography.regular}}>
-                                    alee0510
+                                    {account ? account.username : 'username'}
                                 </Text>
                             </View>
                         </View>
@@ -104,18 +117,17 @@ class Feed extends React.Component {
                 />
                 <ScrollView style = {{ 
                     flex : 1, 
-                    // backgroundColor : 'pink', 
                     paddingHorizontal : 15
                 }}>
-                    <View style = {styles.card}>
-                        <FeedCard/>
+                    <View style = {feedStyles.card}>
+                        <FeedCard saldo = {wallet ? wallet.saldo : 0} fullname = {profile ? profile.name : null}/>
                     </View>
                     <Text style = {{ fontSize : 24, ...typography.bold, marginTop : 20}}>
                         Features
                     </Text>
-                    <View style = {styles.menu}>
+                    <View style = {feedStyles.menu}>
                         <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Map')} >
-                            <View style = {styles.menuIcon}>
+                            <View style = {feedStyles.menuIcon}>
                                 <Icon name = 'map-marker' 
                                     type = 'material-community'
                                     size = {40}
@@ -123,8 +135,8 @@ class Feed extends React.Component {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback style = {styles.menuIcon}>
-                            <View style = {styles.menuIcon}>
+                        <TouchableWithoutFeedback style = {feedStyles.menuIcon}>
+                            <View style = {feedStyles.menuIcon}>
                                 <Icon name = 'clockcircle' 
                                     type = 'antdesign'
                                     size = {40}
@@ -133,7 +145,7 @@ class Feed extends React.Component {
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback  onPress = { _ => navigation.navigate('setting-navigation', { screen : 'Wallet'})}>
-                            <View style = {styles.menuIcon}>
+                            <View style = {feedStyles.menuIcon}>
                                 <Icon name = 'wallet' 
                                     type = 'entypo'
                                     size = {40}
@@ -142,7 +154,7 @@ class Feed extends React.Component {
                             </View>
                         </TouchableWithoutFeedback >
                         <TouchableWithoutFeedback onPress = { _ => navigation.navigate('setting-navigation', { screen : 'Vehicle'})} >
-                            <View style = {styles.menuIcon}>
+                            <View style = {feedStyles.menuIcon}>
                                 <Icon name = 'ios-car' 
                                     type = 'ionicon'
                                     size = {40}
@@ -150,8 +162,8 @@ class Feed extends React.Component {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback style = {styles.menuIcon}>
-                            <View style = {styles.menuIcon}>
+                        <TouchableWithoutFeedback style = {feedStyles.menuIcon}>
+                            <View style = {feedStyles.menuIcon}>
                                 <Medal height = {40} width = {40} fill = {colors.main.white}/>
                             </View>
                         </TouchableWithoutFeedback>
@@ -159,7 +171,7 @@ class Feed extends React.Component {
                     <Text style = {{ fontSize : 24, ...typography.bold, marginVertical : 15}}>
                         Stories
                     </Text>
-                    <View style = {styles.news}>
+                    <View style = {feedStyles.news}>
                         {this.renderNews()}
                     </View>
                 </ScrollView>
@@ -168,58 +180,20 @@ class Feed extends React.Component {
     }
 }
 
-const styles = StyleSheet.create ({
-    container : {
-        flex : 1,
-        backgroundColor : colors.neutrals.gray10,
-    },
-    headerLeft : {
-        height : '100%',
-        // backgroundColor : 'pink',
-        flexDirection : 'row',
-        alignItems : 'center'
-    },
-    card : {
-        height : 300,
-        // marginHorizontal : 15,
-        borderRadius : 15,
-        overflow : 'hidden',
-        ...container.depth(5)
-    },
-    menu : {
-        width : '100%',
-        // backgroundColor : 'yellow',
-        flexDirection : 'row',
-        flexWrap : 'wrap',
-        justifyContent : 'space-between',
-        alignContent : 'center'
-    },
-    menuIcon : {
-        height : 65,
-        width : 65,
-        backgroundColor : colors.main.flatRed,
-        ...container.center,
-        borderRadius : 20,
-        marginVertical : 15,
-        // margin : 3,
-        // marginHorizontal : 4,
-        ...container.depth(4)
-    },
-    news : {
-        width : '100%',
-        // backgroundColor : 'red',
-    }
-})
-
-const mapStore = ({ news }) => {
+const mapStore = ({ news, user, wallet }) => {
     return {
-        news : news.data
+        news : news.data,
+        account : user.account,
+        profile : user.profile,
+        wallet : wallet.data
     }
 }
 
 const mapDispatch = () => {
     return {
-        getNews
+        getNews,
+        getProfile,
+        getSaldo
     }
 }
 
