@@ -1,29 +1,57 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { connect } from 'react-redux'
+import { CommonActions } from '@react-navigation/native'
+import { View, Text, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
+import { URL } from '../../helpers/API_URL'
 
 // import styles
 import { colors, typography, container } from '../../styles'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { settingStyles } from '../../styles/setting'
+
+// import actions
+import { LogOut } from '../../actions'
 
 class Setting extends React.Component {
+    componentDidUpdate () {
+        if (!this.props.account) {
+            const resetAction = CommonActions.reset({
+                index: 0,
+                routes: [
+                    { name: 'Login' }
+                ]
+            })
+            this.props.navigation.dispatch(resetAction)
+        }
+    }
+
     render () {
-        const { navigation } = this.props
+        const { navigation, account, profile } = this.props
         return (
-            <View style = {styles.container}>
-                <Text style = {styles.title}>Settings</Text>
+            <View style = {settingStyles.container}>
+                <Text style = {settingStyles.title}>Settings</Text>
                 <ScrollView style = {{flex : 1}}>
-                    <View style = {styles.accountContainer}>
-                        <Avatar 
-                            rounded 
-                            size = {50} 
-                            title = 'A' 
-                            overlayContainerStyle = {{ backgroundColor : colors.main.flatRed}}
-                        />
+                    <View style = {settingStyles.accountContainer}>
+                        {
+                            profile ? 
+                            <Avatar
+                                rounded
+                                size = {50}
+                                source = {{ uri : URL + '/' + profile.image}}
+                                overlayContainerStyle = {{ ...container.depth(1)}}
+                            />
+                            :
+                            <Avatar 
+                                rounded 
+                                size = {50} 
+                                title = 'A' 
+                                overlayContainerStyle = {{ backgroundColor : colors.main.flatRed}}
+                            />
+
+                        }
                         <View 
                             style ={{ 
                                 flex : 1, 
-                                // backgroundColor : 'pink', 
                                 justifyContent : 'center',
                                 marginLeft : 10
                             }}
@@ -35,9 +63,9 @@ class Setting extends React.Component {
                                     ...typography.semiBold
                                 }}
                             >
-                                    full name
+                                {profile ? profile.name : 'full name'}
                             </Text>
-                            <Text>+6285722286349</Text>
+                            <Text>{profile ? profile.phone : '+620011112222'}</Text>
                         </View>
                         <TouchableWithoutFeedback onPress = { _ => navigation.navigate('profile')}>
                             <View>
@@ -45,70 +73,70 @@ class Setting extends React.Component {
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <View style = {styles.settings}>
-                        <View style = {styles.subSetting}>
+                    <View style = {settingStyles.settings}>
+                        <View style = {settingStyles.subSetting}>
                             <Text style = {{ fontSize : 18, ...typography.bold, paddingVertical : 8 }}>
                                 Account
                             </Text>
                             <TouchableOpacity onPress = { _ => navigation.navigate('Username')}>
-                                <View style = {styles.options}>
+                                <View style = {settingStyles.options}>
                                     <Icon name = 'account' type = 'material-community' size = {25}/>
-                                    <Text style = {styles.optionsText}>username</Text>
+                                    <Text style = {settingStyles.optionsText}>username</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = { _ => navigation.navigate('Password')}>
-                                <View style = {styles.options}>
+                                <View style = {settingStyles.options}>
                                     <Icon name = 'lock' size = {25}/>
-                                    <Text style = {styles.optionsText}>password</Text>
+                                    <Text style = {settingStyles.optionsText}>password</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = { _ => navigation.navigate('Vehicle')}>
-                                <View style = {styles.options}>
+                                <View style = {settingStyles.options}>
                                     <Icon name = 'ios-car' type = 'ionicon' size = {25}/>
-                                    <Text style = {styles.optionsText}>vehicle</Text>
+                                    <Text style = {settingStyles.optionsText}>vehicle</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = { _ => navigation.navigate('Wallet')}>
-                                <View style = {styles.options}>
+                                <View style = {settingStyles.options}>
                                     <Icon name = 'account-balance-wallet' size = {25}/>
-                                    <Text style = {styles.optionsText}>wallet</Text>
+                                    <Text style = {settingStyles.optionsText}>wallet</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = { _ => navigation.navigate('History')}>
-                                <View style = {styles.options}>
+                                <View style = {settingStyles.options}>
                                     <Icon name = 'history' size = {25}/>
-                                    <Text style = {styles.optionsText}>history</Text>
+                                    <Text style = {settingStyles.optionsText}>history</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View style = {styles.subSetting}>
+                        <View style = {settingStyles.subSetting}>
                             <Text style = {{ fontSize : 18, ...typography.bold, paddingVertical : 8 }}>
                                 Info
                             </Text>
                             <TouchableOpacity>
-                                <View style = {styles.options}>
+                                <View style = {settingStyles.options}>
                                     <Icon name = 'help' size = {25}/>
-                                    <Text style = {styles.optionsText}>Help</Text>
+                                    <Text style = {settingStyles.optionsText}>Help</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity>
-                                <View style = {styles.options}>
+                                <View style = {settingStyles.options}>
                                     <Icon name = 'info' size = {25}/>
-                                    <Text style = {styles.optionsText}>About</Text>
+                                    <Text style = {settingStyles.optionsText}>About</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <TouchableWithoutFeedback>
-                        <View style = {styles.logOutButtonContainer}>
-                            <View style = {styles.logOutButton}>
+                    <TouchableWithoutFeedback onPress = { _ => this.props.LogOut()}>
+                        <View style = {settingStyles.logOutButtonContainer}>
+                            <View style = {settingStyles.logOutButton}>
                                 <Text style = {{
                                     fontSize : 20,
                                     ...typography.semiBold,
@@ -126,68 +154,12 @@ class Setting extends React.Component {
     }
 }
 
-const styles = StyleSheet.create ({
-    container : {
-        flex : 1,
-        backgroundColor : colors.neutrals.gray10
-    },
-    title : {
-        fontSize : 28,
-        ...typography.bold,
-        width : '100%',
-        paddingHorizontal : 20,
-        paddingVertical : 15,
-        // backgroundColor : 'pink'
-    },
-    accountContainer : {
-        // flex : 1,
-        width : '100%',
-        paddingHorizontal : 25,
-        paddingVertical : 15,
-        // backgroundColor : 'yellow',
-        flexDirection : 'row',
-        alignItems : 'center'
-    },
-    settings : {
-        // flex : 1,
-        paddingHorizontal : 30,
-        // paddingVertical : 0,
-        // backgroundColor : 'green'
-    },
-    subSetting : {
-        // backgroundColor : 'red',
-        marginVertical : 15
-    },
-    options : {
-        flexDirection : 'row',
-        alignItems : 'center',
-        // backgroundColor : 'yellow',
-        borderBottomWidth : 0.5,
-        borderBottomColor : colors.neutrals.gray150,
-        paddingVertical : 10
-    },
-    optionsText : {
-        flex : 1,
-        paddingLeft : 8,
-        fontSize : 16,
-        textTransform : 'capitalize',
-        ...typography.regular
-    },
-    logOutButtonContainer : {
-        height : 100,
-        justifyContent : 'center',
-        // backgroundColor : 'yellow',
-    },
-    logOutButton : {
-        paddingVertical : 8,
-        backgroundColor : colors.main.flatRed,
-        flexDirection : 'row',
-        marginHorizontal : '20%',
-        borderRadius : 50,
-        alignItems : 'center',
-        justifyContent : 'center',
-        ...container.depth(2)
+const mapStore = ({ user, wallet }) => {
+    return {
+        account : user.account,
+        profile : user.profile,
+        wallet : wallet.data
     }
-})
+}
 
-export default Setting
+export default connect(mapStore, { LogOut })(Setting)

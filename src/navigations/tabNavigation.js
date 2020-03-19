@@ -28,12 +28,12 @@ const TabNavigation = () => {
                 }
             }}
             screenOptions = {({ route }) => ({
-                tabBarVisible : ['qr-scanner', 'setting-navigation'].includes(route.name) ? false : true,
+                tabBarVisible : ['Qr-Scanner', 'Setting-Navigation'].includes(route.name) ? false : true,
                 tabBarIcon : ({ focused }) => {
-                    if (route.name === 'feed-navigation') {
+                    if (route.name === 'Feed-Navigation') {
                         return focused ? <HomeIcon height = {25} fill = {colors.main.flatRed}/> 
                         : <HomeIconOutline height = {25} fill = {'black'}/>
-                    } else if (route.name === 'qr-scanner') {
+                    } else if (route.name === 'Qr-Scanner') {
                         return <QrIcon/>
                     } else {
                         return focused ? <Menu height = {25} width = {25} fill = {colors.main.flatRed}/>
@@ -42,9 +42,9 @@ const TabNavigation = () => {
                 }
             })}
             >
-            <Tabs.Screen name = 'feed-navigation' component = {FeedNavigation}/>
-            <Tabs.Screen name = 'qr-scanner' component = {QrScanner}/>
-            <Tabs.Screen name = 'setting-navigation' component = {SettingNavigation}/>
+            <Tabs.Screen name = 'Feed-Navigation' component = {FeedNavigation}/>
+            <Tabs.Screen name = 'Qr-Scanner' component = {QrScanner}/>
+            <Tabs.Screen name = 'Setting-Navigation' component = {SettingNavigation}/>
         </Tabs.Navigator>
     )
 }

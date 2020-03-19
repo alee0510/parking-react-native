@@ -44,6 +44,7 @@ export const LogIn = (body) => {
 export const LogOut = () => {
     return async (dispatch) => {
         try {
+            console.log('log out')
             await AsyncStorage.clear()
             dispatch({ type : LOG_OUT })
         } catch (err) {

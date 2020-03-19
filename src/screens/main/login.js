@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { StackActions } from '@react-navigation/native'
 import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import { Icon, Input, Button } from 'react-native-elements'
 
@@ -22,7 +23,7 @@ class Login extends React.Component {
     componentDidUpdate () {
         // redirect to home if user login success.
         if (this.props.account) {
-            this.props.navigation.navigate('Home', {screen : 'Feed'})
+            this.props.navigation.navigate('Home')
         }
     }
 
