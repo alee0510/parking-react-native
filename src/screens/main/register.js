@@ -97,7 +97,7 @@ class Register extends React.Component {
                             containerStyle = {styles.button}
                             buttonStyle = {styles.buttonStyle}
                             titleStyle = {{ fontSize : 20, ...typography.bold}}
-                            onPress = { _ => navigation.navigate('add-vehicle')}
+                            onPress = { _ => navigation.navigate('Add-Vehicle')}
                         />
                     </View>
                 </ScrollView>

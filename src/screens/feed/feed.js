@@ -90,7 +90,7 @@ class Feed extends React.Component {
                         </View>
                     )}
                     rightComponent={() => (
-                        <TouchableOpacity onPress = { _ => this.props.navigation.navigate('notification')}>
+                        <TouchableOpacity onPress = { _ => this.props.navigation.navigate('Notification')}>
                             <View style = {{ height : '100%', ...container.center}}>
                                 <Icon name = 'notifications' size = {37} color = {colors.main.flatRed}/>
                             </View>
@@ -114,7 +114,7 @@ class Feed extends React.Component {
                         Features
                     </Text>
                     <View style = {styles.menu}>
-                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('map')} >
+                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Map')} >
                             <View style = {styles.menuIcon}>
                                 <Icon name = 'map-marker' 
                                     type = 'material-community'
@@ -132,7 +132,7 @@ class Feed extends React.Component {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback  onPress = { _ => navigation.navigate('setting-navigation', { screen : 'wallet'})}>
+                        <TouchableWithoutFeedback  onPress = { _ => navigation.navigate('setting-navigation', { screen : 'Wallet'})}>
                             <View style = {styles.menuIcon}>
                                 <Icon name = 'wallet' 
                                     type = 'entypo'
@@ -141,7 +141,7 @@ class Feed extends React.Component {
                                 />
                             </View>
                         </TouchableWithoutFeedback >
-                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('setting-navigation', { screen : 'vehicle'})} >
+                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('setting-navigation', { screen : 'Vehicle'})} >
                             <View style = {styles.menuIcon}>
                                 <Icon name = 'ios-car' 
                                     type = 'ionicon'

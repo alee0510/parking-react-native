@@ -17,15 +17,15 @@ const SettingNavigation = () => {
     return (
         <Stack.Navigator 
             headerMode = 'none' 
-            initialRouteName = 'setting'
+            initialRouteName = 'Setting'
         >
-            <Stack.Screen name = 'setting' component = {Setting} />
-            <Stack.Screen name = 'profile' component = {Profile} />
-            <Stack.Screen name = 'username' component = {Username} />
-            <Stack.Screen name = 'password' component = {Password} />
-            <Stack.Screen name = 'vehicle' component = {Vehicle} />
-            <Stack.Screen name = 'wallet' component = {Wallet} />
-            <Stack.Screen name = 'history' component = {History}/>
+            <Stack.Screen name = 'Setting' component = {Setting} />
+            <Stack.Screen name = 'Profile' component = {Profile} />
+            <Stack.Screen name = 'Username' component = {Username} />
+            <Stack.Screen name = 'Password' component = {Password} />
+            <Stack.Screen name = 'Vehicle' component = {Vehicle} />
+            <Stack.Screen name = 'Wallet' component = {Wallet} />
+            <Stack.Screen name = 'History' component = {History}/>
         </Stack.Navigator>
     )
 }

@@ -15,14 +15,14 @@ const FeedNavigation = ({navigation, route}) => {
     return (
         <Stack.Navigator 
             headerMode = 'none' 
-            initialRouteName = 'feed'
+            initialRouteName = 'Feed'
             screenOptions = {({ route }) => ({
                 tabBarVisible : false
             })}
         >
-            <Stack.Screen name = 'feed' component = {Feed}/>
-            <Stack.Screen name = 'notification' component = {Notification}/>
-            <Stack.Screen name = 'map' component = {Map}/>
+            <Stack.Screen name = 'Feed' component = {Feed}/>
+            <Stack.Screen name = 'Notification' component = {Notification}/>
+            <Stack.Screen name = 'Map' component = {Map}/>
         </Stack.Navigator>
     )
 }

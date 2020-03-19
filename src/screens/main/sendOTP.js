@@ -43,7 +43,7 @@ class SendOTP extends React.Component {
                         We will send you One Time Password via SMS message. 
                         Carrier rates may apply.
                     </Text>
-                    <TouchableWithoutFeedback onPress = { _ => navigation.navigate('verify-otp')}>
+                    <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Verify-OTP')}>
                         <View style = {styles.buttonNext}>
                             <Icon name = 'navigate-next' size = {25} color = {colors.main.white}/>
                         </View>

@@ -81,7 +81,7 @@ class AddVehicle extends React.Component {
                         containerStyle = {styles.button}
                         buttonStyle = {styles.buttonStyle}
                         titleStyle = {{ fontSize : 20, ...typography.bold}}
-                        onPress = { _ => navigation.navigate('sent-otp')}
+                        onPress = { _ => navigation.navigate('Sent-OTP')}
                     />
                 </View>
             </View>

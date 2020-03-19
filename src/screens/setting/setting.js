@@ -50,35 +50,35 @@ class Setting extends React.Component {
                             <Text style = {{ fontSize : 18, ...typography.bold, paddingVertical : 8 }}>
                                 Account
                             </Text>
-                            <TouchableOpacity onPress = { _ => navigation.navigate('username')}>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('Username')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'account' type = 'material-community' size = {25}/>
                                     <Text style = {styles.optionsText}>username</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = { _ => navigation.navigate('password')}>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('Password')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'lock' size = {25}/>
                                     <Text style = {styles.optionsText}>password</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = { _ => navigation.navigate('vehicle')}>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('Vehicle')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'ios-car' type = 'ionicon' size = {25}/>
                                     <Text style = {styles.optionsText}>vehicle</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = { _ => navigation.navigate('wallet')}>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('Wallet')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'account-balance-wallet' size = {25}/>
                                     <Text style = {styles.optionsText}>wallet</Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = { _ => navigation.navigate('history')}>
+                            <TouchableOpacity onPress = { _ => navigation.navigate('History')}>
                                 <View style = {styles.options}>
                                     <Icon name = 'history' size = {25}/>
                                     <Text style = {styles.optionsText}>history</Text>
@@ -109,7 +109,6 @@ class Setting extends React.Component {
                     <TouchableWithoutFeedback>
                         <View style = {styles.logOutButtonContainer}>
                             <View style = {styles.logOutButton}>
-                                {/* <Icon name = 'exit-to-app' size = {30} color = {colors.main.white}/> */}
                                 <Text style = {{
                                     fontSize : 20,
                                     ...typography.semiBold,
