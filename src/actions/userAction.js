@@ -12,6 +12,8 @@ import {
     CHECK_LOGIN_END,
     GET_PROFILE,
     GET_ACCOUNT,
+    EDIT_PASSWORD_ERROR,
+    EDIT_PASSWORD_SUCCESS,
 } from '../helpers/actionTypes'
 
 export const LogIn = (body) => {
@@ -113,4 +115,28 @@ export const editUsername = (username) => {
             console.log(err.response ? err.response.data : err)
         }
     }
+}
+
+export const editPassword = (body) => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type : USER_START })
+            // get id
+            const id = await AsyncStorage.getItem('id')
+            console.log('get user id : ', id)
+
+            // do request
+            console.log('request edit password')
+            console.log(body)
+            const res = await Axios.patch(API_URL_MOBILE + `/account/edit/password/${id}`, body)
+            console.log(res.data)
+
+            dispatch({ type : EDIT_PASSWORD_SUCCESS })
+            dispatch({ type : USER_END })
+        } catch (err) {
+            dispatch({ type : EDIT_PASSWORD_ERROR, payload : err.response ? err.response.data : err })
+            dispatch({ type : USER_END })
+            console.log(err.response ? err.response.data : err)
+        }
+    } 
 }

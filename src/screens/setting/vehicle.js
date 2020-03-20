@@ -1,12 +1,14 @@
 import React from 'react'
-import { View, Text, StyleSheet, Picker } from 'react-native'
+import { connect } from 'react-redux'
+import { View, Picker } from 'react-native'
 import { Input } from 'react-native-elements'
+import { getVehicle } from '../../actions'
 
 // import component
 import Header from '../../components/header'
 
 // import styles
-import { typography } from '../../styles'
+import { vehicleStyles } from '../../styles/setting'
 
 class Vehicle extends React.Component {
     state = {
@@ -14,17 +16,22 @@ class Vehicle extends React.Component {
         type : 1
     }
 
+    componentDidMount () {
+        this.props.getVehicle()
+    }
+
     render () {
         const { iconEdit, type } = this.state
+        console.log('vehicle data : ', this.props.vehicle)
         return (
-            <View style = {styles.container}>
+            <View style = {vehicleStyles.container}>
                 <Header
-                    title = 'Vehilce'
+                    title = 'Vehicle'
                     edit = {iconEdit}
                     handleEdit = { _ => this.setState({ iconEdit : iconEdit ? 0 : 1 })}
                     handleBack = { _ => this.props.navigation.goBack()}
                 />
-                <View style = {styles.form}>
+                <View style = {vehicleStyles.form}>
                     <Picker
                         selectedValue={type}
                         style={{height: 50, width: 150}}
@@ -37,10 +44,10 @@ class Vehicle extends React.Component {
                         label = 'police no'
                         value = {'B 1346 BH'}
                         disabled = {false}
-                        containerStyle = {styles.inputContainer}
-                        labelStyle = {styles.label}
+                        containerStyle = {vehicleStyles.inputContainer}
+                        labelStyle = {vehicleStyles.label}
                     />
-                    <View style = {styles.brand}>
+                    <View style = {vehicleStyles.brand}>
                         <Picker
                             selectedValue={type}
                             style={{height: 50, width: '50%'}}
@@ -62,8 +69,8 @@ class Vehicle extends React.Component {
                         label = 'color'
                         value = {'none'}
                         disabled = {false}
-                        containerStyle = {styles.inputContainer}
-                        labelStyle = {styles.label}
+                        containerStyle = {vehicleStyles.inputContainer}
+                        labelStyle = {vehicleStyles.label}
                     />
                 </View>
             </View>
@@ -71,24 +78,16 @@ class Vehicle extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container : {
-        flex : 1
-    },
-    form : {
-        paddingHorizontal : 30,
-        marginTop : 20
-    },
-    inputContainer : {
-        marginVertical : 10
-    },
-    label : {
-        ...typography.semiBold, 
-        color : 'black'
-    },
-    brand : {
-        flexDirection : 'row'
+const mapStore = ({ vehicle }) => {
+    return {
+        vehicle : vehicle.data
     }
-}) 
+}
 
-export default Vehicle
+const mapDispatch = () => {
+    return {
+        getVehicle
+    }
+}
+
+export default connect(mapStore, mapDispatch())(Vehicle)

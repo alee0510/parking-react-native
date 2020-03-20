@@ -9,6 +9,8 @@ import {
     CHECK_LOGIN, 
     CHECK_LOGIN_START,
     CHECK_LOGIN_END,
+    EDIT_PASSWORD_ERROR,
+    EDIT_PASSWORD_SUCCESS,
 } from "../helpers/actionTypes"
 
 const INITIAL_STATE = {
@@ -39,6 +41,10 @@ export const userReducer = ( state = INITIAL_STATE, action ) => {
             return { ...state, account : action.payload }
         case LOG_IN_ERROR :
             return { ...INITIAL_STATE, error : action.payload, loading : false }
+        case EDIT_PASSWORD_ERROR :
+            return { ...state, error : action.payload }
+        case EDIT_PASSWORD_SUCCESS :
+            return { ...state, error : ''}
         case LOG_OUT :
             return INITIAL_STATE
         default : return state

@@ -12,6 +12,11 @@ export const CHECK_LOGIN_START = 'CHECK_LOGIN_START'
 export const CHECK_LOGIN_END = 'CHECK_LOGIN_END'
 export const GET_PROFILE = 'GET_PROFILE'
 export const GET_ACCOUNT = 'GET_ACCOUNT'
+export const EDIT_PASSWORD_ERROR = 'EDIT_PASSWORD_ERROR'
+export const EDIT_PASSWORD_SUCCESS = 'EDIT_PASSWORD_SUCCESS'
 
 // wallet
 export const GET_SALDO = 'GET_SALDO'
+
+// vehicle
+export const GET_VEHICLE = 'GET_VEHICLE'

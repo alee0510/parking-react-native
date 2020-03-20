@@ -1,101 +1,106 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { Button, Icon, Input } from 'react-native-elements'
+import { View, Alert } from 'react-native'
+import { connect } from 'react-redux'
+import { Icon, Input } from 'react-native-elements'
+import { editPassword } from '../../actions'
 
 // import component
 import Header from '../../components/header'
 
 // import style
-import { colors, typography, container } from '../../styles'
+import { passwordStyles } from '../../styles/setting'
 
-const Password = ({ navigation }) => {
-    const [edit, setEdit] = React.useState(0)
-    const [visible, setVisible] = React.useState(false)
+class Password extends React.Component {
+    state = {
+        visible : false,
+        oldPassword : '',
+        newPassword : '',
+        confirmPassword : ''
+    }
 
-    return (
-        <View style = {styles.container}>
-            <Header
-                title = 'Password'
-                edit = {edit}
-                handleEdit = { _ => setEdit(edit ? 0 : 1)}
-                handleBack = { _ => navigation.goBack()}
-            />
-            <View style = {styles.input}>
-                <Input
-                    label = 'old password'
-                    // value = {'alee0510'}
-                    disabled = {false}
-                    containerStyle = {styles.inputContainer}
-                    leftIconContainerStyle = {{paddingRight : 10}}
-                    labelStyle = {styles.label}
-                    secureTextEntry = {!visible}
-                    placeholder = 'input your password'
-                    leftIcon={
-                        <Icon 
-                            name = {visible ? 'visibility' : 'visibility-off'}
-                            onPress = { _ => setVisible(!visible)}
-                        />
-                    }
+    onButtonCheck = () => {
+        if (this.state.oldPassword === '') return null
+        if (this.state.newPassword !== this.state.confirmPassword) {
+            return Alert.alert('password doesn\'t match.')
+        }
+        this.props.editPassword({
+            oldPassword : this.state.oldPassword,
+            newPassword : this.state.newPassword
+        })
+    }
+
+    render () {
+        const { visible, oldPassword, newPassword, confirmPassword } = this.state
+        const { navigation } = this.props
+        console.log('error : ', this.props.error)
+        return (
+            <View style = {passwordStyles.container}>
+                <Header
+                    title = 'Password'
+                    edit = {1}
+                    handleEdit = {this.onButtonCheck}
+                    loading = {this.props.loading}
+                    handleBack = { _ => navigation.goBack()}
                 />
-                <Input
-                    label = 'new password'
-                    // value = {''}
-                    disabled = {false}
-                    containerStyle = {styles.inputContainer}
-                    leftIconContainerStyle = {{paddingRight : 10}}
-                    labelStyle = {styles.label}
-                    secureTextEntry = {!visible}
-                    leftIcon={
-                        <Icon 
-                            name = {visible ? 'visibility' : 'visibility-off'}
-                            onPress = { _ => setVisible(!visible)}
-                        />
-                    }
-                />
-                <Input
-                    label = 'confirm new password'
-                    // value = {''}
-                    disabled = {false}
-                    containerStyle = {styles.inputContainer}
-                    leftIconContainerStyle = {{paddingRight : 10}}
-                    labelStyle = {styles.label}
-                    secureTextEntry = {!visible}
-                    leftIcon={
-                        <Icon 
-                            name = {visible ? 'visibility' : 'visibility-off'}
-                            onPress = { _ => setVisible(!visible)}
-                        />
-                    }
-                />
+                <View style = {passwordStyles.input}>
+                    <Input
+                        label = 'old password'
+                        value = {oldPassword}
+                        containerStyle = {passwordStyles.inputContainer}
+                        leftIconContainerStyle = {passwordStyles.iconContainer}
+                        labelStyle = {passwordStyles.label}
+                        secureTextEntry = {!visible}
+                        onChangeText = {value => this.setState({ oldPassword : value })}
+                        leftIcon={
+                            <Icon 
+                                name = {visible ? 'visibility' : 'visibility-off'}
+                                onPress = { _ => this.setState({ visible : !visible})}
+                            />
+                        }
+                    />
+                    <Input
+                        label = 'new password'
+                        value = {newPassword}
+                        containerStyle = {passwordStyles.inputContainer}
+                        leftIconContainerStyle = {passwordStyles.iconContainer}
+                        labelStyle = {passwordStyles.label}
+                        secureTextEntry = {!visible}
+                        onChangeText = {value => this.setState({ newPassword : value })}
+                        leftIcon={
+                            <Icon 
+                                name = {visible ? 'visibility' : 'visibility-off'}
+                                onPress = { _ => this.setState({ visible : !visible})}
+                            />
+                        }
+                    />
+                    <Input
+                        label = 'confirm new password'
+                        value = {confirmPassword}
+                        containerStyle = {passwordStyles.inputContainer}
+                        leftIconContainerStyle = {passwordStyles.iconContainer}
+                        labelStyle = {passwordStyles.label}
+                        secureTextEntry = {!visible}
+                        errorMessage = {this.props.error}
+                        errorStyle = {{marginVertical : 10}}
+                        onChangeText = {value => this.setState({ confirmPassword : value })}
+                        leftIcon={
+                            <Icon 
+                                name = {visible ? 'visibility' : 'visibility-off'}
+                                onPress = { _ => this.setState({ visible : !visible})}
+                            />
+                        }
+                    />
+                </View>
             </View>
-        </View>
-    )
+        )
+    }
 }
 
-const styles = StyleSheet.create({
-    container : {
-        flex : 1,
-        backgroundColor : colors.neutrals.gray10
-    },
-    headerTitle : {
-        flexDirection : 'row',
-        paddingHorizontal : 20,
-        paddingVertical : 15,
-        backgroundColor : colors.main.white,
-        alignItems : 'center',
-        ...container.depth(5)
-    },
-    input : {
-        paddingHorizontal : 30,
-        marginTop : 20
-    },
-    inputContainer : {
-        marginVertical : 10
-    },
-    label : {
-        ...typography.semiBold, 
-        color : 'black'
+const mapStore = ({ user }) => {
+    return {
+        error : user.error,
+        loading : user.loading
     }
-})
+}
 
-export default Password
+export default connect(mapStore, { editPassword })(Password)
