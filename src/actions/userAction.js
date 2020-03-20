@@ -11,6 +11,10 @@ import {
     CHECK_LOGIN_START,
     CHECK_LOGIN_END,
     GET_PROFILE,
+    INIT_EDIT_PROFILE,
+    INPUT_EDIT_PROFILE,
+    EDIT_PROFILE_START,
+    EDIT_PROFILE_END,
 } from '../helpers/actionTypes'
 
 export const LogIn = (body) => {
@@ -70,6 +74,7 @@ export const CheckLogin = () => {
     }
 }
 
+// PROFILE
 export const getProfile = (id) => {
     return async (dispatch) => {
         try {
@@ -81,5 +86,42 @@ export const getProfile = (id) => {
         } catch (err) {
             console.log(err.response ? err.response.data : err)
         }
+    }
+}
+
+export const editProfile = (body) => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type : EDIT_PROFILE_START })
+            console.log('request edit profile')
+            console.log('request body : ', body)
+            const id = await AsyncStorage.getItem('id')
+            console.log('user id : ', id)
+            delete body.edit
+            await Axios.patch(API_URL_MOBILE + `/profile/edit/${id}`, body)
+
+            // do refresh data
+            console.log('do refresh data')
+            const { data } = await Axios.get(API_URL_MOBILE + `/profile/${id}`)
+            console.log('new profile : ', data)
+
+            dispatch({ type : GET_PROFILE, payload : data })
+            dispatch({ type : EDIT_PROFILE_END })
+        } catch (err) {
+            dispatch({ type : EDIT_PROFILE_END })
+            console.log(err.response ? err.response.data : err)
+        }
+    }
+}
+export const initEditProfile = (data) => {
+    return {
+        type : INIT_EDIT_PROFILE,
+        payload : data
+    }
+}
+export const inputEditProfile = (key, value) => {
+    return {
+        type : INPUT_EDIT_PROFILE,
+        payload : { key, value }
     }
 }

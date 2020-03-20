@@ -13,10 +13,12 @@ export const CHECK_LOGIN = 'STAY_LOGIN'
 export const CHECK_LOGIN_START = 'CHECK_LOGIN_START'
 export const CHECK_LOGIN_END = 'CHECK_LOGIN_END'
 
-export const REGISTER_ERROR = 'REGISTER_ERROR'
-
 // get profile and account
 export const GET_PROFILE = 'GET_PROFILE'
+export const INIT_EDIT_PROFILE = 'INIT_EDIT_PROFILE'
+export const INPUT_EDIT_PROFILE = 'INPUT_EDIT_PROFILE'
+export const EDIT_PROFILE_START = 'EDIT_PROFILE_START'
+export const EDIT_PROFILE_END = 'EDIT_PROFILE_END'
 
 // wallet
 export const GET_SALDO = 'GET_SALDO'

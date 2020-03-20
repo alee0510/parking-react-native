@@ -8,6 +8,10 @@ import {
     CHECK_LOGIN, 
     CHECK_LOGIN_START,
     CHECK_LOGIN_END,
+    INIT_EDIT_PROFILE,
+    INPUT_EDIT_PROFILE,
+    EDIT_PROFILE_START,
+    EDIT_PROFILE_END
 } from "../helpers/actionTypes"
 
 const INITIAL_STATE = {
@@ -15,7 +19,16 @@ const INITIAL_STATE = {
     profile : null,
     error : '',
     loading : false,
-    check : false 
+    check : false,
+    edit : false 
+}
+
+const INITIAL_EDIT_PROFILE = {
+    edit : false,
+    name : '',
+    birthdate : '',
+    phone : '',
+    address : ''
 }
 
 export const userReducer = ( state = INITIAL_STATE, action ) => {
@@ -38,6 +51,20 @@ export const userReducer = ( state = INITIAL_STATE, action ) => {
             return { ...INITIAL_STATE, error : action.payload, loading : false }
         case LOG_OUT :
             return INITIAL_STATE
+        default : return state
+    }
+}
+
+export const editProfileReducer = (state = INITIAL_EDIT_PROFILE, action) => {
+    switch(action.type) {
+        case INIT_EDIT_PROFILE :
+            return { ...state, ...action.payload }
+        case INPUT_EDIT_PROFILE :
+            return { ...state, [action.payload.key] : action.payload.value }
+        case EDIT_PROFILE_START :
+            return { ...state, edit : true }
+        case EDIT_PROFILE_END :
+            return INITIAL_EDIT_PROFILE
         default : return state
     }
 }

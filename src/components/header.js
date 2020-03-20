@@ -42,7 +42,7 @@ const Header = (props) => {
                 buttonStyle = {{
                     backgroundColor : 'transparent'
                 }}
-                loading = {props.loading}
+                // loading = {true}
                 onPress = {props.handleEdit}
             />
         </View>
