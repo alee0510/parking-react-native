@@ -4,7 +4,7 @@ import { View, Text , TouchableOpacity, ScrollView } from 'react-native'
 import { Icon, Avatar, Input } from 'react-native-elements'
 import DatePicker from 'react-native-datepicker'
 import { URL } from '../../helpers/API_URL'
-import { initEditProfile, inputEditProfile, editProfile } from '../../actions'
+import { editProfile } from '../../actions'
 
 // import component
 import Header from '../../components/header'
@@ -19,42 +19,41 @@ class Profile extends React.Component {
         inputDisable : true,
     }
 
-    onButtonEdit = () => {
-        // init edit profile
-        console.log('init edit profile')
-        this.props.initEditProfile(this.props.profile)
+    // onButtonEdit = () => {
+    //     // init edit profile
+    //     console.log('init edit profile')
+    //     this.props.initEditProfile(this.props.profile)
 
-        // change state
-        console.log('change state')
-        const { editIcon, inputDisable } = this.state
-        this.setState({ editIcon : editIcon ? 0 : 1, inputDisable : !inputDisable },
-            _ => {
-                if (this.state.inputDisable) {
-                    console.log('do edit profile')
-                    this.props.editProfile(this.props.tempProfile)
-                }
-            })
-    }
+    //     // change state
+    //     console.log('change state')
+    //     const { editIcon, inputDisable } = this.state
+    //     this.setState({ editIcon : editIcon ? 0 : 1, inputDisable : !inputDisable },
+    //         _ => {
+    //             if (this.state.inputDisable) {
+    //                 console.log('do edit profile')
+    //                 this.props.editProfile(this.props.tempProfile)
+    //             }
+    //         })
+    // }
 
-    onButtonBack = () => {
-        const { editIcon } = this.state
-        this.setState({ editIcon : editIcon ? 0 : 1, inputDisable : true })
-    }
+    // onButtonBack = () => {
+    //     const { editIcon } = this.state
+    //     this.setState({ editIcon : editIcon ? 0 : 1, inputDisable : true })
+    // }
 
-    onDatePicked = (date) => {
-        const { editIcon } = this.state
-        console.log('picked date : ', date)
+    // onDatePicked = (date) => {
+    //     const { editIcon } = this.state
+    //     console.log('picked date : ', date)
 
-        // check edit condition
-        if (!editIcon) return null
-        this.props.inputEditProfile('birthdate', date.split('T')[0])
-    }
+    //     // check edit condition
+    //     if (!editIcon) return null
+    //     this.props.inputEditProfile('birthdate', date.split('T')[0])
+    // }
 
     render () {
         const { editIcon, inputDisable } = this.state
-        const { profile, tempProfile } = this.props
-        console.log('profile', profile)
-        console.log('edit profile', tempProfile)
+        const { profile  } = this.props
+
         return (
             <View style = {profileStyles.container}>
                 <Header
@@ -65,7 +64,7 @@ class Profile extends React.Component {
                     loading = {this.props.loading}
                 />
                 <ScrollView>
-                    <View style = {profileStyles.imageContainer}>
+                    {/* <View style = {profileStyles.imageContainer}>
                         <View style = {profileStyles.avatar}>
                             {
                                 profile ?
@@ -156,25 +155,21 @@ class Profile extends React.Component {
                             disabled = {inputDisable}
                             onChangeText = { value => this.props.inputEditProfile('address', value) }
                         />
-                    </View>
+                    </View> */}
                 </ScrollView>
             </View>
         )
     }
 }
 
-const mapStore = ({ user, tempProfile }) => {
+const mapStore = ({ user }) => {
     return {
-        profile : user.profile,
-        loading : tempProfile.edit,
-        tempProfile : tempProfile
+        profile : user.profile
     }
 }
 
 const mapDispatch = () => {
     return {
-        initEditProfile,
-        inputEditProfile,
         editProfile
     }
 }

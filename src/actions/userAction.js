@@ -32,6 +32,7 @@ export const LogIn = (body) => {
             console.log('id', data['id'])
             await AsyncStorage.setItem('id', data['id'].toString())
             await AsyncStorage.setItem('token', headers['auth-token'])
+            
             dispatch({ type : USER_END })
         } catch (err) {
             dispatch({type : USER_END})
@@ -98,7 +99,8 @@ export const editUsername = (username) => {
 
             // do request
             console.log('request edit username')
-            await Axios.patch(API_URL_MOBILE + `/account/edit/username/${id}`, {username})
+            const res = await Axios.patch(API_URL_MOBILE + `/account/edit/username/${id}`, {username})
+            console.log(res.data)
 
             // refresh data
             const { data } = await Axios.get(API_URL_MOBILE + `/account/${id}`)

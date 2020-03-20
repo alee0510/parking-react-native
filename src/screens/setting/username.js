@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
 import { Input } from 'react-native-elements'
+import { editUsername } from '../../actions'
 
 // import component
 import Header from '../../components/header'
@@ -12,25 +13,57 @@ import { usernameStyles } from '../../styles/setting'
 class Username extends React.Component {
     state = {
         iconEdit : 0,
+        disableInput : true,
         username : ''
     }
 
+    onButtonEdit = () => {
+        const { iconEdit, disableInput } = this.state
+        // initialize edit
+        if (!iconEdit) {
+            return this.setState({
+                username : this.props.username,
+                iconEdit : 1,
+                disableInput : false
+            })
+        }
+        this.setState({
+            iconEdit : 0,
+            disableInput : true
+        },
+        _ => {
+            console.log(this.state.username)
+            console.log('do request edit username')
+            this.props.editUsername(this.state.username)
+        }
+        )
+
+    }
+
+    onButtonCancel = () => {
+        this.setState({
+            iconEdit : 0,
+            disableInput : true
+        })
+    }
+
     render () {
-        const { iconEdit } = this.state
+        const { iconEdit, disableInput, username } = this.state
         const { navigation } = this.props
         return (
             <View style = {usernameStyles.container}>
                 <Header
                     title = 'Username'
                     edit = { iconEdit }
-                    handleEdit = {}
-                    handleBack = { _ => iconEdit ? this.setState({ iconEdit : iconEdit ? 0 : 1 }) : navigation.goBack()}
+                    handleEdit = {this.onButtonEdit}
+                    handleBack = { _ => iconEdit ? this.onButtonCancel() : navigation.goBack()}
+                    loading = {this.props.loading}
                 />
                 <View style = {usernameStyles.input}>
                     <Input
-                        label = 'username'
+                        label = 'Username'
                         value = { iconEdit ? username : this.props.username }
-                        disabled = {false}
+                        disabled = {disableInput}
                         containerStyle = {usernameStyles.inputContainer}
                         labelStyle = {usernameStyles.label}
                         onChangeText = { value => this.setState({ username : value })}
@@ -47,4 +80,4 @@ const mapStore = ({ user }) => {
     }
 }
 
-export default connect(mapStore)(Username)
+export default connect(mapStore, { editUsername })(Username)
