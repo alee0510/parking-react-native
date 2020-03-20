@@ -9,35 +9,42 @@ import Header from '../../components/header'
 // import style
 import { usernameStyles } from '../../styles/setting'
 
-const Username = ({ navigation }) => {
-    const [edit, setEdit] = React.useState(0)
-    return (
-        <View style = {usernameStyles.container}>
-            <Header
-                title = 'Username'
-                edit = {edit}
-                handleEdit = { _ => setEdit(edit ? 0 : 1)}
-                handleBack = { _ => navigation.goBack()}
-            />
-            <View style = {usernameStyles.input}>
-                <Input
-                    label = 'username'
-                    value = {'alee0510'}
-                    disabled = {false}
-                    containerStyle = {usernameStyles.inputContainer}
-                    labelStyle = {usernameStyles.label}
-                />
-            </View>
-        </View>
-    )
-}
+class Username extends React.Component {
+    state = {
+        iconEdit : 0,
+        username : ''
+    }
 
-const mapStore = ({ user }) => {
-    return {
-        username : user.account.username
+    render () {
+        const { iconEdit } = this.state
+        const { navigation } = this.props
+        return (
+            <View style = {usernameStyles.container}>
+                <Header
+                    title = 'Username'
+                    edit = { iconEdit }
+                    handleEdit = {}
+                    handleBack = { _ => iconEdit ? this.setState({ iconEdit : iconEdit ? 0 : 1 }) : navigation.goBack()}
+                />
+                <View style = {usernameStyles.input}>
+                    <Input
+                        label = 'username'
+                        value = { iconEdit ? username : this.props.username }
+                        disabled = {false}
+                        containerStyle = {usernameStyles.inputContainer}
+                        labelStyle = {usernameStyles.label}
+                        onChangeText = { value => this.setState({ username : value })}
+                    />
+                </View>
+            </View>
+        )
     }
 }
-
-
+const mapStore = ({ user }) => {
+    return {
+        username : user.account.username,
+        loading : user.loading
+    }
+}
 
 export default connect(mapStore)(Username)

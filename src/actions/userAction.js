@@ -2,19 +2,16 @@ import Axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
 import { API_URL, API_URL_MOBILE } from '../helpers/API_URL'
 import { 
-    LOG_IN_START,
-    LOG_IN_END,
     LOG_IN,
     LOG_IN_ERROR, 
+    USER_START,
+    USER_END,
     LOG_OUT,
     CHECK_LOGIN,
     CHECK_LOGIN_START,
     CHECK_LOGIN_END,
     GET_PROFILE,
-    INIT_EDIT_PROFILE,
-    INPUT_EDIT_PROFILE,
-    EDIT_PROFILE_START,
-    EDIT_PROFILE_END,
+    GET_ACCOUNT,
 } from '../helpers/actionTypes'
 
 export const LogIn = (body) => {
@@ -22,7 +19,7 @@ export const LogIn = (body) => {
         try {
             console.log('do request login')
             console.log('body', body)
-            dispatch({ type : LOG_IN_START })
+            dispatch({ type : USER_START })
 
             // ruequest login
             const { data, headers } = await Axios.post(API_URL + '/user/login', body)
@@ -35,8 +32,9 @@ export const LogIn = (body) => {
             console.log('id', data['id'])
             await AsyncStorage.setItem('id', data['id'].toString())
             await AsyncStorage.setItem('token', headers['auth-token'])
-            dispatch({ type : LOG_IN_END })
+            dispatch({ type : USER_END })
         } catch (err) {
+            dispatch({type : USER_END})
             dispatch({ 
                 type : LOG_IN_ERROR, 
                 payload : err.response ? err.response.data : err
@@ -89,40 +87,28 @@ export const getProfile = (id) => {
     }
 }
 
-export const editProfile = (body) => {
+// ACCOUNT
+export const editUsername = (username) => {
     return async (dispatch) => {
         try {
-            dispatch({ type : EDIT_PROFILE_START })
-            console.log('request edit profile')
-            console.log('request body : ', body)
+            dispatch({ type : USER_START })
+            // get id
             const id = await AsyncStorage.getItem('id')
-            console.log('user id : ', id)
-            delete body.edit
-            await Axios.patch(API_URL_MOBILE + `/profile/edit/${id}`, body)
+            console.log('get user id : ', id)
 
-            // do refresh data
-            console.log('do refresh data')
-            const { data } = await Axios.get(API_URL_MOBILE + `/profile/${id}`)
-            console.log('new profile : ', data)
+            // do request
+            console.log('request edit username')
+            await Axios.patch(API_URL_MOBILE + `/account/edit/username/${id}`, {username})
 
-            dispatch({ type : GET_PROFILE, payload : data })
-            dispatch({ type : EDIT_PROFILE_END })
+            // refresh data
+            const { data } = await Axios.get(API_URL_MOBILE + `/account/${id}`)
+            console.log('account : ', data)
+
+            dispatch({ type : GET_ACCOUNT, payload : data })
+            dispatch({ type : USER_END })
         } catch (err) {
-            dispatch({ type : EDIT_PROFILE_END })
+            dispatch({ type : USER_END })
             console.log(err.response ? err.response.data : err)
         }
-    }
-}
-export const initEditProfile = (data) => {
-    return {
-        type : INIT_EDIT_PROFILE,
-        payload : data
-    }
-}
-
-export const inputEditProfile = (key, value) => {
-    return {
-        type : INPUT_EDIT_PROFILE,
-        payload : { key, value }
     }
 }
