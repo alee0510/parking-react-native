@@ -19,14 +19,14 @@ class Map extends React.Component {
 
     requestLocationPermission = async () => {
         try {
+            console.log('request get location')
             var response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
             console.log('request status : ', response)
             if (response === 'granted') {
                 this.getCurrentLocation()
             }
-
         } catch (error) {
-            console.log(error)
+            console.log('error : ', error)
         }
 
     }
@@ -35,7 +35,7 @@ class Map extends React.Component {
         Geolocation.getCurrentPosition(
             // if succes :
             position => {
-                console.log(JSON.stringify(position))
+                console.log('position : ', JSON.stringify(position))
                 const initialPosition = {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
@@ -47,16 +47,17 @@ class Map extends React.Component {
             // if error
             error => Alert.alert(error.message),
             // options
-            { enableHighAccuracy : true, timeout : 10000, maximumAge : 1000 }
+            // { enableHighAccuracy : true }
         )
     }
 
     render () {
         const { initialPosition } = this.state
         const { navigation } = this.props
+        // console.log(initialPosition)
         return (
             <View style = {styles.container}>
-                <MapView
+                {/* <MapView
                     // remove if not using Google Maps
                     provider = {PROVIDER_GOOGLE} 
                     style = {styles.map}
@@ -80,7 +81,7 @@ class Map extends React.Component {
                         <View style = {styles.back}>
                             <Icon name = 'arrow-back' size = {25} color = 'black'/>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback> */}
             </View>
         )
     }

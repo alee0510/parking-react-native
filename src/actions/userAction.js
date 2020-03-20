@@ -28,7 +28,8 @@ export const LogIn = (body) => {
 
             console.log('set local storage')
             // set local storage
-            await AsyncStorage.setItem('id', data.id.toString())
+            console.log('id', data['id'])
+            await AsyncStorage.setItem('id', data['id'].toString())
             await AsyncStorage.setItem('token', headers['auth-token'])
             dispatch({ type : LOG_IN_END })
         } catch (err) {
@@ -42,15 +43,7 @@ export const LogIn = (body) => {
 }
 
 export const LogOut = () => {
-    return async (dispatch) => {
-        try {
-            console.log('log out')
-            await AsyncStorage.clear()
-            dispatch({ type : LOG_OUT })
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    return { type : LOG_OUT }
 }
 
 export const CheckLogin = () => {

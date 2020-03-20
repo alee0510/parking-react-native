@@ -7,8 +7,11 @@ import { Icon, Input, Button } from 'react-native-elements'
 // import custom icon
 import Logo from '../../assets/parking_app.svg'
 
+// import component
+import SplashScreen from '../../components/splashScreen'
+
 // import action
-import { LogIn } from '../../actions'
+import { LogIn, CheckLogin } from '../../actions'
 
 // import styles
 import { typography } from '../../styles'
@@ -20,10 +23,16 @@ class Login extends React.Component {
         username : '',
         password : ''
     }
+
+    componentDidMount () {
+        // check login
+        this.props.CheckLogin()
+    }
+
     componentDidUpdate () {
         // redirect to home if user login success.
         if (this.props.account) {
-            this.props.navigation.dispatch(StackActions.replace('Home'))
+            this.props.navigation.navigate('Home')
         }
     }
 
@@ -38,6 +47,11 @@ class Login extends React.Component {
     render () {
         const { visible, username, password } = this.state
         const { navigation } = this.props
+
+        // display splash screen
+        if (this.props.check) {
+            return <SplashScreen/>
+        }
 
         return (
             <View style = {loginStyles.container}>
@@ -106,8 +120,16 @@ const mapStore = ({ user }) => {
     return {
         error : user.error,
         account : user.account,
-        loading : user.loading
+        loading : user.loading,
+        check : user.check
     }
 }
 
-export default connect(mapStore, { LogIn })(Login)
+const mapDispatch = () => {
+    return {
+        LogIn,
+        CheckLogin
+    }
+}
+
+export default connect(mapStore, mapDispatch())(Login)

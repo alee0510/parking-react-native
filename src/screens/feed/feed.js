@@ -29,10 +29,11 @@ import Medal from '../../assets/medal.svg'
 
 class Feed extends React.Component {
     async componentDidMount () {
-        const userId = await AsyncStorage.getItem('id')
+        const id = this.props.account ? this.props.account.id : 0
+        console.log('user id : ', id)
         this.props.getNews()
-        this.props.getProfile(userId)
-        this.props.getSaldo(userId)
+        this.props.getProfile(id)
+        this.props.getSaldo(id)
     }
 
     hanldeNews = (url) => {
@@ -144,7 +145,7 @@ class Feed extends React.Component {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback  onPress = { _ => navigation.navigate('setting-navigation', { screen : 'Wallet'})}>
+                        <TouchableWithoutFeedback  onPress = { _ => navigation.navigate('Setting-Navigation', { screen : 'Wallet'})}>
                             <View style = {feedStyles.menuIcon}>
                                 <Icon name = 'wallet' 
                                     type = 'entypo'
@@ -153,7 +154,7 @@ class Feed extends React.Component {
                                 />
                             </View>
                         </TouchableWithoutFeedback >
-                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('setting-navigation', { screen : 'Vehicle'})} >
+                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Setting-Navigation', { screen : 'Vehicle'})} >
                             <View style = {feedStyles.menuIcon}>
                                 <Icon name = 'ios-car' 
                                     type = 'ionicon'

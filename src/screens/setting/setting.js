@@ -11,25 +11,20 @@ import { settingStyles } from '../../styles/setting'
 
 // import actions
 import { LogOut } from '../../actions'
+import AsyncStorage from '@react-native-community/async-storage'
 
 class Setting extends React.Component {
-    // componentDidUpdate () {
-    //     if (!this.props.account) {
-    //         const resetAction = CommonActions.reset({
-    //             index: 0,
-    //             routes: [
-    //                 { name: 'Login' }
-    //             ]
-    //         })
-    //         this.props.navigation.dispatch(resetAction)
-    //     }
-    // }
+    onButtonLogOut = async () => {
+        await AsyncStorage.clear()
+        if (!await AsyncStorage.getItem('token')) {
+            this.props.LogOut()
+            console.log('no token => log out')
+            this.props.navigation.dispatch(CommonActions.reset({
+                index : 0,
+                routes : [{ name : 'Login'}]
+            }))
 
-    onButtonLogOut = () => {
-        this.props.navigation.dispatch(CommonActions.reset({
-            index : 0,
-            routes : [{ name : 'Login'}]
-        }))
+        }
     }
 
     render () {
