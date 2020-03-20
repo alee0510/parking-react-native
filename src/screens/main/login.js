@@ -23,7 +23,7 @@ class Login extends React.Component {
     componentDidUpdate () {
         // redirect to home if user login success.
         if (this.props.account) {
-            this.props.navigation.navigate('Home')
+            this.props.navigation.dispatch(StackActions.replace('Home'))
         }
     }
 

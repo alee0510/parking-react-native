@@ -13,16 +13,23 @@ import { settingStyles } from '../../styles/setting'
 import { LogOut } from '../../actions'
 
 class Setting extends React.Component {
-    componentDidUpdate () {
-        if (!this.props.account) {
-            const resetAction = CommonActions.reset({
-                index: 0,
-                routes: [
-                    { name: 'Login' }
-                ]
-            })
-            this.props.navigation.dispatch(resetAction)
-        }
+    // componentDidUpdate () {
+    //     if (!this.props.account) {
+    //         const resetAction = CommonActions.reset({
+    //             index: 0,
+    //             routes: [
+    //                 { name: 'Login' }
+    //             ]
+    //         })
+    //         this.props.navigation.dispatch(resetAction)
+    //     }
+    // }
+
+    onButtonLogOut = () => {
+        this.props.navigation.dispatch(CommonActions.reset({
+            index : 0,
+            routes : [{ name : 'Login'}]
+        }))
     }
 
     render () {
@@ -67,7 +74,7 @@ class Setting extends React.Component {
                             </Text>
                             <Text>{profile ? profile.phone : '+620011112222'}</Text>
                         </View>
-                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('profile')}>
+                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Profile')}>
                             <View>
                                 <Icon name = 'edit'/>
                             </View>
@@ -134,7 +141,7 @@ class Setting extends React.Component {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <TouchableWithoutFeedback onPress = { _ => this.props.LogOut()}>
+                    <TouchableWithoutFeedback onPress = {this.onButtonLogOut}>
                         <View style = {settingStyles.logOutButtonContainer}>
                             <View style = {settingStyles.logOutButton}>
                                 <Text style = {{

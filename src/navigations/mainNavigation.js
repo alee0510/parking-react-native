@@ -48,13 +48,14 @@ class MainNavigation extends React.Component {
         return (
             <Stack.Navigator headerMode = 'none' initialRouteName = 'Login'>
                 {
-                    token == null ? (
+                    this.props.account == null ? (
                         <>
                         <Stack.Screen name = 'Login' component = {Login}/>
                         <Stack.Screen name = 'Register' component = {Register}/>
                         <Stack.Screen name = 'Add-Vehicle' component = {AddVehicle}/>
                         <Stack.Screen name = 'Sent-OTP' component = {SendOTP}/>
                         <Stack.Screen name = 'Verify-OTP' component = {VerifyOTP}/>
+                        <Stack.Screen name = 'Home' component = {TabNavigation}/>
                         </>
                     ) : (
                         <Stack.Screen name = 'Home' component = {TabNavigation}/>
