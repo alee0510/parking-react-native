@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
 import { Button } from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 
@@ -33,18 +33,23 @@ const Header = (props) => {
             >
                 {props.title}
             </Text>
-            <Button
-                icon={{
-                    name: props.edit ? 'check' : 'edit',
-                    size: 30,
-                    color: props.fontColor || 'black'
-                }}
-                buttonStyle = {{
-                    backgroundColor : 'transparent'
-                }}
-                // loading = {true}
-                onPress = {props.handleEdit}
-            />
+            <View style = {{ height : 50, width : 60, ...container.center}}>
+                {
+                    props.loading ? <ActivityIndicator color = {colors.main.flatRed} size = 'large'/>
+                    :
+                    <Button
+                        icon={{
+                            name: props.edit ? 'check' : 'edit',
+                            size: 30,
+                            color: props.fontColor || 'black'
+                        }}
+                        buttonStyle = {{
+                            backgroundColor : 'transparent'
+                        }}
+                        onPress = {props.handleEdit}
+                    />
+                }
+            </View>
         </View>
     )
 }
