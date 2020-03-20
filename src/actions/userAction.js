@@ -119,6 +119,7 @@ export const initEditProfile = (data) => {
         payload : data
     }
 }
+
 export const inputEditProfile = (key, value) => {
     return {
         type : INPUT_EDIT_PROFILE,
