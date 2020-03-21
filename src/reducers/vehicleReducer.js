@@ -1,9 +1,22 @@
-import { GET_VEHICLE, GET_CAR_BRAND, GET_CAR_TYPE, GET_MOTOR_BRAND, GET_MOTOR_TYPE, GET_VEHICLE_ERROR } from '../helpers/actionTypes'
+import { 
+    GET_VEHICLE, 
+    GET_CAR_BRAND, 
+    GET_CAR_TYPE, 
+    GET_MOTOR_BRAND, 
+    GET_MOTOR_TYPE, 
+    GET_VEHICLE_ERROR, 
+    EDIT_VEHICLE_START, 
+    EDIT_VEHICLE_END 
+} from '../helpers/actionTypes'
 
-export const vehicleReducer = (state = { data : [] }, action) => {
+export const vehicleReducer = (state = { data : [], loading : false }, action) => {
     switch(action.type) {
         case GET_VEHICLE :
             return { data : action.payload }
+        case EDIT_VEHICLE_START : 
+            return {...state, loading : true }
+        case EDIT_VEHICLE_END :
+            return {...state, loading : false }
         default : return state
     }
 }

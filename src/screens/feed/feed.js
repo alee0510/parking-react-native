@@ -30,7 +30,7 @@ class Feed extends React.Component {
     async componentDidMount () {
         const id = this.props.account ? this.props.account.id : 0
         console.log('user id : ', id)
-        this.props.getNews()
+        // this.props.getNews()
         this.props.getProfile(id)
         this.props.getSaldo(id)
         this.props.getVehicle(id)
@@ -173,9 +173,9 @@ class Feed extends React.Component {
                     <Text style = {{ fontSize : 24, ...typography.bold, marginVertical : 15}}>
                         Stories
                     </Text>
-                    <View style = {feedStyles.news}>
+                    {/* <View style = {feedStyles.news}>
                         {this.renderNews()}
-                    </View>
+                    </View> */}
                 </ScrollView>
             </View>
         )

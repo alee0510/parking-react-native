@@ -6,7 +6,8 @@ import {
     getCarBrand, 
     getMotorBrand, 
     getCarTypeById, 
-    getMotorTypeById 
+    getMotorTypeById,
+    editVehicle 
 } from '../../actions'
 
 // import component
@@ -21,7 +22,7 @@ class Vehicle extends React.Component {
         disableInput : true,
         type : 1,
         police_no : '',
-        vehicle_type : null,
+        vehicle_type : 1,
         brand_id : null,
         type_id : null,
         color : ''
@@ -29,65 +30,140 @@ class Vehicle extends React.Component {
 
     componentDidMount () {
         const type = this.props.vehicle.vehicle_type
+        this.props.getCarBrand()
+        this.props.getMotorBrand()
         if (type == 1) {
-            this.props.getCarBrand()
             this.props.getCarTypeById(type)
             return
         }
-        this.props.getMotorBrand()
         this.props.getMotorTypeById(type)
     }
 
     onButtonEdit = () => {
+        const { iconEdit } = this.state
+        const { vehicle } = this.props
+        // initialize edit
+        if(!iconEdit) {
+            return this.setState({
+                iconEdit : 1,
+                disableInput : false,
+                type : vehicle.vehicle_type,
+                police_no : vehicle.police_no,
+                brand_id : vehicle.brand_id,
+                type_id : vehicle.type_id,
+                color : vehicle.color
+            })
+        }
+        this.setState({
+            iconEdit : 0,
+            disableInput : true
+        },
+        _ => {
+            console.log('do request edit vehicle')
+            this.props.editVehicle({
+                vehicle_type : this.state.vehicle_type,
+                police_no : this.state.police_no,
+                color : this.state.color,
+                brand_id : this.state.brand_id,
+                type_id : this.state.type_id
+            })
+        }
+        )
         
     }
 
-    renderBrand = () => {
-        this.props.carBrand.map(({id, brand}) => {
-            return <Picker.Item key = {id} label = {brand} value = {id}/>
+    onButtonCancel = () => {
+        this.setState({
+            iconEdit : 0,
+            disableInput : true,
+            type : 1,
+            police_no : '',
+            vehicle_type : null,
+            brand_id : null,
+            type_id : null,
+            color : ''
         })
+    }
+
+    onVehicleChange = (id) => {
+        const { vehicle_type, brand_id } = this.state
+        // if id same
+        if (vehicle_type === id) return null
+
+        // change state
+        console.log('change state')
+        this.setState({ vehicle_type : id })
+        if (vehicle_type === 1) {
+            return this.props.getCarTypeById(brand_id)
+        } 
+        this.props.getMotorTypeById(id)
+    }
+
+    onChangeBrand = (id) => {
+        const { vehicle_type } = this.state
+
+        // change state
+        this.setState({ brand_id : id })
+        console.log('change brand')
+        if(vehicle_type === 1) {
+            return this.props.getCarTypeById(id)
+        }
+        this.props.getMotorTypeById(id)
+    }
+
+    renderBrand = () => {
+        const { vehicle_type } = this.state
+        const { carBrand, motorBrand } = this.props
+        return (vehicle_type === 1 ? carBrand : motorBrand).map(({id, brand}) => (
+            <Picker.Item key = {id} label = {brand} value = {id}/>
+        ))
     }
 
     renderType = () => {
-        this.props.carType.map(({id, name}) => {
-            return <Picker.Item key = {id} label = {name} value = {id}/>
-        })
+        const { vehicle_type } = this.state
+        const { carType, motorType } = this.props
+        return (vehicle_type === 1 ? carType : motorType).map(({id, name}) => (
+            <Picker.Item key = {id} label = {name} value = {id}/>
+        ))
     }
 
     render () {
-        const { iconEdit, disableInput } = this.state
+        const { iconEdit, disableInput, police_no, vehicle_type, brand_id, type_id, color } = this.state
         const { vehicle, navigation } = this.props
         console.log('vehicle data : ', this.props.vehicle)
+        console.log('motor brand : ', this.props.motorBrand)
 
         return (
             <View style = {vehicleStyles.container}>
                 <Header
                     title = 'Vehicle'
                     edit = {iconEdit}
-                    handleEdit = { _ => this.setState({ iconEdit : iconEdit ? 0 : 1 })}
-                    handleBack = { _ => navigation.goBack()}
+                    handleEdit = {this.onButtonEdit}
+                    handleBack = { _ => iconEdit ? this.onButtonCancel()  : navigation.goBack()}
+                    loading = {this.props.loading}
                     />
                 <View style = {vehicleStyles.form}>
                     <Picker
-                        selectedValue={vehicle.vehicle_type}
+                        selectedValue={iconEdit ? vehicle_type : vehicle.vehicle_type}
                         style={{height: 50, width: 150}}
                         onValueChange = { value => this.setState({ type : value })}
                         mode = 'dropdown'
                         enabled = {!disableInput}
+                        onValueChange = { value => this.onVehicleChange(value)}
                     >
-                        <Picker.Item label="Car" value={1}/>
-                        <Picker.Item label="Motorcycle" value={2}/>
+                        <Picker.Item label = "Car" value = {1}/>
+                        <Picker.Item label = "Motorcycle" value = {2}/>
                     </Picker>
                     <Input
                         label = 'Police No'
-                        value = {vehicle.police_no}
+                        value = {iconEdit ? police_no : vehicle.police_no}
                         disabled = {disableInput}
                         containerStyle = {vehicleStyles.inputContainer}
                         labelStyle = {vehicleStyles.label}
                     />
                     <Input
                         label = 'Color'
-                        value = {vehicle.color || 'none'}
+                        value = {iconEdit ? color : vehicle.color}
                         disabled = {disableInput}
                         containerStyle = {vehicleStyles.inputContainer}
                         labelStyle = {vehicleStyles.label}
@@ -96,21 +172,31 @@ class Vehicle extends React.Component {
                         <View style = {vehicleStyles.picker}>
                             <Text style = {vehicleStyles.pickerTitle}>Brand</Text>
                             <Picker
-                                selectedValue = {vehicle.brand_id}
+                                selectedValue = {iconEdit ? brand_id : vehicle.brand_id}
                                 style = {{height: 50, width: '50%'}}
                                 enabled = {!disableInput}
+                                onValueChange = { value => this.onChangeBrand(value)}
                             >
-                                <Picker.Item label = {vehicle.brand} value = {vehicle.brand_id}/>
+                                {
+                                    iconEdit ? this.renderBrand()
+                                    :
+                                    <Picker.Item label = {vehicle.brand} value = {vehicle.brand_id}/>
+                                }
                             </Picker>
                         </View>
                         <View style = {vehicleStyles.picker}>
                             <Text style = {vehicleStyles.pickerTitle}>Type</Text>
                             <Picker
-                                selectedValue = {vehicle.type_id}
+                                selectedValue = {iconEdit ? type_id : vehicle.type_id}
                                 style = {{height: 50, width: '50%'}}
                                 enabled = {!disableInput}
+                                onValueChange = { value => this.setState({ type_id : value })}
                             >
-                                <Picker.Item label = {vehicle.type} value={vehicle.type_id}/>
+                                {
+                                    iconEdit ? this.renderType()
+                                    :
+                                    <Picker.Item label = {vehicle.type} value={vehicle.type_id}/>
+                                }
                             </Picker>
                         </View>
                     </View>
@@ -123,10 +209,11 @@ class Vehicle extends React.Component {
 const mapStore = ({ vehicle, vehicleData }) => {
     return {
         vehicle : vehicle.data,
+        loading : vehicle.loading,
         carBrand : vehicleData.carBrand,
         motorBrand : vehicleData.motorBrand,
         carType : vehicleData.carType,
-        motorType : vehicle.motorType
+        motorType : vehicleData.motorType,
     }
 }
 
@@ -135,7 +222,8 @@ const mapDispatch = () => {
         getCarBrand,
         getCarTypeById,
         getMotorBrand,
-        getMotorTypeById
+        getMotorTypeById,
+        editVehicle
     }
 }
 
