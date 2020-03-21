@@ -1,7 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { CommonActions } from '@react-navigation/native'
-import { View, Text, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { 
+    View, 
+    Text, 
+    TouchableOpacity, 
+    ScrollView, 
+    TouchableWithoutFeedback 
+} from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
 import { URL } from '../../helpers/API_URL'
 
@@ -52,19 +58,22 @@ class Setting extends React.Component {
                             : null
 
                         }
-                        <View style ={settingStyles.profileContainer}>
+                        <TouchableOpacity 
+                            style ={settingStyles.profileContainer}
+                            onPress = { _ => navigation.navigate('Profile')}
+                        >
                             <Text 
                                 style = {settingStyles.profileName}
                             >
                                 {profile ? profile.name : 'full name'}
                             </Text>
                             <Text>{profile ? profile.phone : '+620011112222'}</Text>
-                        </View>
-                        <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Profile')}>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress = { _ => navigation.navigate('Profile')}>
                             <View>
                                 <Icon name = 'edit'/>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     </View>
                     <View style = {settingStyles.settings}>
                         <View style = {settingStyles.subSetting}>

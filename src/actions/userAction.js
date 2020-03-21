@@ -167,3 +167,31 @@ export const editProfile = (body) => {
         }
     } 
 }
+
+export const uploadImage = (file) => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type : USER_START })
+            // get id
+            const id = await AsyncStorage.getItem('id')
+            console.log('get user id : ', id)
+
+            // create form data
+            const body = new FormData()
+            body.append('IMG', file)
+
+            // do request upload
+            console.log('request upload')
+            const response = await Axios.patch(API_URL_MOBILE + `/profile/upload/${id}`, body, {
+                headers : {'Content-Type': `multipart/form-data`}
+            })
+            console.log(response.data)
+
+            // do request
+            dispatch({ type : USER_END })
+        } catch (err) {
+            dispatch({ type : USER_END })
+            console.log(err.response ? err.response.data : err)
+        }
+    } 
+}

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { 
     View, 
     Text, 
-    TouchableWithoutFeedback, 
     ScrollView, 
     TouchableOpacity,
     RefreshControl 
@@ -65,11 +64,11 @@ class History extends React.Component {
                 {/* HEADER */}
                 <View style = {historyStyles.header}
                 >
-                    <TouchableWithoutFeedback onPress = { _ => this.props.navigation.goBack()}>
+                    <TouchableOpacity onPress = { _ => this.props.navigation.goBack()}>
                         <View>
                             <Icon name = 'arrow-back' size = {30} color = {'black'}/>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                     <Text 
                         style = {historyStyles.headerTitle}
                     >

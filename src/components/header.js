@@ -1,5 +1,10 @@
 import React from 'react'
-import { View, Text, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
+import { 
+    View, 
+    Text,
+    ActivityIndicator,
+    TouchableOpacity
+} from 'react-native'
 import { Button } from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 
@@ -17,11 +22,11 @@ const Header = (props) => {
             ...container.depth(5)
         }}
         >
-            <TouchableWithoutFeedback onPress = {props.handleBack}>
+            <TouchableOpacity onPress = {props.handleBack}>
                 <View>
                     <Icon name = 'arrow-back' size = {30} color = { props.fontColor || 'black'}/>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
             <Text 
                 style = {{
                     ...typography.bold, 

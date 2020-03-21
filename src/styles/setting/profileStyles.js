@@ -20,7 +20,13 @@ export const profileStyles = StyleSheet.create({
         ...container.center,
         position : 'absolute',
         bottom : 0,
-        right : 0
+        right : 0,
+        zIndex : 5
+    },
+    buttonStyle : {
+        height : '100%', 
+        width : '100%', 
+        ...container.center
     },
     input : {
         paddingHorizontal : 30
@@ -31,5 +37,19 @@ export const profileStyles = StyleSheet.create({
     label : {
         ...typography.semiBold, 
         color : 'black'
+    },
+    overlayStyle : {
+        paddingVertical : 10, 
+        paddingHorizontal : 15
+    },
+    optionsContainer : {
+        flexDirection : 'row', 
+        alignItems : 'center', 
+        marginVertical : 10
+    },
+    optionsTitle : {
+        marginLeft : 10, 
+        fontSize : 16, 
+        ...typography.regular
     }
 })

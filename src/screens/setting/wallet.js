@@ -118,11 +118,11 @@ class Wallet extends React.Component {
                 <StatusBar backgroundColor = {colors.main.flatRed} barStyle = 'light-content'/>
                 <View style = {walletStyles.header}
                 >
-                    <TouchableWithoutFeedback onPress = { _ => this.props.navigation.goBack()}>
+                    <TouchableOpacity onPress = { _ => this.props.navigation.goBack()}>
                         <View>
                             <Icon name = 'arrow-back' size = {30} color = {'white'}/>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                     <Text 
                         style = {walletStyles.headerTitle}
                     >

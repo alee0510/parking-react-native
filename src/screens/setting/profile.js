@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { View, Text , TouchableOpacity, ScrollView } from 'react-native'
-import { Icon, Avatar, Input } from 'react-native-elements'
+import { Icon, Avatar, Input, Overlay, Button } from 'react-native-elements'
 import DatePicker from 'react-native-datepicker'
+import ImagePicker from 'react-native-image-crop-picker'
 import { URL } from '../../helpers/API_URL'
-import { editProfile } from '../../actions'
+import { editProfile, uploadImage } from '../../actions'
 
 // import component
 import Header from '../../components/header'
@@ -20,7 +21,8 @@ class Profile extends React.Component {
         name : '',
         birthdate : '',
         phone : '',
-        address : ''
+        address : '',
+        visible : false
     }
 
     onButtonEdit = () => {
@@ -72,9 +74,42 @@ class Profile extends React.Component {
         this.setState({ birthdate : date.split('T')[0]})
     }
 
+    onButtonCamera = () => {
+        console.log('edit profile')
+    }
+    onButtonOpenCamera = () => {
+        ImagePicker.openCamera({
+            width: 700,
+            height: 700,
+            cropping: true,
+            mediaType: 'photo'
+        }).then(image => {
+            console.log('image', image)
+            this.setState({ visible: false })
+            this.props.uploadImage(image)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    onButtonOpenGallery = () => {
+        ImagePicker.openPicker({
+            width: 700,
+            height: 700,
+            cropping: true,
+            mediaType: 'photo'
+        }).then(image => {
+            console.log('image', image)
+            this.setState({ visible: false })
+            this.props.uploadImage(image)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
     render () {
         // get variable
-        const { iconEdit, disableInput, name, birthdate, phone, address } = this.state
+        const { iconEdit, disableInput, name, birthdate, phone, address, visible } = this.state
         const { profile  } = this.props
 
         // date picker style
@@ -123,11 +158,13 @@ class Profile extends React.Component {
                                 />
                                 : null
                             }
-                            <TouchableOpacity>
-                                <View style = {profileStyles.cameraIcon}>
-                                    <Icon name = 'camera-alt' color = 'white'/>
-                                </View>
-                            </TouchableOpacity>
+                            <Button 
+                                icon = {{ name: "camera-alt", size: 20, color: "white"}}
+                                buttonStyle = {profileStyles.cameraIcon}
+                                iconContainerStyle = {profileStyles.buttonStyle}
+                                onPress = { _ => this.setState({visible : true})}
+                                // loading = {true}
+                            />
                         </View>
                     </View>
                     <View style = {profileStyles.input}>
@@ -183,6 +220,33 @@ class Profile extends React.Component {
                         /> 
                     </View>
                 </ScrollView>
+                <Overlay
+                    isVisible = {visible}
+                    height = {'auto'}
+                    onBackdropPress = { _ => this.setState({visible : false})}
+                    overlayStyle ={profileStyles.overlayStyle}
+                >
+                    <View>
+                        <TouchableOpacity
+                            style = {profileStyles.optionsContainer}
+                            onPress = {this.onButtonOpenCamera}
+                        >
+                            <Icon name = 'camera-alt' size = {30}/>
+                            <Text style ={profileStyles.optionsTitle}>
+                                Open camera
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style = {profileStyles.optionsContainer}
+                            onPress = {this.onButtonOpenGallery}
+                        >
+                            <Icon name = 'google-photos' type = 'material-community' size = {30}/>
+                            <Text style ={profileStyles.optionsTitle}>
+                                Select from gallery
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </Overlay>
             </View>
         )
     }
@@ -197,7 +261,8 @@ const mapStore = ({ user }) => {
 
 const mapDispatch = () => {
     return {
-        editProfile
+        editProfile,
+        uploadImage
     }
 }
 
