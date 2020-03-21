@@ -1,30 +1,108 @@
 import React from 'react'
-import { View, Text, StyleSheet, StatusBar, ScrollView, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
+import { 
+    View, 
+    Text, 
+    StatusBar, 
+    ScrollView, 
+    TouchableWithoutFeedback, 
+    TouchableOpacity 
+} from 'react-native'
 import { Icon } from 'react-native-elements'
+import FingerprintScanner from 'react-native-fingerprint-scanner'
+import { getHistoryTransaction, topUpSaldo } from '../../actions'
 
 // import component
 import TopUp from '../../components/topUp'
 
 // import styles
-import { colors, typography, container } from '../../styles'
+import { colors } from '../../styles'
+import { walletStyles } from '../../styles/setting'
+import { connect } from 'react-redux'
 
 class Wallet extends React.Component {
     state = {
-        show : false
+        show : false,
+        fingerprint : false,
+        amount : 0,
+        password : null
     }
+
+    async componentDidMount () {
+        this.props.getHistoryTransaction(this.props.account.id)
+        // fingerprint check
+        try {
+            const biometryType =  await FingerprintScanner.isSensorAvailable()
+            console.log(biometryType)
+            this.setState({ fingerprint : true })
+        } catch (err) {
+            console.log(err.message || err)
+        }
+    }
+
+    componentWillUnmount() {
+        FingerprintScanner.release();
+    }
+
+    onButtonNext = async () => {
+        try {
+            console.log('next')
+            const { fingerprint } = this.state
+            if (fingerprint) {
+                // authenticate using fingerprint
+                const response = await FingerprintScanner.authenticate({
+                    description : 'Pay with your fingerprint.'
+                })
+                console.log('response : ', response)
+                if (!response) throw new Error ('invalid fingerprint')
+            }
+            // do transaction
+            console.log('do transaction')
+            this.props.topUpSaldo(this.props.account.id, {
+                amount : this.state.amount,
+                password : this.state.password
+            })
+            
+            this.setState({ show : false })
+        } catch(err) {
+            console.log(err.message || err)
+            this.setState({ show : false })
+        }
+    }
+
+    renderHistory = () => {
+        const types = ['Top-Up', 'Pay Parking', 'Send Saldo', 'Admin Fee']
+        const statusTypes = ['Success', 'Pending', 'Failed']
+        return this.props.history.map(({date, type, amount, status}) => (
+            <TouchableOpacity style = {walletStyles.historyList}>
+                <View>
+                    <Text style ={walletStyles.historyListTitle}>
+                        {types[type-1]}
+                    </Text>
+                    <Text style = {walletStyles.historyListDate}>
+                        {date.split('T')[0]}
+                    </Text>
+                </View>
+                <View style = {walletStyles.historyListAmountBox}>
+                    <Text style = {walletStyles.historyListAmount}>
+                        {`${type == 1 ? '+' : '-'} ${amount}`}
+                    </Text>
+                    <Text style ={walletStyles.historyListStatus}>
+                        {statusTypes[status-1]}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        ))
+    }
+
     render () {
-        const { show } = this.state
+        const { show, fingerprint, amount, password } = this.state
+        // console.log('history : ', this.props.history)
+        // console.log('saldo : ', this.props.saldo)
+        // console.log('account : ', this.props.account)
         return (
-            <View style = {styles.container}>
+            <View style = {walletStyles.container}>
                 <StatusBar backgroundColor = {colors.main.flatRed} barStyle = 'light-content'/>
-                <View style = {{
-                    flexDirection : 'row',
-                    paddingHorizontal : 20,
-                    paddingVertical : 15,
-                    backgroundColor : colors.main.flatRed,
-                    alignItems : 'center',
-                    // ...container.depth(5)
-                }}
+                <View style = {walletStyles.header}
                 >
                     <TouchableWithoutFeedback onPress = { _ => this.props.navigation.goBack()}>
                         <View>
@@ -32,132 +110,64 @@ class Wallet extends React.Component {
                         </View>
                     </TouchableWithoutFeedback>
                     <Text 
-                        style = {{
-                            ...typography.bold, 
-                            fontSize : 28, 
-                            marginLeft : 10,
-                            flex : 1,
-                            color : colors.main.white
-                        }}
+                        style = {walletStyles.headerTitle}
                     >
                         Wallet
                     </Text>
                 </View>
-                <View style = {styles.content}>
-                    <View style = {styles.box}></View>
-                    <View style = {styles.saldoBox}>
-                        <Text style = {{fontSize : 42, ...typography.bold, color : colors.neutrals.gray130}}>
-                            IDR 1000
+                <View style = {walletStyles.content}>
+                    <View style = {walletStyles.box}></View>
+                    <View style = {walletStyles.saldoBox}>
+                        <Text style = {walletStyles.saldo}>
+                            {`IDR ${this.props.wallet.saldo || 0}`}
                         </Text>
                         <TouchableWithoutFeedback onPress = { _ => this.setState({show : true})}>
-                            <View style = {styles.plus}>
+                            <View style = {walletStyles.plus}>
                                 <Icon name = 'add' size = {35} color = 'white'/>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <View style = {styles.history}>
-                        <Text style ={{
-                            with : '100%', 
-                            padding : 5, 
-                            // backgroundColor : 'pink',
-                            fontSize : 20,
-                            ...typography.semiBold,
-                            textTransform : 'capitalize'
-                            }}
+                    <View style = {walletStyles.history}>
+                        <Text style ={walletStyles.subHeaderTitle}
                         >
                             history
                         </Text>
-                        <ScrollView style = {styles.historyContent}>
-                            <TouchableOpacity style = {styles.historyList}>
-                                <View>
-                                    <Text style ={{fontSize : 16, ...typography.semiBold}}>To Up</Text>
-                                    <Text style = {{fontSize : 12, ...typography.light}}>Friday, 15th Oct 2019</Text>
-                                </View>
-                                <Text style = {{ fontSize : 16, ...typography.semiBold}}>+5000</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {styles.historyList}>
-                                <View>
-                                    <Text style ={{fontSize : 16, ...typography.semiBold}}>To Up</Text>
-                                    <Text style = {{fontSize : 12, ...typography.light}}>Friday, 15th Oct 2019</Text>
-                                </View>
-                                <Text style = {{ fontSize : 16, ...typography.semiBold}}>+5000</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {styles.historyList}>
-                                <View>
-                                    <Text style ={{fontSize : 16, ...typography.semiBold}}>To Up</Text>
-                                    <Text style = {{fontSize : 12, ...typography.light}}>Friday, 15th Oct 2019</Text>
-                                </View>
-                                <Text style = {{ fontSize : 16, ...typography.semiBold}}>+5000</Text>
-                            </TouchableOpacity>
+                        <ScrollView style = {walletStyles.historyContent}>
+                            {this.renderHistory()}
                         </ScrollView>
                     </View>
                 </View>
-                <TopUp show = { show } onPress = { _ => this.setState({ show : false })}/>
+                <TopUp 
+                    show = { show } 
+                    onPress = { _ => this.onButtonNext()}
+                    amount = {amount}
+                    password = {password}
+                    onChangeAmount = { value => this.setState({ amount : value})}
+                    onChangePass = { value => this.setState({ password : value})}
+                    passwordInput = {!fingerprint}
+                    errorMessage = {this.props.error}
+                    loading = {this.props.loading}
+                />
             </View>
         )
     }
 }
 
-const styles = StyleSheet.create({
-    container : {
-        flex : 1,
-        position : 'relative'
-    },
-    content : {
-        flex : 1,
-        // backgroundColor : 'yellow',
-        alignItems : 'center'
-    },
-    box : {
-        width : '100%',
-        height : '15%',
-        backgroundColor : colors.main.flatRed
-    },
-    saldoBox : {
-        width : '80%',
-        height : 100,
-        backgroundColor : colors.main.white,
-        position : 'absolute',
-        top : '7%',
-        flexDirection : 'row',
-        alignItems : 'center',
-        justifyContent : 'space-between',
-        paddingHorizontal : 30,
-        borderRadius : 15,
-        ...container.depth(4)
-    },
-    history : {
-        width : '100%',
-        flex : 1,
-        // backgroundColor : 'tomato',
-        marginTop : '15%',
-        paddingHorizontal : 25,
-        paddingVertical : 10
-    },
-    historyContent : {
-        flex : 1,
-        marginTop : 10,
-        // backgroundColor : 'pink'
-        
-    },
-    historyList : {
-        width : '100%',
-        borderBottomWidth : 0.3,
-        borderBottomColor : colors.neutrals.gray220,
-        backgroundColor : colors.neutrals.gray10,
-        flexDirection : 'row',
-        alignItems : 'center',
-        justifyContent : 'space-between',
-        paddingHorizontal : 10,
-        paddingVertical : 5
-    },
-    plus : {
-        height : 40, width : 40,
-        borderRadius : 20,
-        backgroundColor : colors.main.flatRed,
-        ...container.depth(4),
-        ...container.center
+const mapStore = ({ user, wallet }) => {
+    return {
+        account : user.account,
+        wallet : wallet.data,
+        history : wallet.history,
+        loading : wallet.loading,
+        error : wallet.error
     }
-})
+}
 
-export default Wallet
+const mapDispatch = () => {
+    return {
+        getHistoryTransaction,
+        topUpSaldo
+    }
+}
+
+export default connect(mapStore, mapDispatch())(Wallet)

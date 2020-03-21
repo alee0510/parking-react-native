@@ -29,6 +29,10 @@ export const VERIFY_OTP_ERROR = 'VERIFY_OTP_ERROR'
 
 // wallet
 export const GET_SALDO = 'GET_SALDO'
+export const GET_HISTORY_TRANSATION = 'GET_HISTORY_TRANSATION'
+export const TOP_UP_START = 'TOP_UP_START'
+export const TOP_UP_END = 'TOP_UP_END'
+export const TOP_UP_ERROR = 'TOP_UP_ERROR'
 
 // vehicle
 export const GET_VEHICLE = 'GET_VEHICLE'
