@@ -1,11 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet, StatusBar, Vibration } from 'react-native'
+import { View, Text, StatusBar, Vibration } from 'react-native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 import VirtualKeyboard from 'react-native-virtual-keyboard'
 import LinearGradient from 'react-native-linear-gradient'
 
 // import styles
-import { colors, typography, container} from '../../styles'
+import { colors } from '../../styles'
 import { verifyStyles } from '../../styles/main'
 
 class VerifyOTP extends React.Component {
