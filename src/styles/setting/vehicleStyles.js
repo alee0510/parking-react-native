@@ -16,7 +16,13 @@ export const vehicleStyles = StyleSheet.create({
         ...typography.semiBold, 
         color : 'black'
     },
-    brand : {
-        flexDirection : 'row'
+    picker : {
+        flexDirection : 'column',
+        width : '100%',
+        paddingHorizontal : 10
+    },
+    pickerTitle : {
+        fontSize : 15,
+        ...typography.bold
     }
 })

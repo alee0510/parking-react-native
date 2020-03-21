@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import AsyncStorage from '@react-native-community/async-storage'
 import { 
     View, 
     Text, 
@@ -15,7 +14,7 @@ import { Header, Avatar, Icon } from 'react-native-elements'
 import { URL } from '../../helpers/API_URL'
 
 // import actions
-import { getNews, getProfile, getSaldo } from '../../actions'
+import { getNews, getProfile, getSaldo, getVehicle } from '../../actions'
 
 // import style
 import { colors, typography, container } from '../../styles'
@@ -34,6 +33,7 @@ class Feed extends React.Component {
         this.props.getNews()
         this.props.getProfile(id)
         this.props.getSaldo(id)
+        this.props.getVehicle(id)
     }
 
     hanldeNews = (url) => {
@@ -195,7 +195,8 @@ const mapDispatch = () => {
     return {
         getNews,
         getProfile,
-        getSaldo
+        getSaldo,
+        getVehicle
     }
 }
 

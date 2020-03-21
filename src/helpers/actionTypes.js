@@ -32,3 +32,9 @@ export const GET_SALDO = 'GET_SALDO'
 
 // vehicle
 export const GET_VEHICLE = 'GET_VEHICLE'
+export const GET_CAR_BRAND = 'GET_CAR_BRAND'
+export const GET_ALL_CAR_TYPE = 'GET_ALL_CAR_TYPE'
+export const GET_CAR_TYPE = 'GET_CAR_TYPE'
+export const GET_MOTOR_BRAND = 'GET_MOTOR_BRAND'
+export const GET_MOTOR_TYPE = 'GET_MOTOR_TYPE'
+export const GET_VEHICLE_ERROR = 'GET_VEHICLE_ERROR'
