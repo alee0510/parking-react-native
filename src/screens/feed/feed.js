@@ -78,7 +78,7 @@ class Feed extends React.Component {
                     leftComponent = {() => (
                         <View style = {feedStyles.headerLeft}>
                             {
-                                profile ? 
+                                profile ? profile.image ? 
                                 <Avatar
                                     rounded
                                     source = {{ uri : URL + '/' + profile.image}}
@@ -88,10 +88,11 @@ class Feed extends React.Component {
                                 :
                                 <Avatar 
                                     rounded 
-                                    title="A" 
+                                    title= {profile.name.split('')[0].toUpperCase()} 
                                     size = {60} 
                                     overlayContainerStyle = {{ backgroundColor : colors.main.flatRed}}
                                 />
+                                : null
                             }
                             <View style = {{ marginLeft : 10, height : '100%', width : 200, justifyContent : 'center'}}>
                                 <Text style = {{ fontSize : 24, ...typography.bold}}>

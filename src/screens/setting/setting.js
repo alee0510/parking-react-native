@@ -35,7 +35,7 @@ class Setting extends React.Component {
                 <ScrollView style = {{flex : 1}}>
                     <View style = {settingStyles.accountContainer}>
                         {
-                            profile ? 
+                            profile ? profile.image ?
                             <Avatar
                                 rounded
                                 size = {50}
@@ -46,9 +46,10 @@ class Setting extends React.Component {
                             <Avatar 
                                 rounded 
                                 size = {50} 
-                                title = 'A' 
+                                title = {profile.name.split('')[0].toUpperCase()} 
                                 overlayContainerStyle = {{ backgroundColor : colors.main.flatRed}}
                             />
+                            : null
 
                         }
                         <View 
