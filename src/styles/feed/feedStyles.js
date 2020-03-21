@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { container, colors } from '../index'
+import { container, colors, typography } from '../index'
 
 export const feedStyles = StyleSheet.create({
     container : {
@@ -10,6 +10,12 @@ export const feedStyles = StyleSheet.create({
         height : '100%',
         flexDirection : 'row',
         alignItems : 'center'
+    },
+    headerCenter : {
+        marginLeft : 10, 
+        height : '100%', 
+        width : 200, 
+        justifyContent : 'center'
     },
     card : {
         height : 300,
@@ -35,5 +41,15 @@ export const feedStyles = StyleSheet.create({
     },
     news : {
         width : '100%',
+    },
+    storiesTitle : {
+        fontSize : 24, 
+        ...typography.bold, 
+        marginVertical : 15
+    },
+    feturesTitle : {
+        fontSize : 24, 
+        ...typography.bold, 
+        marginTop : 20
     }
 })

@@ -5,11 +5,16 @@ import {
     StatusBar, 
     ScrollView, 
     TouchableWithoutFeedback, 
-    TouchableOpacity 
+    TouchableOpacity,
+    RefreshControl 
 } from 'react-native'
 import { Icon } from 'react-native-elements'
 import FingerprintScanner from 'react-native-fingerprint-scanner'
-import { getHistoryTransaction, topUpSaldo } from '../../actions'
+import { 
+    getHistoryTransaction, 
+    topUpSaldo, 
+    getSaldo 
+} from '../../actions'
 
 // import component
 import TopUp from '../../components/topUp'
@@ -24,7 +29,8 @@ class Wallet extends React.Component {
         show : false,
         fingerprint : false,
         amount : 0,
-        password : null
+        password : null,
+        refresh : false
     }
 
     async componentDidMount () {
@@ -69,6 +75,14 @@ class Wallet extends React.Component {
         }
     }
 
+    onRefresh = () => {
+        console.log('on refresh')
+        this.setState({refresh : true})
+        this.props.getHistoryTransaction(this.props.account.id)
+        this.props.getSaldo(this.props.account.id)
+        this.setState({refresh : false})
+    }
+
     renderHistory = () => {
         const types = ['Top-Up', 'Pay Parking', 'Send Saldo', 'Admin Fee']
         const statusTypes = ['Success', 'Pending', 'Failed']
@@ -95,7 +109,7 @@ class Wallet extends React.Component {
     }
 
     render () {
-        const { show, fingerprint, amount, password } = this.state
+        const { show, fingerprint, amount, password, refresh } = this.state
         // console.log('history : ', this.props.history)
         // console.log('saldo : ', this.props.saldo)
         // console.log('account : ', this.props.account)
@@ -132,7 +146,12 @@ class Wallet extends React.Component {
                         >
                             history
                         </Text>
-                        <ScrollView style = {walletStyles.historyContent}>
+                        <ScrollView 
+                            style = {walletStyles.historyContent}
+                            refreshControl = {
+                                <RefreshControl refreshing = {refresh} onRefresh = {this.onRefresh}/>
+                            }
+                        >
                             {this.renderHistory()}
                         </ScrollView>
                     </View>
@@ -166,7 +185,8 @@ const mapStore = ({ user, wallet }) => {
 const mapDispatch = () => {
     return {
         getHistoryTransaction,
-        topUpSaldo
+        topUpSaldo,
+        getSaldo
     }
 }
 

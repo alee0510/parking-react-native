@@ -8,7 +8,8 @@ import {
     TouchableWithoutFeedback,
     Image,
     Linking,
-    TouchableOpacity
+    TouchableOpacity,
+    RefreshControl
 } from 'react-native'
 import { Header, Avatar, Icon } from 'react-native-elements'
 import { URL } from '../../helpers/API_URL'
@@ -27,10 +28,14 @@ import FeedCard from '../../components/feedCard'
 import Medal from '../../assets/medal.svg'
 
 class Feed extends React.Component {
+    state = {
+        refresh : false
+    }
+
     async componentDidMount () {
         const id = this.props.account ? this.props.account.id : 0
         console.log('user id : ', id)
-        // this.props.getNews()
+        this.props.getNews()
         this.props.getProfile(id)
         this.props.getSaldo(id)
         this.props.getVehicle(id)
@@ -39,6 +44,14 @@ class Feed extends React.Component {
     hanldeNews = (url) => {
         Linking.openURL(url)
         .catch(err => console.log(err))
+    }
+
+    onRefresh = () => {
+        console.log('on refresh')
+        this.setState({ refresh : true })
+        this.props.getNews()
+        this.props.getSaldo(this.props.account.id)
+        this.setState({ refresh : false })
     }
 
     renderNews = () => {
@@ -70,6 +83,7 @@ class Feed extends React.Component {
     }
 
     render () {
+        const { refresh } = this.state
         const { navigation, profile, account, wallet } = this.props
         return (
             <View style = {feedStyles.container}>
@@ -94,7 +108,7 @@ class Feed extends React.Component {
                                 />
                                 : null
                             }
-                            <View style = {{ marginLeft : 10, height : '100%', width : 200, justifyContent : 'center'}}>
+                            <View style = {feedStyles.headerCenter}>
                                 <Text style = {{ fontSize : 24, ...typography.bold}}>
                                     Hello,
                                 </Text>
@@ -117,14 +131,16 @@ class Feed extends React.Component {
                         height : 100
                     }}
                 />
-                <ScrollView style = {{ 
-                    flex : 1, 
-                    paddingHorizontal : 15
-                }}>
+                <ScrollView 
+                    style = {{flex : 1, paddingHorizontal : 15}}
+                    refreshControl = {
+                        <RefreshControl refreshing = {refresh} onRefresh = {this.onRefresh}/>
+                    }
+                >
                     <View style = {feedStyles.card}>
                         <FeedCard saldo = {wallet ? wallet.saldo : 0} fullname = {profile ? profile.name : null}/>
                     </View>
-                    <Text style = {{ fontSize : 24, ...typography.bold, marginTop : 20}}>
+                    <Text style = {feedStyles.feturesTitle}>
                         Features
                     </Text>
                     <View style = {feedStyles.menu}>
@@ -170,12 +186,12 @@ class Feed extends React.Component {
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <Text style = {{ fontSize : 24, ...typography.bold, marginVertical : 15}}>
+                    <Text style = {feedStyles.storiesTitle}>
                         Stories
                     </Text>
-                    {/* <View style = {feedStyles.news}>
+                    <View style = {feedStyles.news}>
                         {this.renderNews()}
-                    </View> */}
+                    </View>
                 </ScrollView>
             </View>
         )
