@@ -1,34 +1,49 @@
 import React from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, ScrollView, TouchableWithoutFeedback, Alert } from 'react-native'
 import { Input, Button, Icon } from 'react-native-elements'
 
 // import styles
-import { typography, container, colors } from '../../styles'
+import { typography } from '../../styles'
+import { registerStyles } from '../../styles/main'
 
 class Register extends React.Component {
     state = {
-        visible : false
+        visible : false,
+        fullname : '',
+        username : '',
+        email : '',
+        password : '',
+        confirmPassword : ''
     }
+
+    onButtonRegister = () => {
+        const { fullname, username, email, password, confirmPassword } = this.state
+        if (password === '' & confirmPassword === '') return null
+        if (password !== confirmPassword) return Alert.alert('password doesn\'t match.')
+        
+    }
+
     render () {
-        const { visible } = this.state
+        const { visible, fullname, username, email, password, confirmPassword } = this.state
         const { navigation } = this.props
         return (
-            <View style = {styles.container}>
+            <View style = {registerStyles.container}>
                 <ScrollView style = {{paddingVertical : '10%', width : '85%'}}>
                     <View style = {{ width : '80%', marginVertical : 18, marginHorizontal : 10}}>
-                        <Text style = {styles.title}>
+                        <Text style = {registerStyles.title}>
                             Create your Parking Account
                         </Text>
                     </View>
-                    <View style = {styles.form}>
+                    <View style = {registerStyles.form}>
                         <Input
                             label = 'Full name'
-                            // value = {'alee0510'}
+                            value = {fullname}
                             disabled = {false}
-                            labelStyle = {styles.label}
-                            containerStyle = {styles.inputContainer}
-                            inputContainerStyle = {styles.inputContainerStyle}
-                            inputStyle = {styles.inputStyle}
+                            labelStyle = {registerStyles.label}
+                            containerStyle = {registerStyles.inputContainer}
+                            inputContainerStyle = {registerStyles.inputContainerStyle}
+                            inputStyle = {registerStyles.inputStyle}
+                            onChangeText = { value => this.setState({ fullname : value })}
                             leftIcon={
                                 <Icon name='face-profile' type = 'material-community'
                                 size={24} color='black'
@@ -37,32 +52,32 @@ class Register extends React.Component {
                         />
                         <Input
                             label = 'Username'
-                            // value = {'alee0510'}
+                            value = {username}
                             disabled = {false}
-                            labelStyle = {styles.label}
-                            containerStyle = {styles.inputContainer}
-                            inputContainerStyle = {styles.inputContainerStyle}
-                            inputStyle = {styles.inputStyle}
+                            labelStyle = {registerStyles.label}
+                            containerStyle = {registerStyles.inputContainer}
+                            inputContainerStyle = {registerStyles.inputContainerStyle}
+                            inputStyle = {registerStyles.inputStyle}
                             leftIcon={ <Icon name='account-circle' size={24} color='black'/> }
                         />
                         <Input
                             label = 'Email'
-                            // value = {'alee0510'}
+                            value = {email}
                             disabled = {false}
-                            labelStyle = {styles.label}
-                            containerStyle = {styles.inputContainer}
-                            inputContainerStyle = {styles.inputContainerStyle}
-                            inputStyle = {styles.inputStyle}
+                            labelStyle = {registerStyles.label}
+                            containerStyle = {registerStyles.inputContainer}
+                            inputContainerStyle = {registerStyles.inputContainerStyle}
+                            inputStyle = {registerStyles.inputStyle}
                             leftIcon={ <Icon name='email' size={24} color='black'/> }
                         />
                         <Input
                             label = 'Password'
-                            // value = {'alee0510'}
+                            value = {password}
                             disabled = {false}
-                            labelStyle = {styles.label}
-                            containerStyle = {styles.inputContainer}
-                            inputContainerStyle = {styles.inputContainerStyle}
-                            inputStyle = {styles.inputStyle}
+                            labelStyle = {registerStyles.label}
+                            containerStyle = {registerStyles.inputContainer}
+                            inputContainerStyle = {registerStyles.inputContainerStyle}
+                            inputStyle = {registerStyles.inputStyle}
                             leftIcon={
                                 <TouchableWithoutFeedback 
                                     onPress = { _ => this.setState({ visible : !visible})}
@@ -75,12 +90,12 @@ class Register extends React.Component {
                             }
                         />
                         <Input
-                            // value = {'alee0510'}
+                            value = {confirmPassword}
                             disabled = {false}
-                            labelStyle = {styles.label}
-                            containerStyle = {styles.inputContainer}
-                            inputContainerStyle = {styles.inputContainerStyle}
-                            inputStyle = {styles.inputStyle}
+                            labelStyle = {registerStyles.label}
+                            containerStyle = {registerStyles.inputContainer}
+                            inputContainerStyle = {registerStyles.inputContainerStyle}
+                            inputStyle = {registerStyles.inputStyle}
                             leftIcon={
                                 <TouchableWithoutFeedback 
                                     onPress = { _ => this.setState({ visible : !visible})}
@@ -94,8 +109,8 @@ class Register extends React.Component {
                         />
                         <Button 
                             title = 'Register' 
-                            containerStyle = {styles.button}
-                            buttonStyle = {styles.buttonStyle}
+                            containerStyle = {registerStyles.button}
+                            buttonStyle = {registerStyles.buttonStyle}
                             titleStyle = {{ fontSize : 20, ...typography.bold}}
                             onPress = { _ => navigation.navigate('Add-Vehicle')}
                         />
@@ -106,47 +121,5 @@ class Register extends React.Component {
     }
 }
 
-const styles = StyleSheet.create ({
-    container : {
-        flex : 1,
-        backgroundColor : colors.neutrals.gray20,
-        alignItems : 'center'
-    },
-    title : {
-        fontSize : 32,
-        ...typography.bold,
-        color : colors.neutrals.gray220
-    },
-    inputContainer : {
-        ...container.depth(4),
-    },
-    inputContainerStyle : {
-        backgroundColor : colors.main.white,
-        borderWidth : 0,
-        borderColor : colors.neutrals.gray220,
-        borderRadius : 50,
-        overflow : 'hidden',
-        borderBottomWidth : 0,
-        ...container.depth(4),
-        marginVertical : 8
-    },
-    inputStyle : {
-        marginLeft : 5
-    },
-    label : {
-        ...typography.semiBold, 
-        color : 'black',
-        paddingVertical : 2
-    },
-    button : {
-        marginTop : '8%',
-        marginHorizontal : '10%'
-    },
-    buttonStyle : {
-        borderRadius : 50,
-        backgroundColor : colors.main.flatRed,
-        // fontSize : 20
-    },
-})
 
 export default Register

@@ -1,19 +1,29 @@
 import React from 'react'
-import { View, Text, StyleSheet, StatusBar, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, StatusBar, TouchableWithoutFeedback } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 
 // import styles
-import { colors, typography, container } from '../../styles'
+import { colors, container } from '../../styles'
+import { sendStyles } from '../../styles/main'
 
 // import assets
 import SmartPhone from '../../assets/message-on-phone.svg'
 
 class SendOTP extends React.Component {
+    state = {
+        phone : ''
+    }
+
+    onButtonSend = () => {
+
+    }
+
     render () {
+        const { phone } = this.state
         const { navigation } = this.props
         return (
-            <View style = {styles.container}>
+            <View style = {sendStyles.container}>
                 <StatusBar backgroundColor = {'#d73535'} barStyle = 'light-content'/>
                 <View style = {{ flex : 1.6 }}>
                     <LinearGradient 
@@ -26,25 +36,26 @@ class SendOTP extends React.Component {
                         <SmartPhone height = {110} fill = {colors.main.white}/>
                     </LinearGradient>
                 </View>
-                <View style = {styles.form}>
+                <View style = {sendStyles.form}>
                     <Input
-                        // value = {'alee0510'}
+                        value = {phone}
                         disabled = {false}
-                        labelStyle = {styles.label}
+                        labelStyle = {sendStyles.label}
                         containerStyle = {{...container.depth(4)}}
-                        inputContainerStyle = {styles.inputContainerStyle}
+                        inputContainerStyle = {sendStyles.inputContainerStyle}
                         inputStyle = {{marginLeft : 5}}
                         keyboardType = 'number-pad'
+                        onChangeText = { value => this.setState({ phone : value })}
                         leftIcon={
                             <Text>+62</Text>
                         }
                     />
-                    <Text style = {styles.info}>
+                    <Text style = {sendStyles.info}>
                         We will send you One Time Password via SMS message. 
                         Carrier rates may apply.
                     </Text>
                     <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Verify-OTP')}>
-                        <View style = {styles.buttonNext}>
+                        <View style = {sendStyles.buttonNext}>
                             <Icon name = 'navigate-next' size = {25} color = {colors.main.white}/>
                         </View>
                     </TouchableWithoutFeedback>
@@ -53,41 +64,5 @@ class SendOTP extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container : {
-        flex : 1
-    },
-    form : {
-        flex : 1,
-        backgroundColor : colors.neutrals.gary20,
-        paddingHorizontal : '10%',
-        justifyContent : 'center',
-        alignItems : 'center'
-    },
-    inputContainerStyle : {
-        backgroundColor : colors.main.white,
-        borderWidth : 0,
-        borderColor : colors.neutrals.gray220,
-        borderRadius : 50,
-        overflow : 'hidden',
-        borderBottomWidth : 0,
-        ...container.depth(4)
-    },
-    buttonNext : {
-        height : 50, width : 50,
-        backgroundColor : colors.main.flatRed,
-        borderRadius : 25,
-        ...container.center,
-        ...container.depth(2)
-    },
-    info : {
-        textAlign : 'center', 
-        marginVertical : 23,
-        marginHorizontal : 30,
-        fontSize : 13,
-        ...typography.regular
-    }
-})
 
 export default SendOTP
