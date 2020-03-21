@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, Picker, Text } from 'react-native'
+import { View, Picker, Text, ScrollView } from 'react-native'
 import { Input } from 'react-native-elements'
 import { 
     getCarBrand, 
@@ -60,7 +60,7 @@ class Vehicle extends React.Component {
         },
         _ => {
             console.log('do request edit vehicle')
-            this.props.editVehicle({
+            this.props.editVehicle(this.props.account.id,{
                 vehicle_type : this.state.vehicle_type,
                 police_no : this.state.police_no,
                 color : this.state.color,
@@ -78,7 +78,7 @@ class Vehicle extends React.Component {
             disableInput : true,
             type : 1,
             police_no : '',
-            vehicle_type : null,
+            vehicle_type : 1,
             brand_id : null,
             type_id : null,
             color : ''
@@ -130,8 +130,8 @@ class Vehicle extends React.Component {
     render () {
         const { iconEdit, disableInput, police_no, vehicle_type, brand_id, type_id, color } = this.state
         const { vehicle, navigation } = this.props
-        console.log('vehicle data : ', this.props.vehicle)
-        console.log('motor brand : ', this.props.motorBrand)
+        // console.log('vehicle data : ', this.props.vehicle)
+        // console.log('motor brand : ', this.props.motorBrand)
 
         return (
             <View style = {vehicleStyles.container}>
@@ -142,7 +142,7 @@ class Vehicle extends React.Component {
                     handleBack = { _ => iconEdit ? this.onButtonCancel()  : navigation.goBack()}
                     loading = {this.props.loading}
                     />
-                <View style = {vehicleStyles.form}>
+                <ScrollView style = {vehicleStyles.form}>
                     <Picker
                         selectedValue={iconEdit ? vehicle_type : vehicle.vehicle_type}
                         style={{height: 50, width: 150}}
@@ -160,6 +160,7 @@ class Vehicle extends React.Component {
                         disabled = {disableInput}
                         containerStyle = {vehicleStyles.inputContainer}
                         labelStyle = {vehicleStyles.label}
+                        onChangeText = {value => this.setState({police_no : value})}
                     />
                     <Input
                         label = 'Color'
@@ -167,6 +168,7 @@ class Vehicle extends React.Component {
                         disabled = {disableInput}
                         containerStyle = {vehicleStyles.inputContainer}
                         labelStyle = {vehicleStyles.label}
+                        onChangeText = {value => this.setState({color : value})}
                     />
                     <View>
                         <View style = {vehicleStyles.picker}>
@@ -200,14 +202,15 @@ class Vehicle extends React.Component {
                             </Picker>
                         </View>
                     </View>
-                </View>
+                </ScrollView>
             </View>
         )
     }
 }
 
-const mapStore = ({ vehicle, vehicleData }) => {
+const mapStore = ({ user, vehicle, vehicleData }) => {
     return {
+        account : user.account,
         vehicle : vehicle.data,
         loading : vehicle.loading,
         carBrand : vehicleData.carBrand,

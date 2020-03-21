@@ -83,14 +83,15 @@ export const getMotorTypeById = (id) => {
 }
 
 // edit vehicle
-export const editVehicle = (body) => {
+export const editVehicle = (id, body) => {
     return async (dispatch) => {
         try {
             dispatch({type : EDIT_VEHICLE_START})
             // do request edit
             console.log('request edit vehicle')
+            if (!body.color) delete body.color
             console.log(body)
-            const response = await Axios.patch(API_URL_MOBILE + `/vehicle/edit/${id}`)
+            const response = await Axios.patch(API_URL_MOBILE + `/vehicle/edit/${id}`, body)
             console.log(response.data)
 
             // refresh redux data
