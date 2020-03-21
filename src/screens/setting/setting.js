@@ -52,19 +52,9 @@ class Setting extends React.Component {
                             : null
 
                         }
-                        <View 
-                            style ={{ 
-                                flex : 1, 
-                                justifyContent : 'center',
-                                marginLeft : 10
-                            }}
-                        >
+                        <View style ={settingStyles.profileContainer}>
                             <Text 
-                                style = {{
-                                    fontSize : 20, 
-                                    textTransform : 'capitalize', 
-                                    ...typography.semiBold
-                                }}
+                                style = {settingStyles.profileName}
                             >
                                 {profile ? profile.name : 'full name'}
                             </Text>
@@ -78,60 +68,74 @@ class Setting extends React.Component {
                     </View>
                     <View style = {settingStyles.settings}>
                         <View style = {settingStyles.subSetting}>
-                            <Text style = {{ fontSize : 18, ...typography.bold, paddingVertical : 8 }}>
+                            <Text style = {settingStyles.settingTitle}>
                                 Account
                             </Text>
                             <TouchableOpacity onPress = { _ => navigation.navigate('Username')}>
                                 <View style = {settingStyles.options}>
                                     <Icon name = 'account' type = 'material-community' size = {25}/>
-                                    <Text style = {settingStyles.optionsText}>username</Text>
+                                    <Text style = {settingStyles.optionsText}>
+                                        username
+                                    </Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = { _ => navigation.navigate('Password')}>
                                 <View style = {settingStyles.options}>
                                     <Icon name = 'lock' size = {25}/>
-                                    <Text style = {settingStyles.optionsText}>password</Text>
+                                    <Text style = {settingStyles.optionsText}>
+                                        password
+                                    </Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = { _ => navigation.navigate('Vehicle')}>
                                 <View style = {settingStyles.options}>
                                     <Icon name = 'ios-car' type = 'ionicon' size = {25}/>
-                                    <Text style = {settingStyles.optionsText}>vehicle</Text>
+                                    <Text style = {settingStyles.optionsText}>
+                                        vehicle
+                                    </Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = { _ => navigation.navigate('Wallet')}>
                                 <View style = {settingStyles.options}>
                                     <Icon name = 'account-balance-wallet' size = {25}/>
-                                    <Text style = {settingStyles.optionsText}>wallet</Text>
+                                    <Text style = {settingStyles.optionsText}>
+                                        wallet
+                                    </Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = { _ => navigation.navigate('History')}>
                                 <View style = {settingStyles.options}>
                                     <Icon name = 'history' size = {25}/>
-                                    <Text style = {settingStyles.optionsText}>history</Text>
+                                    <Text style = {settingStyles.optionsText}>
+                                        history
+                                    </Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                         </View>
                         <View style = {settingStyles.subSetting}>
-                            <Text style = {{ fontSize : 18, ...typography.bold, paddingVertical : 8 }}>
+                            <Text style = {settingStyles.settingTitle}>
                                 Info
                             </Text>
                             <TouchableOpacity>
                                 <View style = {settingStyles.options}>
                                     <Icon name = 'help' size = {25}/>
-                                    <Text style = {settingStyles.optionsText}>Help</Text>
+                                    <Text style = {settingStyles.optionsText}>
+                                        Help
+                                    </Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity>
                                 <View style = {settingStyles.options}>
                                     <Icon name = 'info' size = {25}/>
-                                    <Text style = {settingStyles.optionsText}>About</Text>
+                                    <Text style = {settingStyles.optionsText}>
+                                        About
+                                    </Text>
                                     <Icon name = 'navigate-next'/>
                                 </View>
                             </TouchableOpacity>
@@ -140,12 +144,7 @@ class Setting extends React.Component {
                     <TouchableWithoutFeedback onPress = {this.onButtonLogOut}>
                         <View style = {settingStyles.logOutButtonContainer}>
                             <View style = {settingStyles.logOutButton}>
-                                <Text style = {{
-                                    fontSize : 20,
-                                    ...typography.semiBold,
-                                    color : colors.main.white,
-                                    textAlign : 'center'
-                                }}>
+                                <Text style = {settingStyles.logOutButtonText}>
                                     Log out
                                 </Text>
                             </View>

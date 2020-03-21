@@ -53,5 +53,26 @@ export const settingStyles = StyleSheet.create({
         alignItems : 'center',
         justifyContent : 'center',
         ...container.depth(2)
+    },
+    logOutButtonText : {
+        fontSize : 20,
+        ...typography.semiBold,
+        color : colors.main.white,
+        textAlign : 'center'
+    },
+    profileContainer : {
+        flex : 1, 
+        justifyContent : 'center',
+        marginLeft : 10
+    },
+    profileName : {
+        fontSize : 20, 
+        textTransform : 'capitalize', 
+        ...typography.semiBold
+    },
+    settingTitle : {
+        fontSize : 18, 
+        ...typography.bold, 
+        paddingVertical : 8
     }
 })

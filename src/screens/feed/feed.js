@@ -41,10 +41,10 @@ class Feed extends React.Component {
         this.props.getVehicle(id)
     }
 
-    hanldeNews = (url) => {
-        Linking.openURL(url)
-        .catch(err => console.log(err))
-    }
+    // hanldeNews = (url) => {
+    //     Linking.openURL(url)
+    //     .catch(err => console.log(err))
+    // }
 
     onRefresh = () => {
         console.log('on refresh')
@@ -57,7 +57,7 @@ class Feed extends React.Component {
     renderNews = () => {
         return this.props.news.map((item, index) => {
             return (
-                <TouchableWithoutFeedback key = {index} onPress = {() => this.hanldeNews(item.url)}>
+                <TouchableWithoutFeedback key = {index} onPress = {() => this.props.navigation.navigate('Web-View', {url : item.url})}>
                     <View style = {{
                         flex : 1, 
                         marginBottom : 20,

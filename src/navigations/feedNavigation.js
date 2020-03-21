@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Feed from '../screens/feed/feed'
 import Notification from '../screens/feed/notification'
 import Map from '../screens/feed/map'
+import MyWebView from '../components/webView'
 
 // create stack
 const Stack = createStackNavigator()
@@ -23,6 +24,7 @@ const FeedNavigation = ({navigation, route}) => {
             <Stack.Screen name = 'Feed' component = {Feed}/>
             <Stack.Screen name = 'Notification' component = {Notification}/>
             <Stack.Screen name = 'Map' component = {Map}/>
+            <Stack.Screen name = 'Web-View' component = {MyWebView}/>
         </Stack.Navigator>
     )
 }
