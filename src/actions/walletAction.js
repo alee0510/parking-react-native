@@ -55,7 +55,7 @@ export const topUpSaldo = (id, body) => {
 
             // do request
             console.log('request top up')
-            const response = await Axios.patch(API_URL_MOBILE + `/wallet/topup/${id}`, body)
+            const response = await Axios.post(API_URL_MOBILE + `/wallet/topup/${id}`, body)
             console.log('topup response : ', response.data)
 
             // refresh history

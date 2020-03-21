@@ -91,7 +91,7 @@ export const editVehicle = (id, body) => {
             console.log('request edit vehicle')
             if (!body.color) delete body.color
             console.log(body)
-            const response = await Axios.patch(API_URL_MOBILE + `/vehicle/edit/${id}`, body)
+            const response = await Axios.put(API_URL_MOBILE + `/vehicle/edit/${id}`, body)
             console.log(response.data)
 
             // refresh redux data

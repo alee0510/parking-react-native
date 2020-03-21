@@ -101,7 +101,7 @@ export const editUsername = (username) => {
 
             // do request
             console.log('request edit username')
-            const res = await Axios.patch(API_URL_MOBILE + `/account/edit/username/${id}`, {username})
+            const res = await Axios.put(API_URL_MOBILE + `/account/edit/username/${id}`, {username})
             console.log(res.data)
 
             // refresh data
@@ -128,7 +128,7 @@ export const editPassword = (body) => {
             // do request
             console.log('request edit password')
             console.log(body)
-            const res = await Axios.patch(API_URL_MOBILE + `/account/edit/password/${id}`, body)
+            const res = await Axios.put(API_URL_MOBILE + `/account/edit/password/${id}`, body)
             console.log(res.data)
 
             dispatch({ type : EDIT_PASSWORD_SUCCESS })
@@ -153,7 +153,7 @@ export const editProfile = (body) => {
 
             // do request
             console.log('request edit profile')
-            const res = await Axios.patch(API_URL_MOBILE + `/profile/edit/${id}`, body)
+            const res = await Axios.put(API_URL_MOBILE + `/profile/edit/${id}`, body)
             console.log(res.data)
 
             // refresh redux data
@@ -182,7 +182,7 @@ export const uploadImage = (file) => {
 
             // do request upload
             console.log('request upload')
-            const response = await Axios.patch(API_URL_MOBILE + `/profile/upload/${id}`, body, {
+            const response = await Axios.put(API_URL_MOBILE + `/profile/upload/${id}`, body, {
                 headers : {'Content-Type': `multipart/form-data`}
             })
             console.log(response.data)
