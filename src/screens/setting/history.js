@@ -1,27 +1,69 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableWithoutFeedback, ScrollView, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+import { 
+    View, 
+    Text, 
+    TouchableWithoutFeedback, 
+    ScrollView, 
+    TouchableOpacity,
+    RefreshControl 
+} from 'react-native'
 import { Icon } from 'react-native-elements'
+import { getHistory } from '../../actions'
 
 // import styles
-import { colors, container, typography } from '../../styles'
+import { container } from '../../styles'
+import { historyStyles } from '../../styles/setting'
 
 class History extends React.Component {
     state = {
-        iconEdit : false
+        refresh : false
+    }
+
+    componentDidMount () {
+        this.props.getHistory(this.props.account.id)
+    }
+
+    onRefresh = () => {
+        this.setState({refresh : true})
+        console.log('on refresh')
+        this.props.getHistory(this.props.account.id)
+        this.setState({refresh : false})
+    }
+
+    renderHistory = () => {
+        return this.props.history.map(({place_name, leave_date, duration, total_cost}) => {
+            let hours = Math.floor(duration/60)
+            let minutes = duration - (hours*60)
+            return <TouchableOpacity style = {historyStyles.listContent}>
+                        <View>
+                            <Text style = {historyStyles.listPlace}>
+                                {place_name}
+                            </Text>
+                            <Text style = {historyStyles.listDate}>
+                                {new Date(leave_date).toLocaleDateString()}
+                            </Text>
+                        </View>
+                        <View style = {{...container.center}}>
+                            <Text style ={historyStyles.listAmount}>
+                                {`- ${total_cost}`}
+                            </Text>
+                            <Text style = {historyStyles.listDuration}>
+                                {`${hours}h ${minutes}m`}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+            
+        })
     }
     render () {
-        const { iconEdit } = this.state
+        const { refresh } = this.state
+        console.log('history : ', this.props.history)
+
         return (
-            <View style = {styles.container}>
+            <View style = {historyStyles.container}>
                 {/* HEADER */}
-                <View style = {{
-                    flexDirection : 'row',
-                    paddingHorizontal : 20,
-                    paddingVertical : 15,
-                    backgroundColor : colors.main.white,
-                    alignItems : 'center',
-                    ...container.depth(5)
-                }}
+                <View style = {historyStyles.header}
                 >
                     <TouchableWithoutFeedback onPress = { _ => this.props.navigation.goBack()}>
                         <View>
@@ -29,62 +71,30 @@ class History extends React.Component {
                         </View>
                     </TouchableWithoutFeedback>
                     <Text 
-                        style = {{
-                            ...typography.bold, 
-                            fontSize : 28, 
-                            marginLeft : 10,
-                            flex : 1,
-                            color : colors.neutrals.gray220
-                        }}
+                        style = {historyStyles.headerTitle}
                     >
                         History
                     </Text>
                 </View>
                 {/* CONTENTS */}
-                <ScrollView style = {styles.content}>
-                    <TouchableOpacity style = {styles.listContent}>
-                        <View>
-                            <Text style = {{ fontSize : 16, ...typography.semiBold}}>
-                                AEON Mall BSD
-                            </Text>
-                            <Text style = {{fontSize : 12, ...typography.light}}>
-                                Friday, 02 Feb 2020
-                            </Text>
-                        </View>
-                        <View style = {{...container.center}}>
-                            <Text style ={{fontSize : 16, ...typography.semiBold}}>
-                                2000
-                            </Text>
-                            <Text style = {{fontSize : 12, ...typography.light}}>
-                                1h 30m
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                <ScrollView 
+                    style = {historyStyles.content}
+                    refreshControl = {
+                        <RefreshControl refreshing = {refresh} onRefresh = {this.onRefresh}/>
+                    }
+                >
+                    {this.renderHistory()}
                 </ScrollView>
             </View>
         )
     }
 }
 
-const styles = StyleSheet.create({
-    container : {
-        flex : 1
-    },
-    content : {
-        // backgroundColor : 'yellow',
-        flex : 1,
-        padding : 25
-    },
-    listContent : {
-        flexDirection : 'row',
-        justifyContent : 'space-between',
-        alignItems : 'center',
-        padding : 10,
-        backgroundColor : 'white',
-        borderRadius : 5,
-        borderBottomWidth : 0.3,
-        borderBottomColor : colors.neutrals.gray220
+const mapStore = ({ user, history }) => {
+    return {
+        account : user.account,
+        history : history.data
     }
-})
+}
 
-export default History
+export default connect(mapStore, { getHistory })(History)

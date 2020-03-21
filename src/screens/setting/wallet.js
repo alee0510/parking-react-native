@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { 
     View, 
     Text, 
@@ -22,7 +23,6 @@ import TopUp from '../../components/topUp'
 // import styles
 import { colors } from '../../styles'
 import { walletStyles } from '../../styles/setting'
-import { connect } from 'react-redux'
 
 class Wallet extends React.Component {
     state = {

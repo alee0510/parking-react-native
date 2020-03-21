@@ -44,3 +44,6 @@ export const GET_MOTOR_TYPE = 'GET_MOTOR_TYPE'
 export const GET_VEHICLE_ERROR = 'GET_VEHICLE_ERROR'
 export const EDIT_VEHICLE_START = 'EDIT_VEHICLE_START'
 export const EDIT_VEHICLE_END = 'EDIT_VEHICLE_END'
+
+// history
+export const GET_HISTORY = 'GET_HISTORY'

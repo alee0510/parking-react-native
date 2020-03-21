@@ -7,6 +7,7 @@ import { userReducer } from './userReducer'
 import { walletReducer } from './walletReducer'
 import { vehicleReducer, vehicleDataReducer } from './vehicleReducer'
 import { registerReducer } from './registerReducer'
+import { historyRedducer } from './historyReducer'
 
 // export all reducers
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
     wallet : walletReducer,
     vehicle : vehicleReducer,
     vehicleData : vehicleDataReducer,
-    register : registerReducer
+    register : registerReducer,
+    history : historyRedducer
 })

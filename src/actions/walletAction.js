@@ -25,7 +25,7 @@ export const getSaldo = (id) => {
 export const getHistoryTransaction = (id) => {
     return async (dispatch) => {
         try {
-            console.log('request get history')
+            console.log('request get history transaction')
             const { data } = await Axios.get(API_URL_MOBILE + `/wallet/history/${id}`)
             console.log('history transaction : ', data)
     
