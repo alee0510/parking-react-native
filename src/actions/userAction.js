@@ -140,3 +140,30 @@ export const editPassword = (body) => {
         }
     } 
 }
+
+// PROFILE
+export const editProfile = (body) => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type : USER_START })
+            console.log(body)
+            // get id
+            const id = await AsyncStorage.getItem('id')
+            console.log('get user id : ', id)
+
+            // do request
+            console.log('request edit profile')
+            const res = await Axios.patch(API_URL_MOBILE + `/profile/edit/${id}`, body)
+            console.log(res.data)
+
+            // refresh redux data
+            const { data } = await Axios.get(API_URL_MOBILE + `/profile/${id}`)
+            console.log(data)
+            dispatch({ type : GET_PROFILE, payload : data })
+            dispatch({ type : USER_END })
+        } catch (err) {
+            dispatch({ type : USER_END })
+            console.log(err.response ? err.response.data : err)
+        }
+    } 
+}

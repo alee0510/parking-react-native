@@ -15,59 +15,96 @@ import { profileStyles } from '../../styles/setting'
 
 class Profile extends React.Component {
     state = {
-        editIcon : 0,
-        inputDisable : true,
+        iconEdit : 0,
+        disableInput : true,
+        name : '',
+        birthdate : '',
+        phone : '',
+        address : ''
     }
 
-    // onButtonEdit = () => {
-    //     // init edit profile
-    //     console.log('init edit profile')
-    //     this.props.initEditProfile(this.props.profile)
+    onButtonEdit = () => {
+        const { iconEdit } = this.state
+        // initialize edit state
+        if (!iconEdit) {
+            return this.setState({
+                name : this.props.profile.name,
+                birthdate : this.props.profile.birthdate,
+                phone : this.props.profile.phone,
+                address : this.props.profile.address,
+                iconEdit : 1,
+                disableInput : false
+            })
+        }
+        this.setState({
+            iconEdit : 0,
+            disableInput : true
+        },
+        _ => {
+            console.log('save')
+            console.log('do request edit profil')
+            this.props.editProfile({
+                name : this.state.name,
+                birthdate : this.state.birthdate,
+                phone : this.state.phone,
+                address : this.state.address
+            })
+        }
+        )
+    }
 
-    //     // change state
-    //     console.log('change state')
-    //     const { editIcon, inputDisable } = this.state
-    //     this.setState({ editIcon : editIcon ? 0 : 1, inputDisable : !inputDisable },
-    //         _ => {
-    //             if (this.state.inputDisable) {
-    //                 console.log('do edit profile')
-    //                 this.props.editProfile(this.props.tempProfile)
-    //             }
-    //         })
-    // }
+    onButtonCancel = () => {
+        this.setState({
+            iconEdit : 0,
+            disableInput : true,
+            name : '',
+            birthdate : '',
+            phone : '',
+            address : ''
+        })
+    }
 
-    // onButtonBack = () => {
-    //     const { editIcon } = this.state
-    //     this.setState({ editIcon : editIcon ? 0 : 1, inputDisable : true })
-    // }
+    onDatePicked = (date) => {
+        console.log('picked date : ', date)
 
-    // onDatePicked = (date) => {
-    //     const { editIcon } = this.state
-    //     console.log('picked date : ', date)
-
-    //     // check edit condition
-    //     if (!editIcon) return null
-    //     this.props.inputEditProfile('birthdate', date.split('T')[0])
-    // }
+        // check edit condition
+        if (!this.state.iconEdit) return null
+        this.setState({ birthdate : date.split('T')[0]})
+    }
 
     render () {
-        const { editIcon, inputDisable } = this.state
+        // get variable
+        const { iconEdit, disableInput, name, birthdate, phone, address } = this.state
         const { profile  } = this.props
+
+        // date picker style
+        const datePickerStyle = {
+            dateIcon: {
+                position: 'absolute',
+                left: 0,
+                top: 4,
+                marginLeft: 10
+            },
+            dateInput: {
+                marginLeft: 0,
+                borderWidth : 0
+            }
+        }
 
         return (
             <View style = {profileStyles.container}>
                 <Header
                     title = 'Profile'
-                    edit = { editIcon }
+                    edit = { iconEdit }
                     handleEdit = {this.onButtonEdit}
-                    handleBack = { _ => editIcon ? this.onButtonBack() : this.props.navigation.goBack()}
+                    handleBack = { _ => iconEdit ? this.onButtonCancel() : this.props.navigation.goBack()}
                     loading = {this.props.loading}
                 />
                 <ScrollView>
-                    {/* <View style = {profileStyles.imageContainer}>
+                    <View style = {profileStyles.imageContainer}>
                         <View style = {profileStyles.avatar}>
                             {
-                                profile ?
+                                profile ? profile.image ?
                                 <Avatar
                                     rounded
                                     size = {125}
@@ -78,13 +115,13 @@ class Profile extends React.Component {
                                 <Avatar 
                                     rounded 
                                     size = {125} 
-                                    title = 'A' 
+                                    title = {profile.name.split('')[0].toUpperCase()} 
                                     overlayContainerStyle = {{ 
                                         backgroundColor : colors.main.flatRed, 
                                         ...container.depth(5)
                                     }}
                                 />
-
+                                : null
                             }
                             <TouchableOpacity>
                                 <View style = {profileStyles.cameraIcon}>
@@ -96,16 +133,15 @@ class Profile extends React.Component {
                     <View style = {profileStyles.input}>
                         <Input
                             label = 'Full name'
-                            value = { editIcon ? tempProfile.name : profile.name }
-                            disabled = {false}
+                            value = { iconEdit ? name : profile.name }
+                            disabled = {disableInput}
                             containerStyle = {profileStyles.inputContainer}
                             labelStyle = {profileStyles.label}
-                            disabled = {inputDisable}
-                            onChangeText = { value => this.props.inputEditProfile('name', value)}
+                            onChangeText = { value => this.setState({ name : value })}
                         />
                         <Text style ={{
-                            fontSize : 16, 
-                            ...typography.semiBold,
+                            fontSize : 15, 
+                            ...typography.bold,
                             marginHorizontal : 10,
                             marginVertical : 10
                             }}
@@ -113,49 +149,39 @@ class Profile extends React.Component {
                             Birthdate
                         </Text>
                         <DatePicker
-                            style={{width: 200}}
-                            date={new Date (editIcon ? tempProfile.birthdate : profile.birthdate)}
-                            mode="date"
-                            placeholder="select date"
-                            format="YYYY-MM-DD"
-                            minDate="2016-05-01"
-                            maxDate="2016-06-01"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 10
-                                },
-                                dateInput: {
-                                    marginLeft: 0,
-                                    borderWidth : 0
-                                }
-                            }}
+                            style = {{width: 200}}
+                            date = {
+                                iconEdit ? new Date(birthdate || Date.now())
+                                : new Date(profile.birthdate)
+                            }
+                            mode = "date"
+                            placeholder = "select date"
+                            format = "YYYY-MM-DD"
+                            minDate = "1990-01-01"
+                            maxDate = "2020-03-21"
+                            confirmBtnText = "Confirm"
+                            cancelBtnText = "Cancel"
+                            customStyles = {datePickerStyle}
                             onDateChange = { date => this.onDatePicked(date) }
                         />
                         <Input
                             label = 'Phone'
-                            value = { editIcon ? tempProfile.phone : profile.phone }
-                            disabled = {false}
+                            value = { iconEdit ? phone : profile.phone }
+                            disabled = {disableInput}
                             containerStyle = {profileStyles.inputContainer}
                             labelStyle = {profileStyles.label}
-                            disabled = {inputDisable}
                             keyboardType = 'number-pad'
-                            onChangeText = { value => this.props.inputEditProfile('phone', value) }
+                            onChangeText = { value => this.setState({ phone : value })}
                         />
                         <Input
                             label = 'Address'
-                            value = {editIcon ? tempProfile.address : profile.address }
-                            disabled = {false}
+                            value = {iconEdit ? address : profile.address }
+                            disabled = {disableInput}
                             containerStyle = {profileStyles.inputContainer}
                             labelStyle = {profileStyles.label}
-                            disabled = {inputDisable}
-                            onChangeText = { value => this.props.inputEditProfile('address', value) }
-                        />
-                    </View> */}
+                            onChangeText = { value => this.setState({ address : value }) }
+                        /> 
+                    </View>
                 </ScrollView>
             </View>
         )
@@ -164,7 +190,8 @@ class Profile extends React.Component {
 
 const mapStore = ({ user }) => {
     return {
-        profile : user.profile
+        profile : user.profile,
+        loading : user.loading
     }
 }
 

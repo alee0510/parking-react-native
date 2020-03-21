@@ -28,7 +28,7 @@ class Setting extends React.Component {
     }
 
     render () {
-        const { navigation, account, profile } = this.props
+        const { navigation, profile } = this.props
         return (
             <View style = {settingStyles.container}>
                 <Text style = {settingStyles.title}>Settings</Text>
@@ -43,7 +43,7 @@ class Setting extends React.Component {
                                 overlayContainerStyle = {{ ...container.depth(1)}}
                             />
                             :
-                            <Avatar 
+                            <Avatar  
                                 rounded 
                                 size = {50} 
                                 title = {profile.name.split('')[0].toUpperCase()} 
@@ -159,7 +159,6 @@ class Setting extends React.Component {
 
 const mapStore = ({ user, wallet }) => {
     return {
-        account : user.account,
         profile : user.profile,
         wallet : wallet.data
     }
