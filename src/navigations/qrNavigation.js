@@ -9,7 +9,7 @@ const Stack = createStackNavigator()
 
 const QrNavigation = () => {
     return (
-        <Stack.Navigator initialRouteName = 'Payment' headerMode = 'none'>
+        <Stack.Navigator initialRouteName = 'Qr-Scanner' headerMode = 'none'>
             <Stack.Screen name = 'Qr-Scanner' component = {QrScanner}/>
             <Stack.Screen name = 'Payment' component = {Payment}/>
         </Stack.Navigator>

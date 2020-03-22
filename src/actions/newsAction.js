@@ -6,7 +6,7 @@ export const getNews = () => {
     return async (dispatch) => {
         try {
             const response = await Axios.get(NEWS_API_URL)
-            console.log('articles : ', response.data.articles)
+            // console.log('articles : ', response.data.articles)
             dispatch({
                 type : GET_NEWS,
                 payload : response.data.articles

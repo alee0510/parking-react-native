@@ -29,7 +29,7 @@ export const getHistoryTransaction = (id) => {
             const { data } = await Axios.get(API_URL_MOBILE + `/wallet/history/${id}`)
             console.log('history transaction : ', data)
     
-            dispatch({ type : GET_HISTORY_TRANSATION, payload : data })
+            dispatch({ type : GET_HISTORY_TRANSATION, payload : data.reverse() })
         } catch (err) {
             console.log(err.response ? err.response.data : err)
         }
@@ -61,7 +61,7 @@ export const topUpSaldo = (id, body) => {
             // refresh history
             const history = await Axios.get(API_URL_MOBILE + `/wallet/history/${id}`)
             console.log('history transaction : ', history.data)
-            dispatch({ type : GET_HISTORY_TRANSATION, payload : history.data })
+            dispatch({ type : GET_HISTORY_TRANSATION, payload : history.data.reverse() })
 
             // refresh saldo
             const saldo = await Axios.get(API_URL_MOBILE + `/wallet/saldo/${id}`)
@@ -89,7 +89,7 @@ export const payParking = (id, amount) => {
             // refresh history
             const history = await Axios.get(API_URL_MOBILE + `/wallet/history/${id}`)
             console.log('history transaction : ', history.data)
-            dispatch({ type : GET_HISTORY_TRANSATION, payload : history.data })
+            dispatch({ type : GET_HISTORY_TRANSATION, payload : history.data.reverse() })
 
             // refresh saldo
             const saldo = await Axios.get(API_URL_MOBILE + `/wallet/saldo/${id}`)

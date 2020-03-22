@@ -1,11 +1,15 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import QRCodeScanner from 'react-native-qrcode-scanner'
-import { View, TouchableWithoutFeedback } from 'react-native'
+import { View, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
 import { RNCamera as Camera } from 'react-native-camera'
-import { Icon, Text } from 'react-native-elements'
+import { Icon, Text, Overlay } from 'react-native-elements'
+import { TabActions } from '@react-navigation/native'
+import { enterParking, leaveParking, payParking } from '../actions'
 
 // import style
 import { qrStyles } from '../styles/qrCodeStyles'
+import { colors } from '../styles'
 
 // import svg file
 import Barcode from '../assets/barcode.svg'
@@ -16,6 +20,14 @@ class QrScanner extends React.Component {
     }
 
     onSuccess = (e) => {
+        if (this.props.token) {
+            console.log('leave parking')
+            this.props.navigation.navigate('Payment', { url : e.data })
+            return 
+        }
+        console.log('enter parking')
+        this.props.enterParking(e.data, this.props.account.id, this.props.vehicle.vehicle_type)
+        this.props.navigation.dispatch(TabActions.jumpTo('Feed-Navigation'))
         console.log(e.data)
     }
 
@@ -25,6 +37,8 @@ class QrScanner extends React.Component {
 
     render () {
         const { flash } = this.state
+        console.log(this.props.parking)
+        
         return (
             <View style ={qrStyles.container}>
                 <TouchableWithoutFeedback onPress = {() => this.props.navigation.goBack()}>
@@ -66,9 +80,35 @@ class QrScanner extends React.Component {
                         <Barcode height = {100}/>
                     </View>
                 </View>
+                <Overlay isVisible = {this.props.loading} height = {'auto'}>
+                    <View style = {qrStyles.loadingStyle}>
+                        <ActivityIndicator size={50} color= {colors.main.flatRed} />
+                        <Text style = {qrStyles.loadingText}>
+                            Loading . . .
+                        </Text>
+                    </View>
+                </Overlay>
             </View>
         )
     }
 }
 
-export default QrScanner
+const mapStore = ({ parking, user, vehicle }) => {
+    return {
+        token : parking.token,
+        account : user.account,
+        vehicle : vehicle.data,
+        loading : parking.loading,
+        parking : parking
+    }
+}
+
+const mapDispatch = () => {
+    return {
+        enterParking,
+        leaveParking,
+        payParking
+    }
+}
+
+export default connect(mapStore, mapDispatch())(QrScanner)

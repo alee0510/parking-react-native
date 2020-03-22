@@ -53,5 +53,14 @@ export const qrStyles = StyleSheet.create({
         fontSize : 16, 
         ...typography.bold, 
         paddingBottom : 5
+    },
+    loadingStyle : {
+        flexDirection : 'row',
+        alignItems : 'center'
+    },
+    loadingText : {
+       marginLeft : 10,
+       fontSize : 16,
+       ...typography.regular 
     }
 })

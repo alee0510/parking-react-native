@@ -12,6 +12,7 @@ const INITIAL_STATE = {
     token : null, // fill witdh date
     duration: 10,
     cost: 0,
+    place : '',
     status : 0,
     loading : false,
     rating : false
@@ -25,6 +26,7 @@ export const parkingReducer = (state = INITIAL_STATE, action) => {
                 id : action.payload.id, 
                 token : action.payload.token,
                 cost : action.payload.cost,
+                place : action.payload.place,
                 status : 1
             }
         case CHECK_PARKING :
@@ -33,6 +35,7 @@ export const parkingReducer = (state = INITIAL_STATE, action) => {
                 id : action.payload.id, 
                 token : action.payload.token,
                 cost : action.payload.cost,
+                place : action.payload.place,
                 status : 1
             }
         case LEAVE_PARKING :
