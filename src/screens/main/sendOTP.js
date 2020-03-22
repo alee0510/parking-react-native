@@ -28,7 +28,7 @@ class SendOTP extends React.Component {
         if(this.props.status) {
             return this.props.navigation.replace('Verify-OTP')
         }
-        Vibration.vibrate(200)
+        // Vibration.vibrate(200)
     }
 
     onButtonSend = () => {

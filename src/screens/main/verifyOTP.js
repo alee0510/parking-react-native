@@ -14,7 +14,7 @@ class VerifyOTP extends React.Component {
     state = {
         code : ''
     }
-    componentDidMount () {
+    componentDidUpdate () {
         if(this.props.status) {
             return this.props.navigation.replace('Home')
         }

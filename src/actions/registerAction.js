@@ -63,7 +63,7 @@ export const sendOTP = (phone) => {
 
             dispatch({ 
                 type : SENT_OTP_SUCCESS, 
-                payload : { phone, request_id : data }
+                payload : { phone, request_id : data.request_id }
             })
         } catch (err) {
             dispatch({ type : SENT_OTP_ERROR, payload : err.response ? err.response.data : err})
@@ -79,6 +79,7 @@ export const verifyOTP = (id, body) => {
             dispatch({ type : REGISTER_START })
             // do verify
             console.log('request verify one time password (OTP)')
+            console.log(body)
             const { data, headers } = await Axios.post(API_URL_MOBILE + `/OTP/verify/${id}`, body)
             console.log(data)
             console.log(headers['auth-token'])
