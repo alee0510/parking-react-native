@@ -65,7 +65,6 @@ class Feed extends React.Component {
             rating : rate,
             message : reviews
         })
-        
     }
 
     renderNews = () => {
