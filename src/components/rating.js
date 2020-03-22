@@ -21,11 +21,13 @@ const Ratings = (props) => {
                 <Rating
                     type = 'heart'
                     showRating
-                    onFinishRating = { rating => console.log('rating : ' + rating)}
+                    onFinishRating = {props.onFinishRating}
                 />
                 <TextInput 
-                    multiline 
+                    multiline
+                    value = {props.reviews} 
                     style = {styles.textArea}
+                    onChangeText = {props.onChangeText}
                 />
                 <View style = {{ position : 'absolute', bottom : '3%'}}>
                     <Button 
@@ -35,6 +37,8 @@ const Ratings = (props) => {
                             width : 150,
                             borderRadius : 50
                         }}
+                        onPress = {props.onPress}
+                        loading = {props.loading}
                     />
                 </View>
             </View>

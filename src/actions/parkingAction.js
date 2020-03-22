@@ -103,3 +103,20 @@ export const checkParking = () => {
         }
     }
 }
+
+export const giveRating = (body) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type : PARKING_START})
+            console.log('body', body)
+            // request give parking
+            const response = await Axios.post(API_URL_MOBILE + `/rating`, body)
+            console.log(response.data)
+
+            dispatch({type : PARKING_END})
+        } catch (err) {
+            dispatch({type : PARKING_END})
+            console.log(err.response ? err.response.data : err)
+        }
+    }
+}

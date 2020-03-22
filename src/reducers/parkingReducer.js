@@ -39,7 +39,7 @@ export const parkingReducer = (state = INITIAL_STATE, action) => {
                 status : 1
             }
         case LEAVE_PARKING :
-            return { ...INITIAL_STATE, rating : true }
+            return { ...state, token : null, cost : 0, place : '', rating : true }
         case GIVE_RATING :
             return INITIAL_STATE
         case PARKING_START :

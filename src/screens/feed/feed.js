@@ -7,7 +7,6 @@ import {
     ScrollView, 
     TouchableWithoutFeedback,
     Image,
-    Linking,
     TouchableOpacity,
     RefreshControl
 } from 'react-native'
@@ -15,7 +14,13 @@ import { Header, Avatar, Icon } from 'react-native-elements'
 import { URL } from '../../helpers/API_URL'
 
 // import actions
-import { getNews, getProfile, getSaldo, getVehicle } from '../../actions'
+import { 
+    getNews, 
+    getProfile, 
+    getSaldo, 
+    getVehicle,
+    giveRating 
+} from '../../actions'
 
 // import style
 import { colors, typography, container } from '../../styles'
@@ -23,13 +28,16 @@ import { feedStyles } from '../../styles/feed'
 
 // import components
 import FeedCard from '../../components/feedCard'
+import Ratings from '../../components/rating'
 
 // import icon
 import Medal from '../../assets/medal.svg'
 
 class Feed extends React.Component {
     state = {
-        refresh : false
+        refresh : false,
+        reviews : '',
+        rate : 0
     }
 
     async componentDidMount () {
@@ -47,6 +55,17 @@ class Feed extends React.Component {
         this.props.getNews()
         this.props.getSaldo(this.props.account.id)
         this.setState({ refresh : false })
+    }
+
+    onButtonRating = () => {
+        const {reviews, rate} = this.state
+        this.props.giveRating({
+            area_id : this.props.areaId,
+            user_id : this.props.account.id,
+            rating : rate,
+            message : reviews
+        })
+        
     }
 
     renderNews = () => {
@@ -78,8 +97,12 @@ class Feed extends React.Component {
     }
 
     render () {
-        const { refresh } = this.state
+        const { refresh, rate, reviews } = this.state
         const { navigation, profile, account, wallet } = this.props
+        console.log('area id : ', this.props.areaId)
+        console.log('reviews', reviews)
+        console.log('rate', rate)
+
         return (
             <View style = {feedStyles.container}>
                 <StatusBar backgroundColor = {colors.neutrals.gray10} barStyle = 'dark-content'/>
@@ -188,17 +211,28 @@ class Feed extends React.Component {
                         {this.renderNews()}
                     </View>
                 </ScrollView>
+                <Ratings
+                    show = {!true}
+                    reviews = {reviews}
+                    onChangeText = { value => this.setState({reviews : value}) }
+                    onFinishRating = { rating => this.setState({rate : rating}) }
+                    onPress = {this.props.onButtonRating}
+                    loading = {this.props.loading}
+                />
             </View>
         )
     }
 }
 
-const mapStore = ({ news, user, wallet }) => {
+const mapStore = ({ news, user, wallet, parking }) => {
     return {
         news : news.data,
         account : user.account,
         profile : user.profile,
-        wallet : wallet.data
+        wallet : wallet.data,
+        rating : parking.rating,
+        areaId : parking.id,
+        loading : parking.loading
     }
 }
 
@@ -207,7 +241,8 @@ const mapDispatch = () => {
         getNews,
         getProfile,
         getSaldo,
-        getVehicle
+        getVehicle,
+        giveRating
     }
 }
 
