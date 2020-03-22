@@ -67,7 +67,7 @@ class Map extends React.Component {
     renderMarker = () => {
         return this.props.area.map(item => {
             return <Marker
-                coordinate = {{latitude : item.latitude, longitude : item.longitude}}
+                coordinate = {{latitude : item.coordinates.latitude, longitude : item.coordinates.longitude}}
             >
                 <Callout>
                     <Text>Hello</Text>
