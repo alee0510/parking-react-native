@@ -1,11 +1,11 @@
 import React from 'react'
 import QRCodeScanner from 'react-native-qrcode-scanner'
-import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { View, TouchableWithoutFeedback } from 'react-native'
 import { RNCamera as Camera } from 'react-native-camera'
 import { Icon, Text } from 'react-native-elements'
 
 // import style
-import { colors, container, typography } from '../styles'
+import { qrStyles } from '../styles/qrCodeStyles'
 
 // import svg file
 import Barcode from '../assets/barcode.svg'
@@ -26,14 +26,14 @@ class QrScanner extends React.Component {
     render () {
         const { flash } = this.state
         return (
-            <View style ={{ flex : 1, backgroundColor : colors.main.white}}>
+            <View style ={qrStyles.container}>
                 <TouchableWithoutFeedback onPress = {() => this.props.navigation.goBack()}>
-                    <View style = {styles.buttonBack}>
+                    <View style = {qrStyles.buttonBack}>
                         <Icon name = 'arrow-back'/>
                     </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress = {this.handleFlash}>
-                    <View style = {styles.flashButton}>
+                    <View style = {qrStyles.flashButton}>
                         <Icon name = {flash ? 'flash-on' : 'flash-off'}/>
                     </View>
                 </TouchableWithoutFeedback>
@@ -46,21 +46,23 @@ class QrScanner extends React.Component {
                         reactivateTimeout = {5000}
                         showMarker
                         customMarker = {() => (
-                            <View style = {{ height : 300, width : 300, borderWidth : 2.5, borderColor : colors.main.flatRed}}>
+                            <View style = {qrStyles.customMarker}>
 
                             </View>
                         )}
                     />
                 </View>
-                <View style = {styles.footer}>
-                    <View style = {styles.note}>
-                        <Text style = {{ fontSize : 16, ...typography.bold, paddingBottom : 5 }}>Note : </Text>
+                <View style = {qrStyles.footer}>
+                    <View style = {qrStyles.note}>
+                        <Text style = {qrStyles.footerInfo}>
+                            Note : 
+                        </Text>
                         <Text>
                             Please hold your phone and align to scan qr-code. 
                             If proccess failed, it will automatically scan after 5s.
                         </Text>
                     </View>
-                    <View style = {styles.icon}>
+                    <View style = {qrStyles.icon}>
                         <Barcode height = {100}/>
                     </View>
                 </View>
@@ -68,43 +70,5 @@ class QrScanner extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    buttonBack : {
-        height : 40,
-        width : 40,
-        backgroundColor : colors.main.white,
-        borderRadius : 20,
-        ...container.center,
-        position : 'absolute',
-        top : 15, left : 15,
-        zIndex : 5
-    },
-    flashButton : {
-        height : 40,
-        width : 40,
-        borderRadius : 20,
-        backgroundColor : colors.main.white,
-        ...container.center,
-        position : 'absolute',
-        top : 15,
-        right : 15,
-        zIndex : 5
-    },
-    footer : {
-        flex : 1,
-        flexDirection : 'row',
-        zIndex : 5
-    },
-    note : {
-        width : '50%', height : '100%',
-        paddingHorizontal : 25,
-        justifyContent : 'center'
-    },
-    icon : {
-        width : '50%', height : '100%',
-        justifyContent : 'center'
-    }
-})
 
 export default QrScanner

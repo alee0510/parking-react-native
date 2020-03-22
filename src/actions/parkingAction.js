@@ -1,6 +1,12 @@
 import Axios from 'axios'
-import { AsyncStorage } from 'react-native'
-import { PARKING_START, PARKING_END, ENTER_PARKING, LEAVE_PARKING } from '../helpers/actionTypes'
+import { AsyncStorage } from '@react-native-community/async-storage'
+import { 
+    PARKING_START, 
+    PARKING_END, 
+    ENTER_PARKING, 
+    LEAVE_PARKING, 
+    CHECK_PARKING 
+} from '../helpers/actionTypes'
 
 export const enterParking = async (url, id, type) => {
     return async (dispatch) => {
@@ -57,6 +63,31 @@ export const leaveParking = (url, area_id, duration) => {
         } catch (err) {
             dispatch({type : PARKING_END})
             console.log(err.response ? err.response.data : err)
+        }
+    }
+}
+
+export const checkParking = () => {
+    return async (dispatch) => {
+        try {
+            // restore token
+            console.log('restore parking token')
+            const token = parseInt(await AsyncStorage.getItem('parkingToken'))
+            const id = parseInt(await AsyncStorage.getItem('parkingId'))
+            const cost = parseInt(await AsyncStorage.getItem('cost'))
+
+            // set redux storage
+            console.log('setup redux for parking')
+            dispatch({ 
+                type : CHECK_PARKING,
+                payload : {
+                    id : id,
+                    token : token,
+                    cost : cost
+                }
+            })
+        } catch (err) {
+            console.log(err)
         }
     }
 }

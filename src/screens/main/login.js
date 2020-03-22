@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { StackActions } from '@react-navigation/native'
+// import { StackActions } from '@react-navigation/native'
 import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import { Icon, Input, Button } from 'react-native-elements'
 
@@ -11,7 +11,7 @@ import Logo from '../../assets/parking_app.svg'
 import SplashScreen from '../../components/splashScreen'
 
 // import action
-import { LogIn, CheckLogin } from '../../actions'
+import { LogIn, CheckLogin, checkParking } from '../../actions'
 
 // import styles
 import { typography } from '../../styles'
@@ -27,6 +27,9 @@ class Login extends React.Component {
     componentDidMount () {
         // check login
         this.props.CheckLogin()
+
+        // check parking
+        this.props.checkParking()
     }
 
     componentDidUpdate () {
@@ -128,7 +131,8 @@ const mapStore = ({ user }) => {
 const mapDispatch = () => {
     return {
         LogIn,
-        CheckLogin
+        CheckLogin,
+        checkParking
     }
 }
 

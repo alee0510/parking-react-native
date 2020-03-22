@@ -7,6 +7,7 @@ import { colors } from '../styles'
 // import navigation
 import FeedNavigation from './feedNavigation'
 import SettingNavigation from './settingNavigation'
+import QrNavigation from './qrNavigation'
 import QrScanner from '../screens/qrSanner'
 
 // import svg icons
@@ -28,12 +29,12 @@ const TabNavigation = () => {
                 }
             }}
             screenOptions = {({ route }) => ({
-                tabBarVisible : ['Qr-Scanner', 'Setting-Navigation'].includes(route.name) ? false : true,
+                tabBarVisible : ['Qr-Navigation', 'Setting-Navigation'].includes(route.name) ? false : true,
                 tabBarIcon : ({ focused }) => {
                     if (route.name === 'Feed-Navigation') {
                         return focused ? <HomeIcon height = {25} fill = {colors.main.flatRed}/> 
                         : <HomeIconOutline height = {25} fill = {'black'}/>
-                    } else if (route.name === 'Qr-Scanner') {
+                    } else if (route.name === 'Qr-Navigation') {
                         return <QrIcon/>
                     } else {
                         return focused ? <Menu height = {25} width = {25} fill = {colors.main.flatRed}/>
@@ -43,7 +44,7 @@ const TabNavigation = () => {
             })}
             >
             <Tabs.Screen name = 'Feed-Navigation' component = {FeedNavigation}/>
-            <Tabs.Screen name = 'Qr-Scanner' component = {QrScanner}/>
+            <Tabs.Screen name = 'Qr-Navigation' component = {QrNavigation}/>
             <Tabs.Screen name = 'Setting-Navigation' component = {SettingNavigation}/>
         </Tabs.Navigator>
     )
