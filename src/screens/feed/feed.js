@@ -102,6 +102,7 @@ class Feed extends React.Component {
         console.log('area id : ', this.props.areaId)
         console.log('reviews', reviews)
         console.log('rate', rate)
+        console.log('rating', this.props.rating)
 
         return (
             <View style = {feedStyles.container}>
@@ -212,7 +213,7 @@ class Feed extends React.Component {
                     </View>
                 </ScrollView>
                 <Ratings
-                    show = {!true}
+                    show = {this.props.rating}
                     reviews = {reviews}
                     onChangeText = { value => this.setState({reviews : value}) }
                     onFinishRating = { rating => this.setState({rate : rating}) }

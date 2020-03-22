@@ -5,7 +5,8 @@ import {
     PARKING_END, 
     ENTER_PARKING, 
     LEAVE_PARKING, 
-    CHECK_PARKING 
+    CHECK_PARKING, 
+    GIVE_RATING
 } from '../helpers/actionTypes'
 import { API_URL_MOBILE } from '../helpers/API_URL'
 
@@ -113,7 +114,7 @@ export const giveRating = (body) => {
             const response = await Axios.post(API_URL_MOBILE + `/rating`, body)
             console.log(response.data)
 
-            dispatch({type : PARKING_END})
+            dispatch({type : GIVE_RATING})
         } catch (err) {
             dispatch({type : PARKING_END})
             console.log(err.response ? err.response.data : err)
