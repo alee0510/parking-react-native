@@ -47,3 +47,6 @@ export const EDIT_VEHICLE_END = 'EDIT_VEHICLE_END'
 
 // history
 export const GET_HISTORY = 'GET_HISTORY'
+
+// map
+export const GET_LOCATION = 'GET_LOCATION'

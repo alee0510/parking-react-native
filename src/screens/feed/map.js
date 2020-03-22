@@ -1,20 +1,35 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, TouchableWithoutFeedback, Alert } from 'react-native'
+import { connect } from 'react-redux'
+import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native'
 import { Icon } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import { request, PERMISSIONS } from 'react-native-permissions'
 import Geolocation from '@react-native-community/geolocation'
+import RNAndroidLocationEnabler from 'react-native-android-location-enabler'
+import { getParkingArea } from '../../actions'
 
 // import styles
-import { colors, container } from '../../styles'
+import { mapStyles } from '../../styles/feed'
 
 class Map extends React.Component {
     state = {
         initialPosition : null
     }
 
-    componentDidMount () {
-        this.requestLocationPermission()
+    async componentDidMount () {
+        try {
+            // get area data
+            this.props.getParkingArea()
+
+            // request enable location
+            const data = await RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({interval: 10000, fastInterval: 5000})
+            console.log('request enable location', data)
+
+            // request get current location
+            this.requestLocationPermission()
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     requestLocationPermission = async () => {
@@ -45,28 +60,26 @@ class Map extends React.Component {
                 this.setState({ initialPosition })
             },
             // if error
-            error => Alert.alert(error.message),
-            // options
-            // { enableHighAccuracy : true }
+            error => Alert.alert(error.message)
         )
     }
 
     render () {
         const { initialPosition } = this.state
         const { navigation } = this.props
-        // console.log(initialPosition)
+        console.log('area : ', this.props.area)
         return (
-            <View style = {styles.container}>
-                {/* <MapView
+            <View style = {mapStyles.container}>
+                <MapView
                     // remove if not using Google Maps
                     provider = {PROVIDER_GOOGLE} 
-                    style = {styles.map}
+                    style = {mapStyles.map}
                     ref = { map => this._map = map}
                     showsUserLocation = {true}
                     initialRegion = { initialPosition }
-                    >
+                >
                         <Marker
-                            coordinate = {{latitude : -7.1358475730352975, longitude : 111.165600682721834}}
+                            coordinate = {{latitude : -6.3139437, longitude : 106.677089}}
                         >
                             <Callout>
                                 <Image 
@@ -76,35 +89,21 @@ class Map extends React.Component {
                                 <Text>My Home</Text>
                             </Callout>
                         </Marker>
-                    </MapView>
-                    <TouchableWithoutFeedback onPress = { _ => navigation.goBack()}>
-                        <View style = {styles.back}>
-                            <Icon name = 'arrow-back' size = {25} color = 'black'/>
-                        </View>
-                    </TouchableWithoutFeedback> */}
+                </MapView>
+                <TouchableWithoutFeedback onPress = { _ => navigation.goBack()}>
+                    <View style = {mapStyles.back}>
+                        <Icon name = 'arrow-back' size = {25} color = 'black'/>
+                    </View>
+                </TouchableWithoutFeedback> 
             </View>
         )
     }
 }
 
-const styles = StyleSheet.create({
-    container : {
-        flex : 1
-    },
-    map : {
-        flex : 1
-    },
-    back : {
-        height : 50,
-        width : 50,
-        backgroundColor : colors.main.white,
-        position : 'absolute',
-        top : 20,
-        left : 10,
-        ...container.center,
-        ...container.depth(2),
-        borderRadius : 25
+const mapStore = ({ area }) => {
+    return {
+        area : area.data
     }
-})
+}
 
-export default Map
+export default  connect(mapStore, { getParkingArea })(Map)
