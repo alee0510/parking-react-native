@@ -126,6 +126,7 @@ class Profile extends React.Component {
             }
         }
 
+        console.log(visible)
         return (
             <View style = {profileStyles.container}>
                 <Header

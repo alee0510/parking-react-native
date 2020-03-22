@@ -177,17 +177,29 @@ export const uploadImage = (file) => {
             console.log('get user id : ', id)
 
             // create form data
-            const body = new FormData()
-            body.append('IMG', file)
+            const formData = new FormData()
+            const image = {
+                originalname : `photo.${file.mime.split('/')[1]}`,
+                mimetype : file.mime,
+                uri : file.path
+            }
+            console.log('image file : ', image)
+            formData.append('IMG', image)
 
             // do request upload
             console.log('request upload')
-            const response = await Axios.put(API_URL_MOBILE + `/profile/upload/${id}`, body, {
+            const options = {
                 headers : {'Content-Type': `multipart/form-data`}
-            })
+            }
+            const response = await Axios.put(API_URL_MOBILE + `/profile/upload/${id}`, formData, options)
             console.log(response.data)
 
-            // do request
+            // do refresh redux
+            console.log('refresh redux')
+            const { data } = await Axios.get(API_URL_MOBILE + `/profile/${id}`)
+            console.log('new profile : ', data)
+            dispatch({ type : GET_PROFILE, payload : data })
+
             dispatch({ type : USER_END })
         } catch (err) {
             dispatch({ type : USER_END })
