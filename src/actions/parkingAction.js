@@ -32,6 +32,7 @@ export const enterParking = (url, id, type) => {
             await AsyncStorage.setItem('cost', data[0].cost.toString())
             await AsyncStorage.setItem('parkingId', data[0].parking_id.toString())
             await AsyncStorage.setItem('place', data[0].place_name)
+            await AsyncStorage.setItem('areaId', url.split('/')[3])
 
             // set redux storage
             console.log('set redux storage')
@@ -41,7 +42,8 @@ export const enterParking = (url, id, type) => {
                     id : data[0].parking_id,
                     token : token,
                     cost : data[0].cost,
-                    place : data[0].place_name
+                    place : data[0].place_name,
+                    areaId : url.split('/')[3]
                 }
             })
             dispatch({type : PARKING_END})
@@ -53,7 +55,7 @@ export const enterParking = (url, id, type) => {
     }
 }
 
-export const leaveParking = (url, area_id, duration) => {
+export const leaveParking = (url, parkingId, duration) => {
     return async (dispatch) => {
         try {
             dispatch({type : PARKING_START})
@@ -63,7 +65,7 @@ export const leaveParking = (url, area_id, duration) => {
             // console.log('parking duration : ', duration)
     
             console.log('do request leave parking area')
-            const response = await Axios.post(API_URL_MOBILE + url + area_id, {duration})
+            const response = await Axios.post(API_URL_MOBILE + url + parkingId, {duration})
             console.log(response.data)
     
             // clear local storage
@@ -71,6 +73,7 @@ export const leaveParking = (url, area_id, duration) => {
             await AsyncStorage.removeItem('cost')
             await AsyncStorage.removeItem('parkingId')
             await AsyncStorage.removeItem('place')
+            await AsyncStorage.removeItem('areaId')
 
             dispatch({type : LEAVE_PARKING})
             dispatch({type : PARKING_END})
@@ -90,6 +93,7 @@ export const checkParking = () => {
             const id = parseInt(await AsyncStorage.getItem('parkingId'))
             const cost = parseInt(await AsyncStorage.getItem('cost'))
             const place = await AsyncStorage.getItem('place')
+            const areaId = await AsyncStorage.getItem('areaId')
 
             if (!token) return null
 
@@ -97,7 +101,7 @@ export const checkParking = () => {
             console.log('setup redux for parking')
             dispatch({ 
                 type : CHECK_PARKING,
-                payload : { id, token, cost, place }
+                payload : { id, token, cost, place, areaId }
             })
         } catch (err) {
             console.log(err)

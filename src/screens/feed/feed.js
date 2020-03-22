@@ -60,7 +60,7 @@ class Feed extends React.Component {
     onButtonRating = () => {
         const {reviews, rate} = this.state
         this.props.giveRating({
-            area_id : this.props.areaId,
+            area_id : parseInt(this.props.areaId),
             user_id : this.props.account.id,
             rating : rate,
             message : reviews
@@ -217,7 +217,7 @@ class Feed extends React.Component {
                     reviews = {reviews}
                     onChangeText = { value => this.setState({reviews : value}) }
                     onFinishRating = { rating => this.setState({rate : rating}) }
-                    onPress = {this.props.onButtonRating}
+                    onPress = {this.onButtonRating}
                     loading = {this.props.loading}
                 />
             </View>
@@ -232,7 +232,7 @@ const mapStore = ({ news, user, wallet, parking }) => {
         profile : user.profile,
         wallet : wallet.data,
         rating : parking.rating,
-        areaId : parking.id,
+        areaId : parking.areaId,
         loading : parking.loading
     }
 }

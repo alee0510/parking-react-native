@@ -15,7 +15,8 @@ const INITIAL_STATE = {
     place : '',
     status : 0,
     loading : false,
-    rating : false
+    rating : false,
+    areaId : null
 }
 
 export const parkingReducer = (state = INITIAL_STATE, action) => {
@@ -27,6 +28,7 @@ export const parkingReducer = (state = INITIAL_STATE, action) => {
                 token : action.payload.token,
                 cost : action.payload.cost,
                 place : action.payload.place,
+                areaId : action.payload.areaId,
                 status : 1
             }
         case CHECK_PARKING :
@@ -36,6 +38,7 @@ export const parkingReducer = (state = INITIAL_STATE, action) => {
                 token : action.payload.token,
                 cost : action.payload.cost,
                 place : action.payload.place,
+                areaId : action.payload.areaId,
                 status : 1
             }
         case LEAVE_PARKING :
