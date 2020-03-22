@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { View, Text, StatusBar, Vibration } from 'react-native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 import VirtualKeyboard from 'react-native-virtual-keyboard'
 import LinearGradient from 'react-native-linear-gradient'
+import { verifyOTP } from '../../actions'
 
 // import styles
 import { colors } from '../../styles'
@@ -14,11 +16,28 @@ class VerifyOTP extends React.Component {
     }
     
     onInputCode = (code) => {
-        this.setState({code}, _ => this.state.code.length >= 4 ? Vibration.vibrate(500) : null)
+        this.setState({code}, 
+            _ => this.state.code.length >= 4 ? this.onButtonSubmit() : null)
+    }
+
+    onButtonSubmit = () => {
+        console.log('verify otp')
+        this.props.verifyOTP(this.props.id, {
+            phone : this.props.phone,
+            request_id : this.props.request_id,
+            pin : this.state.code
+        })
+
+        if(!this.props.error && !this.props.loading) {
+            return this.props.navigation.replace('Home')
+        }
+        Vibration.vibrate(200)
     }
 
     render () {
         const { code } = this.state
+        console.log('error : ', this.props.error)
+
         return (
             <View style = {verifyStyles.container}>
                 <StatusBar backgroundColor = {'#d73535'} barStyle = 'light-content'/>
@@ -60,4 +79,14 @@ class VerifyOTP extends React.Component {
     }
 }
 
-export default VerifyOTP
+const mapStore = ({ register }) => {
+    return {
+        loading : register.loading,
+        id : register.userId,
+        request_id : register.request_id,
+        phone : register.phone,
+        error : register.error
+    }
+}
+
+export default connect(mapStore, { verifyOTP })(VerifyOTP)

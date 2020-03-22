@@ -1,7 +1,15 @@
 import React from 'react'
-import { View, Text, StatusBar, TouchableWithoutFeedback } from 'react-native'
+import { connect } from 'react-redux'
+import { 
+    View, 
+    Text, 
+    StatusBar, 
+    TouchableWithoutFeedback,
+    ActivityIndicator 
+} from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
+import { sendOTP } from '../../actions'
 
 // import styles
 import { colors, container } from '../../styles'
@@ -12,16 +20,17 @@ import SmartPhone from '../../assets/message-on-phone.svg'
 
 class SendOTP extends React.Component {
     state = {
-        phone : ''
+        phone : 0
     }
 
     onButtonSend = () => {
-
+        this.props.sendOTP(`+62${this.state.phone}`)
+        this.props.navigation.replace('Verify-OTP')
     }
 
     render () {
         const { phone } = this.state
-        const { navigation } = this.props
+        // const { navigation } = this.props
         return (
             <View style = {sendStyles.container}>
                 <StatusBar backgroundColor = {'#d73535'} barStyle = 'light-content'/>
@@ -54,9 +63,14 @@ class SendOTP extends React.Component {
                         We will send you One Time Password via SMS message. 
                         Carrier rates may apply.
                     </Text>
-                    <TouchableWithoutFeedback onPress = { _ => navigation.navigate('Verify-OTP')}>
+                    <TouchableWithoutFeedback onPress = {this.onButtonSend}>
                         <View style = {sendStyles.buttonNext}>
-                            <Icon name = 'navigate-next' size = {25} color = {colors.main.white}/>
+                            {
+                                this.props.loading ? 
+                                <ActivityIndicator size = {25} color = {colors.main.white} />
+                                :
+                                <Icon name = 'navigate-next' size = {25} color = {colors.main.white}/>
+                            }
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
@@ -65,4 +79,10 @@ class SendOTP extends React.Component {
     }
 }
 
-export default SendOTP
+const mapStore = ({register}) => {
+    return {
+        loading : register.loading
+    }
+}
+
+export default connect(mapStore, { sendOTP })(SendOTP)

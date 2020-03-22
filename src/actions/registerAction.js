@@ -15,14 +15,15 @@ import {
 import AsyncStorage from '@react-native-community/async-storage'
 
 // submit user account data
-export const Register = async (body) => {
+export const register = (body) => {
     return async (dispatch) => {
         try {
             dispatch({ type : REGISTER_START })
             // do request register user
             console.log('request register user account')
-            const { data } = await Axios.post(API_URL + `/user/register`, body)
-            console.log(data)
+            console.log(body)
+            // const { data } = await Axios.post(API_URL + `/user/register`, body)
+            // console.log(data)
 
             dispatch({ type : REGISTER_SUCCESS, payload : data })
         } catch (err) {
@@ -32,13 +33,14 @@ export const Register = async (body) => {
     }
 }
 
-export const registerVehicle = async (body) => {
+export const registerVehicle = (body) => {
     return async (dispatch) => {
         try {
             dispatch({ type : REGISTER_START })
             // do request register user
             console.log('request register user vehicle')
-            const response = await Axios.post(API_URL + `/register/vehicle`, body)
+            console.log(body)
+            // const response = await Axios.post(API_URL + `/register/vehicle`, body)
             console.log(response.data)
 
             dispatch({ type : REGISTER_VEHICLE_SUCCESS })
@@ -49,13 +51,14 @@ export const registerVehicle = async (body) => {
     }
 }
 
-export const sendOTP = async (phone) => {
+export const sendOTP = (phone) => {
     return async (dispatch) => {
         try {
             dispatch({ type : REGISTER_START })
+            console.log(phone)
             // do request OTP
             console.log('request one time password (OTP)')
-            const { data } = await Axios.post(API_URL_MOBILE + `/OTP/request`, {phone})
+            // const { data } = await Axios.post(API_URL_MOBILE + `/OTP/request`, {phone})
             console.log(data)
 
             dispatch({ 
@@ -70,13 +73,13 @@ export const sendOTP = async (phone) => {
 }
 
 // need : user id, phone, and request_id
-export const verifyOTP = async (id, body) => {
+export const verifyOTP = (id, body) => {
     return async (dispatch) => {
         try {
             dispatch({ type : REGISTER_START })
             // do verify
             console.log('request verify one time password (OTP)')
-            const { data, headers } = await Axios.post(API_URL_MOBILE + `/OTP/verify/${id}`, body)
+            // const { data, headers } = await Axios.post(API_URL_MOBILE + `/OTP/verify/${id}`, body)
             console.log(data)
             console.log(headers['auth-token'])
 

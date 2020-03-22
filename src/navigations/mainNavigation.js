@@ -13,7 +13,7 @@ const Stack = createStackNavigator()
 
 const MainNavigation = () => {
     return (
-        <Stack.Navigator headerMode = 'none' initialRouteName = 'Login'>
+        <Stack.Navigator headerMode = 'none' initialRouteName = 'Add-Vehicle'>
             <Stack.Screen name = 'Login' component = {Login}/>
             <Stack.Screen name = 'Register' component = {Register}/>
             <Stack.Screen name = 'Add-Vehicle' component = {AddVehicle}/>

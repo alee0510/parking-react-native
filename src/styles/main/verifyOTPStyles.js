@@ -31,5 +31,9 @@ export const verifyStyles = StyleSheet.create({
         height : '50%',
         width : '100%',
         ...container.center,
+    },
+    error : {
+        marginVertical : 15,
+        color : colors.main.white,
     }
 })

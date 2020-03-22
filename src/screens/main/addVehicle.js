@@ -1,87 +1,151 @@
 import React from 'react'
-import { View, Text, StyleSheet, Picker } from 'react-native'
+import { connect } from 'react-redux'
+import { View, Text, Picker } from 'react-native'
 import { Input, Icon, Button } from 'react-native-elements'
+import { 
+    getCarBrand, 
+    getMotorBrand, 
+    getCarTypeById, 
+    getMotorTypeById,
+    registerVehicle 
+} from '../../actions'
 
 // import style
-import { colors, container, typography } from '../../styles'
+import { typography } from '../../styles'
+import { addVehicleStyles } from '../../styles/main'
 
 class AddVehicle extends React.Component {
     state = {
-        police : null,
-        type : 0,
-        brand : 0,
-        brandName : 0
+        police_no : null,
+        color : '',
+        vehicle_type : 1,
+        brand_id : 0,
+        type_id : 0,
+        disabled : false,
     }
+
+    componentDidMount() {
+        console.log('get all brands')
+        this.props.getCarBrand()
+        this.props.getMotorBrand()
+    }
+
+    onChangeBrand = (id) => {
+        const { vehicle_type } = this.state
+        this.setState({brand_id : id})
+        if (vehicle_type === 1) { //car
+            return this.props.getCarTypeById(id)
+        }
+        this.props.getMotorTypeById(id)
+    }
+
+    onButtonSubmit = () => {
+        const { police_no, vehicle_type, brand_id, type_id, color } = this.state
+        // request register vehicle
+        this.props.registerVehicle({
+            police_no, vehicle_type, brand_id, type_id, color, user_id : this.props.user_id
+        })
+
+        // navigate to next page
+        this.props.navigation.replace('Sent-OTP')
+    }
+
+    renderBrand = () => {
+        const { vehicle_type } = this.state
+        const { carBrand, motorBrand } = this.props
+        return (vehicle_type === 1 ? carBrand : motorBrand).map(({id, brand}) => (
+            <Picker.Item key = {id} label = {brand} value = {id}/>
+        ))
+    }
+
+    renderType = () => {
+        const { vehicle_type } = this.state
+        const { carType, motorType } = this.props
+        return (vehicle_type === 1? carType : motorType).map(({id, name}) => (
+            <Picker.Item key = {id} label = {name} value = {id}/>
+        ))
+    }
+
     render () {
-        const { type, police, brand, brandName } = this.state
+        const { police_no, vehicle_type, type_id, brand_id, disabled, color } = this.state
         const { navigation } = this.props
         return (
-            <View style = {styles.container}>
+            <View style = {addVehicleStyles.container}>
                 <View style = {{width : '80%'}}>
-                    <Text style = {styles.title}>Add your Vehicle Info</Text>
+                    <Text style = {addVehicleStyles.title}>Add your Vehicle Info</Text>
                 </View>
                 <View style = {{ marginVertical : 20 }}>
                     <Input
                         label = 'Police No'
-                        value = {police}
+                        value = {police_no}
                         disabled = {false}
-                        labelStyle = {styles.label}
-                        containerStyle = {{...container.depth(4), marginVertical : '5%'}}
-                        inputContainerStyle = {styles.inputContainerStyle}
+                        labelStyle = {addVehicleStyles.label}
+                        containerStyle = {addVehicleStyles.policeInputContainer}
+                        inputContainerStyle = {addVehicleStyles.inputContainerStyle}
                         inputStyle = {{marginLeft : 5}}
                         leftIcon={
                             <Icon name='ios-car' type = 'ionicon' size={24} color='black'/>
                         }
-                        onChange = { (e) => this.setState({police : e.target.value})}
+                        onChangeText = { value => this.setState({police_no : value})}
                     />
-                    <View style = {styles.typeBox}>
-                        <Text style = {{ fontSize : 16, ...typography.bold, marginRight : 10}}>
+                    <Input
+                        label = 'Color'
+                        value = {color}
+                        disabled = {false}
+                        labelStyle = {addVehicleStyles.label}
+                        containerStyle = {addVehicleStyles.policeInputContainer}
+                        inputContainerStyle = {addVehicleStyles.inputContainerStyle}
+                        inputStyle = {{marginLeft : 5}}
+                        leftIcon={
+                            <Icon name='ios-car' type = 'ionicon' size={24} color='black'/>
+                        }
+                        onChangeText = { value => this.setState({color : value})}
+                    />
+                    <View style = {addVehicleStyles.typeBox}>
+                        <Text style = {addVehicleStyles.inputTitle}>
                             Vehicle type
                         </Text>
                         <Picker
-                            selectedValue={type}
+                            selectedValue={vehicle_type}
                             style={{height: 50, width: 150}}
-                            onValueChange = { value => this.setState({ type : value })}
+                            onValueChange = { value => this.setState({ vehicle_type : value })}
+                            enabled = {!disabled}
                         >
-                            <Picker.Item label = 'All' value = {0}/>
                             <Picker.Item label = "Car" value={1}/>
                             <Picker.Item label = "Motorcycle" value={2}/>
                         </Picker>
                     </View>
-                    <View style = {styles.typeBox}>
-                        <Text style = {{ fontSize : 16, ...typography.bold, marginRight : 10}}>
+                    <View style = {addVehicleStyles.typeBox}>
+                        <Text style = {addVehicleStyles.inputTitle}>
                             Brand
                         </Text>
                         <Picker
-                            selectedValue={type}
+                            selectedValue={brand_id}
                             style={{height: 50, width: 150}}
-                            onValueChange = { value => this.setState({ type : value })}
+                            onValueChange = { value => this.onChangeBrand(value)}
                         >
-                            <Picker.Item label = 'All' value = {0}/>
-                            <Picker.Item label = "Car" value={1}/>
-                            <Picker.Item label = "Motorcycle" value={2}/>
+                            {this.renderBrand()}
                         </Picker>
                     </View>
-                    <View style = {styles.typeBox}>
-                        <Text style = {{ fontSize : 16, ...typography.bold, marginRight : 10}}>
-                            Brand Name
+                    <View style = {addVehicleStyles.typeBox}>
+                        <Text style = {addVehicleStyles.inputTitle}>
+                            Type
                         </Text>
                         <Picker
-                            selectedValue={type}
+                            selectedValue={type_id}
                             style={{height: 50, width: 150}}
-                            onValueChange = { value => this.setState({ type : value })}
+                            onValueChange = { value => this.setState({type_id : value})}
                         >
-                            <Picker.Item label = 'All' value = {0}/>
-                            <Picker.Item label = "Car" value={1}/>
-                            <Picker.Item label = "Motorcycle" value={2}/>
+                            {this.renderType()}
                         </Picker>
                     </View>
                     <Button 
                         title = 'Submit' 
-                        containerStyle = {styles.button}
-                        buttonStyle = {styles.buttonStyle}
+                        containerStyle = {addVehicleStyles.button}
+                        buttonStyle = {addVehicleStyles.buttonStyle}
                         titleStyle = {{ fontSize : 20, ...typography.bold}}
-                        onPress = { _ => navigation.navigate('Sent-OTP')}
+                        onPress = {this.onButtonSubmit}
+                        loading = {this.props.loading}
                     />
                 </View>
             </View>
@@ -89,47 +153,25 @@ class AddVehicle extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container : {
-        flex : 1,
-        backgroundColor : colors.neutrals.gray20,
-        paddingHorizontal : '8%',
-        paddingVertical : '20%'
-    },
-    title : {
-        fontSize : 32,
-        ...typography.bold
-    },
-    typeBox : {
-        flexDirection : 'row',
-        alignItems : 'center',
-        paddingHorizontal : 15,
-        justifyContent : 'space-between'
-    },
-    inputContainerStyle : {
-        backgroundColor : colors.main.white,
-        borderWidth : 0,
-        borderColor : colors.neutrals.gray220,
-        borderRadius : 50,
-        overflow : 'hidden',
-        borderBottomWidth : 0,
-        ...container.depth(4),
-        marginVertical : 8
-    },
-    label : {
-        ...typography.semiBold, 
-        color : 'black',
-        paddingVertical : 2
-    },
-    button : {
-        marginTop : '10%',
-        marginHorizontal : '10%'
-    },
-    buttonStyle : {
-        borderRadius : 50,
-        backgroundColor : colors.main.flatRed,
-        fontSize : 20
-    },
-})
+const mapStore = ({vehicleData, register}) => {
+    return {
+        carBrand : vehicleData.carBrand,
+        motorBrand : vehicleData.motorBrand,
+        carType : vehicleData.carType,
+        motorType : vehicleData.motorType,
+        user_id : register.userId,
+        loading : register.loading
+    }
+}
 
-export default AddVehicle
+const mapDispatch = () => {
+    return {
+        getCarBrand, 
+        getMotorBrand, 
+        getCarTypeById, 
+        getMotorTypeById, 
+        registerVehicle 
+    }
+}
+
+export default connect(mapStore, mapDispatch())(AddVehicle)
