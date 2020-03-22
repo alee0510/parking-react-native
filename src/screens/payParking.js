@@ -29,7 +29,7 @@ class Payment extends React.Component {
             // set duration
             let duration = Math.ceil((this.props.token - Date.now())/60000)
             if (duration < 10) duration = 10
-            const total = duration * this.props.cost
+            const total = Math.ceil(duration/10) * this.props.cost
             this.setState({duration : duration, total : total})
 
         } catch (err) {
