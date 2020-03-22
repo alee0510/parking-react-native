@@ -41,11 +41,6 @@ class Feed extends React.Component {
         this.props.getVehicle(id)
     }
 
-    // hanldeNews = (url) => {
-    //     Linking.openURL(url)
-    //     .catch(err => console.log(err))
-    // }
-
     onRefresh = () => {
         console.log('on refresh')
         this.setState({ refresh : true })

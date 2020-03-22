@@ -64,6 +64,18 @@ class Map extends React.Component {
         )
     }
 
+    renderMarker = () => {
+        return this.props.area.map(item => {
+            return <Marker
+                coordinate = {{latitude : item.latitude, longitude : item.longitude}}
+            >
+                <Callout>
+                    <Text>Hello</Text>
+                </Callout>
+            </Marker>
+        })
+    }
+
     render () {
         const { initialPosition } = this.state
         const { navigation } = this.props
@@ -78,17 +90,7 @@ class Map extends React.Component {
                     showsUserLocation = {true}
                     initialRegion = { initialPosition }
                 >
-                        <Marker
-                            coordinate = {{latitude : -6.3139437, longitude : 106.677089}}
-                        >
-                            <Callout>
-                                <Image 
-                                source = {{
-                                    uri : 'https://images-na.ssl-images-amazon.com/images/I/61kjg9VYF8L._AC_SY606_.jpg'
-                                }} style={{width: 200, height: 200}}/>
-                                <Text>My Home</Text>
-                            </Callout>
-                        </Marker>
+                    {this.renderMarker()}
                 </MapView>
                 <TouchableWithoutFeedback onPress = { _ => navigation.goBack()}>
                     <View style = {mapStyles.back}>
