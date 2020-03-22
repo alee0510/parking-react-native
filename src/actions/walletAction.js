@@ -3,9 +3,9 @@ import { API_URL_MOBILE } from '../helpers/API_URL'
 import { 
     GET_SALDO, 
     GET_HISTORY_TRANSATION, 
-    TOP_UP_START, 
-    TOP_UP_END,
-    TOP_UP_ERROR
+    TRANSACTION_START,
+    TRANSACTION_END,
+    TRANSACTION_ERROR
 } from '../helpers/actionTypes'
 
 export const getSaldo = (id) => {
@@ -39,7 +39,7 @@ export const getHistoryTransaction = (id) => {
 export const topUpSaldo = (id, body) => {
     return async (dispatch) => {
         try {
-            dispatch({type : TOP_UP_START})
+            dispatch({type : TRANSACTION_START})
             console.log('request request topup')
             console.log(body)
             // do authentication
@@ -68,9 +68,37 @@ export const topUpSaldo = (id, body) => {
             console.log('saldo : ', saldo.data)
             dispatch({ type : GET_SALDO, payload : saldo.data })
 
-            dispatch({type : TOP_UP_END })
+            dispatch({type : TRANSACTION_END })
         } catch (err) {
-            dispatch({type : TOP_UP_ERROR, payload : err.response ? err.response.data : err})
+            dispatch({type : TRANSACTION_ERROR, payload : err.response ? err.response.data : err})
+            console.log(err.response ? err.response.data : err)
+        }
+    }
+}
+
+export const payParking = (id, amount) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type : TRANSACTION_START})
+            console.log('do request pay parking')
+            const response = await Axios.post(API_URL_MOBILE + `/parking/pay/${id}`, {
+                total : amount
+            })
+            console.log(response.data)
+            
+            // refresh history
+            const history = await Axios.get(API_URL_MOBILE + `/wallet/history/${id}`)
+            console.log('history transaction : ', history.data)
+            dispatch({ type : GET_HISTORY_TRANSATION, payload : history.data })
+
+            // refresh saldo
+            const saldo = await Axios.get(API_URL_MOBILE + `/wallet/saldo/${id}`)
+            console.log('saldo : ', saldo.data)
+            dispatch({ type : GET_SALDO, payload : saldo.data })
+            
+            dispatch({type : TRANSACTION_END})
+        } catch (err) {
+            dispatch({type : TRANSACTION_ERROR, payload : err.response ? err.response.data : err})
             console.log(err.response ? err.response.data : err)
         }
     }

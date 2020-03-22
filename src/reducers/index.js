@@ -9,6 +9,7 @@ import { vehicleReducer, vehicleDataReducer } from './vehicleReducer'
 import { registerReducer } from './registerReducer'
 import { historyRedducer } from './historyReducer'
 import { mapReducer } from './mapReducer'
+import { parkingReducer } from './parkingReducer'
 
 // export all reducers
 export default combineReducers({
@@ -19,5 +20,6 @@ export default combineReducers({
     vehicleData : vehicleDataReducer,
     register : registerReducer,
     history : historyRedducer,
-    area : mapReducer
+    area : mapReducer,
+    parking : parkingReducer
 })

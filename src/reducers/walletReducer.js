@@ -1,4 +1,10 @@
-import { GET_SALDO, GET_HISTORY_TRANSATION, TOP_UP_START, TOP_UP_END, TOP_UP_ERROR } from '../helpers/actionTypes'
+import { 
+    GET_SALDO, 
+    GET_HISTORY_TRANSATION,
+    TRANSACTION_START, 
+    TRANSACTION_END,
+    TRANSACTION_ERROR
+} from '../helpers/actionTypes'
 
 const INITIAL_STATE = {
     data : null,
@@ -13,11 +19,11 @@ export const walletReducer = (state = INITIAL_STATE, action) => {
             return {...state, data : action.payload }
         case GET_HISTORY_TRANSATION : 
             return {...state, history : action.payload }
-        case TOP_UP_START :
+        case TRANSACTION_START :
             return { ...state, loading : true }
-        case TOP_UP_END :
+        case TRANSACTION_END :
             return { ...state, loading : false, error : '' }
-        case TOP_UP_ERROR :
+        case TRANSACTION_ERROR :
             return { ...state, loading : false, error : action.payload }
         default : return state
     }

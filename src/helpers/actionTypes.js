@@ -30,9 +30,9 @@ export const VERIFY_OTP_ERROR = 'VERIFY_OTP_ERROR'
 // wallet
 export const GET_SALDO = 'GET_SALDO'
 export const GET_HISTORY_TRANSATION = 'GET_HISTORY_TRANSATION'
-export const TOP_UP_START = 'TOP_UP_START'
-export const TOP_UP_END = 'TOP_UP_END'
-export const TOP_UP_ERROR = 'TOP_UP_ERROR'
+export const TRANSACTION_START = 'TRANSACTION_START'
+export const TRANSACTION_END = 'TRANSACTION_END'
+export const TRANSACTION_ERROR = 'TRANSACTION_ERROR'
 
 // vehicle
 export const GET_VEHICLE = 'GET_VEHICLE'
@@ -50,3 +50,11 @@ export const GET_HISTORY = 'GET_HISTORY'
 
 // map
 export const GET_LOCATION = 'GET_LOCATION'
+
+// parking
+export const ENTER_PARKING = 'ENTER_PARKING'
+export const LEAVE_PARKING = 'LEAVE_PARKING'
+export const PARKING_START = 'PARKING_START'
+export const PARKING_END = 'PARKING_END'
+export const CHECK_PARKING = 'CHECK_PARKING'
+export const GIVE_RATING = 'GIVE_RATING'
