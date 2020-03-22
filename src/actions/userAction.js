@@ -179,9 +179,9 @@ export const uploadImage = (file) => {
             // create form data
             const formData = new FormData()
             const image = {
-                originalname : `photo.${file.mime.split('/')[1]}`,
-                mimetype : file.mime,
-                uri : file.path
+                uri: file.path,
+                type: 'image/jpeg',
+                name: 'photo.jpg',
             }
             console.log('image file : ', image)
             formData.append('IMG', image)
