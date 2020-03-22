@@ -27,15 +27,15 @@ export const registerReducer = (state = INITIAL_STATE, action) => {
         case REGISTER_START :
             return { ...state, loading : true }
         case REGISTER_SUCCESS : 
-            return { ...state, loading : false, registerStatus : true, userId : action.payload }
+            return { ...state, loading : false, registerStatus : true, userId : action.payload, error : '' }
         case REGISTER_ERROR : 
             return { ...state, loading : false, error : action.payload }
         case REGISTER_VEHICLE_SUCCESS :
-            return { ...state, loading : false, registerVehicleStatus : true }
+            return { ...state, loading : false, registerVehicleStatus : true, error : '' }
         case REGISTER_VEHICLE_ERROR :
             return { ...state, loading : false, error : action.payload }
         case SENT_OTP_SUCCESS :
-            return { ...state, loading: false, request_id : action.payload.request_id, phone : action.payload.phone }
+            return { ...state, loading: false, request_id : action.payload.request_id, phone : action.payload.phone, error : '' }
         case SENT_OTP_ERROR :
             return { ...state, loading : false, error : action.payload }
         case VERIFY_OTP_SUCCESS :

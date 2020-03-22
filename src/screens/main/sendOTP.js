@@ -5,7 +5,8 @@ import {
     Text, 
     StatusBar, 
     TouchableWithoutFeedback,
-    ActivityIndicator 
+    ActivityIndicator,
+    Vibration 
 } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
@@ -25,7 +26,10 @@ class SendOTP extends React.Component {
 
     onButtonSend = () => {
         this.props.sendOTP(`+62${this.state.phone}`)
-        this.props.navigation.replace('Verify-OTP')
+        if(!this.props.error){
+            return this.props.navigation.replace('Verify-OTP')
+        }
+        Vibration.vibrate(200)
     }
 
     render () {
@@ -81,7 +85,8 @@ class SendOTP extends React.Component {
 
 const mapStore = ({register}) => {
     return {
-        loading : register.loading
+        loading : register.loading,
+        error : register.error
     }
 }
 

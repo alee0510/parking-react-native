@@ -22,7 +22,7 @@ export const register = (body) => {
             // do request register user
             console.log('request register user account')
             console.log(body)
-            // const { data } = await Axios.post(API_URL + `/user/register`, body)
+            const { data } = await Axios.post(API_URL + `/user/register`, body)
             // console.log(data)
 
             dispatch({ type : REGISTER_SUCCESS, payload : data })
@@ -40,7 +40,7 @@ export const registerVehicle = (body) => {
             // do request register user
             console.log('request register user vehicle')
             console.log(body)
-            // const response = await Axios.post(API_URL + `/register/vehicle`, body)
+            const response = await Axios.post(API_URL + `/register/vehicle`, body)
             console.log(response.data)
 
             dispatch({ type : REGISTER_VEHICLE_SUCCESS })
@@ -58,7 +58,7 @@ export const sendOTP = (phone) => {
             console.log(phone)
             // do request OTP
             console.log('request one time password (OTP)')
-            // const { data } = await Axios.post(API_URL_MOBILE + `/OTP/request`, {phone})
+            const { data } = await Axios.post(API_URL_MOBILE + `/OTP/request`, {phone})
             console.log(data)
 
             dispatch({ 
@@ -79,7 +79,7 @@ export const verifyOTP = (id, body) => {
             dispatch({ type : REGISTER_START })
             // do verify
             console.log('request verify one time password (OTP)')
-            // const { data, headers } = await Axios.post(API_URL_MOBILE + `/OTP/verify/${id}`, body)
+            const { data, headers } = await Axios.post(API_URL_MOBILE + `/OTP/verify/${id}`, body)
             console.log(data)
             console.log(headers['auth-token'])
 

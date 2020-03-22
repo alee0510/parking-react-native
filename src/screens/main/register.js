@@ -25,7 +25,7 @@ class Register extends React.Component {
         this.props.register({
             fullname, username, email, password
         })
-        this.props.navigation.navigate('Add-Vehicle')
+        this.props.navigation.replace('Add-Vehicle')
     }
 
     render () {
