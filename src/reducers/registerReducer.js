@@ -35,11 +35,11 @@ export const registerReducer = (state = INITIAL_STATE, action) => {
         case REGISTER_VEHICLE_ERROR :
             return { ...state, loading : false, error : action.payload }
         case SENT_OTP_SUCCESS :
-            return { ...state, loading: false, request_id : action.payload.request_id, phone : action.payload.phone, error : '' }
+            return { ...state, loading: false, request_id : action.payload.request_id, phone : action.payload.phone, error : '', sendOTPStatus : true }
         case SENT_OTP_ERROR :
             return { ...state, loading : false, error : action.payload }
         case VERIFY_OTP_SUCCESS :
-            return INITIAL_STATE
+            return {...INITIAL_STATE, verified : true }
         case VERIFY_OTP_ERROR :
             return{ ...state, loading : false, error : action.payload }
         default : return state

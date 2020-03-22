@@ -18,6 +18,13 @@ class Register extends React.Component {
         confirmPassword : ''
     }
 
+    componentDidUpdate() {
+        console.log('did update')
+        if(this.props.status) {
+            this.props.navigation.replace('Add-Vehicle')
+        }
+    }
+
     onButtonRegister = () => {
         const { fullname, username, email, password, confirmPassword } = this.state
         if (password === '' & confirmPassword === '') return null
@@ -25,13 +32,12 @@ class Register extends React.Component {
         this.props.register({
             fullname, username, email, password
         })
-        this.props.navigation.replace('Add-Vehicle')
     }
 
     render () {
         const { visible, fullname, username, email, password, confirmPassword } = this.state
+        console.log(this.props.status)
         // const { navigation } = this.props
-
         return (
             <View style = {registerStyles.container}>
                 <ScrollView style = {{paddingVertical : '10%', width : '85%'}}>
@@ -108,6 +114,7 @@ class Register extends React.Component {
                             inputStyle = {registerStyles.inputStyle}
                             secureTextEntry = {!visible}
                             onChangeText = { value => this.setState({ confirmPassword : value })}
+                            errorMessage = {this.props.error}
                             leftIcon={
                                 <TouchableWithoutFeedback 
                                     onPress = { _ => this.setState({ visible : !visible})}
@@ -134,9 +141,12 @@ class Register extends React.Component {
     }
 }
 
+
 const mapStore = ({ register }) => {
     return {
-        loading : register.loading
+        loading : register.loading,
+        error : register.error,
+        status : register.registerStatus
     }
 }
 

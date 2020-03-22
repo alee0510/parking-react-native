@@ -31,10 +31,10 @@ class History extends React.Component {
     }
 
     renderHistory = () => {
-        return this.props.history.map(({place_name, leave_date, duration, total_cost}) => {
+        return this.props.history.map(({place_name, leave_date, duration, total_cost}, index) => {
             let hours = Math.floor(duration/60)
             let minutes = duration - (hours*60)
-            return <TouchableOpacity style = {historyStyles.listContent}>
+            return <TouchableOpacity style = {historyStyles.listContent} key = {index}>
                         <View>
                             <Text style = {historyStyles.listPlace}>
                                 {place_name}

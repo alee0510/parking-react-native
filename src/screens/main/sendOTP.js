@@ -24,16 +24,20 @@ class SendOTP extends React.Component {
         phone : 0
     }
 
-    onButtonSend = () => {
-        this.props.sendOTP(`+62${this.state.phone}`)
-        if(!this.props.error){
+    componentDidUpdate () {
+        if(this.props.status) {
             return this.props.navigation.replace('Verify-OTP')
         }
         Vibration.vibrate(200)
     }
 
+    onButtonSend = () => {
+        this.props.sendOTP(`+62${this.state.phone}`)
+    }
+
     render () {
         const { phone } = this.state
+        console.log(this.props.data)
         // const { navigation } = this.props
         return (
             <View style = {sendStyles.container}>
@@ -86,7 +90,8 @@ class SendOTP extends React.Component {
 const mapStore = ({register}) => {
     return {
         loading : register.loading,
-        error : register.error
+        data : register,
+        status : register.sendOTPStatus
     }
 }
 

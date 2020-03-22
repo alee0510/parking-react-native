@@ -40,5 +40,6 @@ export const registerStyles = StyleSheet.create({
     buttonStyle : {
         borderRadius : 50,
         backgroundColor : colors.main.flatRed,
+        height : 50
     },
 })

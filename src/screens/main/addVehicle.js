@@ -30,6 +30,14 @@ class AddVehicle extends React.Component {
         this.props.getMotorBrand()
     }
 
+    componentDidUpdate() {
+        console.log('did update')
+        if(this.props.status) {
+            // navigate to next page
+            this.props.navigation.replace('Sent-OTP')
+        }
+    }
+
     onChangeBrand = (id) => {
         const { vehicle_type } = this.state
         this.setState({brand_id : id})
@@ -45,9 +53,6 @@ class AddVehicle extends React.Component {
         this.props.registerVehicle({
             police_no, vehicle_type, brand_id, type_id, color, user_id : this.props.user_id
         })
-
-        // navigate to next page
-        this.props.navigation.replace('Sent-OTP')
     }
 
     renderBrand = () => {
@@ -68,7 +73,8 @@ class AddVehicle extends React.Component {
 
     render () {
         const { police_no, vehicle_type, type_id, brand_id, disabled, color } = this.state
-        const { navigation } = this.props
+        console.log(this.props.data)
+        // const { navigation } = this.props
         return (
             <View style = {addVehicleStyles.container}>
                 <View style = {{width : '80%'}}>
@@ -160,7 +166,9 @@ const mapStore = ({vehicleData, register}) => {
         carType : vehicleData.carType,
         motorType : vehicleData.motorType,
         user_id : register.userId,
-        loading : register.loading
+        loading : register.loading,
+        status : register.registerVehicleStatus,
+        data : register
     }
 }
 

@@ -23,9 +23,9 @@ export const register = (body) => {
             console.log('request register user account')
             console.log(body)
             const { data } = await Axios.post(API_URL + `/user/register`, body)
-            // console.log(data)
+            console.log(data)
 
-            dispatch({ type : REGISTER_SUCCESS, payload : data })
+            dispatch({ type : REGISTER_SUCCESS, payload : data.id })
         } catch (err) {
             dispatch({ type : REGISTER_ERROR, payload : err.response ? err.response.data : err})
             console.log(err.response ? err.response.data : err)
@@ -40,7 +40,7 @@ export const registerVehicle = (body) => {
             // do request register user
             console.log('request register user vehicle')
             console.log(body)
-            const response = await Axios.post(API_URL + `/register/vehicle`, body)
+            const response = await Axios.post(API_URL + `/user/register/vehicle`, body)
             console.log(response.data)
 
             dispatch({ type : REGISTER_VEHICLE_SUCCESS })

@@ -86,8 +86,8 @@ class Wallet extends React.Component {
     renderHistory = () => {
         const types = ['Top-Up', 'Pay Parking', 'Send Saldo', 'Admin Fee']
         const statusTypes = ['Success', 'Pending', 'Failed']
-        return this.props.history.map(({date, type, amount, status}) => (
-            <TouchableOpacity style = {walletStyles.historyList}>
+        return this.props.history.map(({date, type, amount, status}, index) => (
+            <TouchableOpacity style = {walletStyles.historyList} key = {index}>
                 <View>
                     <Text style ={walletStyles.historyListTitle}>
                         {types[type-1]}

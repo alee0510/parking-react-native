@@ -14,7 +14,13 @@ class VerifyOTP extends React.Component {
     state = {
         code : ''
     }
-    
+    componentDidMount () {
+        if(this.props.status) {
+            return this.props.navigation.replace('Home')
+        }
+        Vibration.vibrate(200)
+    }
+
     onInputCode = (code) => {
         this.setState({code}, 
             _ => this.state.code.length >= 4 ? this.onButtonSubmit() : null)
@@ -27,16 +33,12 @@ class VerifyOTP extends React.Component {
             request_id : this.props.request_id,
             pin : this.state.code
         })
-
-        if(!this.props.error && !this.props.loading) {
-            return this.props.navigation.replace('Home')
-        }
-        Vibration.vibrate(200)
     }
 
     render () {
         const { code } = this.state
         console.log('error : ', this.props.error)
+        console.log(this.props.data)
 
         return (
             <View style = {verifyStyles.container}>
@@ -85,7 +87,8 @@ const mapStore = ({ register }) => {
         id : register.userId,
         request_id : register.request_id,
         phone : register.phone,
-        error : register.error
+        data : register,
+        status : register.verified
     }
 }
 
