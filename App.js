@@ -12,6 +12,7 @@ import Reducers from './src/reducers'
 
 class App extends React.Component {
     render () {
+        console.disableYellowBox = true
         return (
             <Provider store = {createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
                 <NavigationContainer>
