@@ -146,7 +146,8 @@ class Feed extends React.Component {
                     containerStyle = {{
                         backgroundColor : colors.neutrals.gray10,
                         paddingTop : 0,
-                        height : 100
+                        height : 90,
+                        marginHorizontal : 10
                     }}
                 />
                 <ScrollView 
