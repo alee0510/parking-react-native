@@ -32,7 +32,7 @@ const style = StyleSheet.create({
         width : 74,
         borderRadius : 37,
         position : 'absolute',
-        top : -66,
+        top : -65.5,
         ...container.depth(2)
     }
 })

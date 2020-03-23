@@ -52,14 +52,18 @@ class Wallet extends React.Component {
     onButtonNext = async () => {
         try {
             console.log('next')
-            const { fingerprint } = this.state
+            const { fingerprint, amount } = this.state
+            if (amount == 0) return this.setState({show : false})
             if (fingerprint) {
                 // authenticate using fingerprint
                 const response = await FingerprintScanner.authenticate({
-                    description : 'Pay with your fingerprint.'
+                    description : 'Pay with your fingerprint.',
+                    onAttempt :  _ => colors.loading('fingerprint scan failed.')
                 })
                 console.log('response : ', response)
-                if (!response) throw new Error ('invalid fingerprint')
+                if (!response) {
+                    throw new Error ('invalid fingerprint')
+                }
             }
             // do transaction
             console.log('do transaction')
@@ -68,10 +72,12 @@ class Wallet extends React.Component {
                 password : this.state.password
             })
             
-            this.setState({ show : false })
+            this.setState({ show : false, amount : 0 })
         } catch(err) {
+            console.log(err)
             console.log(err.message || err)
-            this.setState({ show : false })
+            FingerprintScanner.release()
+            this.setState({ show : false, amount : 0 })
         }
     }
 
@@ -158,7 +164,8 @@ class Wallet extends React.Component {
                 </View>
                 <TopUp 
                     show = { show } 
-                    onPress = { _ => this.onButtonNext()}
+                    onButtonNextPress = { _ => this.onButtonNext()}
+                    onBackdropPress = { _ => this.setState({ show : false, amount : 0})}
                     amount = {amount}
                     password = {password}
                     onChangeAmount = { value => this.setState({ amount : value})}

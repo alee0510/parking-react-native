@@ -10,7 +10,7 @@ const TopUp = (props) => {
     return (
         <Overlay 
             isVisible = {props.show}
-            onBackdropPress = {props.onPress}
+            onBackdropPress = {props.onBackdropPress}
             height = {'70%'}
             overlayStyle = {styles.container}
         >
@@ -48,7 +48,7 @@ const TopUp = (props) => {
                 </View>
                 <Button
                     title = 'Next'
-                    onPress = {props.onPress}
+                    onPress = {props.onButtonNextPress}
                     loading = {props.loading}
                     buttonStyle = {{
                         backgroundColor : colors.main.flatRed,

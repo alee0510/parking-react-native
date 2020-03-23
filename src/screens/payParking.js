@@ -48,7 +48,8 @@ class Payment extends React.Component {
             if(fingerprint) {
                 // authenticate using fingerprint
                 const response = await FingerprintScanner.authenticate({
-                    description : 'Pay with your fingerprint.'
+                    description : 'Pay with your fingerprint.',
+                    onAttempt : _ => console.log('fingerprint scan failed.')
                 })
                 console.log('response : ', response)
                 if (!response) throw new Error ('invalid fingerprint')
@@ -59,6 +60,7 @@ class Payment extends React.Component {
             this.props.payParking(id, total)
     
             // leave parking
+            console.log('leave parking')
             this.props.leaveParking(route.params.url, areaId, duration)
     
             // const action
@@ -67,6 +69,7 @@ class Payment extends React.Component {
                 routes : [{ name : 'Feed-Navigation'}]
             }))
         } catch (err) {
+            FingerprintScanner.release()
             console.log(err.message || err)
         }
     }
@@ -110,6 +113,8 @@ class Payment extends React.Component {
                         <Image source = {require('../assets/barcode.png')} />
                     </View>
                 </View>
+                <View style = {paymentStyles.leftCircle}></View>
+                <View style = {paymentStyles.rightCircle}></View>
                 <Button
                     icon = {<Icon name="dollar" type = 'font-awesome' size={15} color="white"/>}
                     title="Pay"
