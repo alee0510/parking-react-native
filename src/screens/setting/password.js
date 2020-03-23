@@ -36,7 +36,7 @@ class Password extends React.Component {
         return (
             <View style = {passwordStyles.container}>
                 <Header
-                    title = 'Password'
+                    title = 'Edit Password'
                     edit = {1}
                     handleEdit = {this.onButtonCheck}
                     loading = {this.props.loading}

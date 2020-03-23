@@ -15,7 +15,6 @@ import { getParkingArea } from '../../actions'
 
 // import styles
 import { mapStyles } from '../../styles/feed'
-import { typography } from '../../styles'
 
 class Map extends React.Component {
     state = {
