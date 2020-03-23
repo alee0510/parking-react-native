@@ -18,5 +18,15 @@ export const mapStyles = StyleSheet.create({
         ...container.center,
         ...container.depth(2),
         borderRadius : 25
-    }
+    },
+    callOutContentConatiner : {
+        height : 'auto', 
+        width : 'auto'
+    },
+    callOutPlace : {
+        fontSize : 18, 
+        ...typography.bold, 
+        textAlign : 'center', 
+        marginVertical : 10
+    },
 })

@@ -1,7 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { 
+    View, 
+    Text, 
+    Alert, 
+    TouchableWithoutFeedback 
+} from 'react-native'
+import { Icon, Button } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import { request, PERMISSIONS } from 'react-native-permissions'
 import Geolocation from '@react-native-community/geolocation'
@@ -10,6 +15,7 @@ import { getParkingArea } from '../../actions'
 
 // import styles
 import { mapStyles } from '../../styles/feed'
+import { typography } from '../../styles'
 
 class Map extends React.Component {
     state = {
@@ -86,18 +92,43 @@ class Map extends React.Component {
     }
 
     renderMarker = () => {
-        return this.props.area.map(({id, coordinates, place_name, car_cost, motor_cost, car_slot, motor_slot, direction}) => {
+        return this.props.area.map(({
+            id, 
+            coordinates, 
+            place_name, 
+            car_cost, 
+            motor_cost, 
+            car_slot,
+            motor_slot, 
+            direction
+        }) => {
             return <Marker
                 key = {id}
-                coordinate = {{latitude : coordinates ? coordinates.latitude : 0, longitude : coordinates ? coordinates.longitude : 0}}
+                coordinate = {{
+                    latitude : coordinates ? coordinates.latitude : 0, 
+                    longitude : coordinates ? coordinates.longitude : 0
+                }}
             >
                 <Callout 
                     onPress = { _ => this.onCalloutClick(direction, place_name)}
+                    style = {{padding : 15}}
                 >
-                    <View style = {{height : 100, width : 200, borderRadius : 50}}>
-                        <Text>{place_name ? place_name : 'place name'}</Text>
-                        <Text>{`Car price IDK ${car_cost}/10 minutes, Slot : ${car_slot}`}</Text>
-                        <Text>{`Motor price IDK ${motor_cost}/10 minutes, Slot : ${motor_slot}`}</Text>
+                    <View style = {mapStyles.callOutContentConatiner}>
+                        <Text style = {mapStyles.callOutPlace}>
+                            {place_name ? place_name : 'place name'}
+                        </Text>
+                        <Text style = {{paddingVertical : 5}}>
+                            {`Car IDK ${car_cost}/10min, Slot : ${car_slot}`}
+                        </Text>
+                        <Text>
+                            {`Motor IDK ${motor_cost}/10min, Slot : ${motor_slot}`}
+                        </Text>
+                        <Button 
+                            title = 'Go'
+                            icon = { <Icon name = 'directions' size = {25} color = 'white'/>}
+                            buttonStyle = {{padding : 5, borderRadius : 50, marginTop : 15}}
+                            titleStyle = {{marginLeft : 20}}
+                        />
                     </View>
                 </Callout>
             </Marker>
