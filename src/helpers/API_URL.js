@@ -2,3 +2,4 @@ export const NEWS_API_URL = 'http://newsapi.org/v2/top-headlines?country=id&apiK
 export const API_URL = 'http://35.238.37.11:5000/api'
 export const API_URL_MOBILE = 'http://35.238.37.11:5000/api/mobile'
 export const URL = 'http://35.238.37.11:5000'
+export const URL_MAP = 'https://www.google.com/maps/dir'

@@ -6,6 +6,7 @@ import Feed from '../screens/feed/feed'
 import Notification from '../screens/feed/notification'
 import Map from '../screens/feed/map'
 import MyWebView from '../components/webView'
+import MapWebView from '../components/mapWebView'
 
 // create stack
 const Stack = createStackNavigator()
@@ -25,6 +26,7 @@ const FeedNavigation = ({navigation, route}) => {
             <Stack.Screen name = 'Notification' component = {Notification}/>
             <Stack.Screen name = 'Map' component = {Map}/>
             <Stack.Screen name = 'Web-View' component = {MyWebView}/>
+            <Stack.Screen name = 'Map-Web' component = {MapWebView}/>
         </Stack.Navigator>
     )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { WebView} from 'react-native-webview'
+import { WebView } from 'react-native-webview'
 
 const MyWebView = ({navigation, route}) => {
     console.log(route.params.url)

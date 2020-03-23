@@ -32,9 +32,25 @@ class Map extends React.Component {
         }
     }
 
-    onCalloutClick = (location) => {
-        console.log(location)
-        console.log(this.state.initialPosition)
+    onCalloutClick = (direction, place_name) => {
+        const { initialPosition } = this.state
+        Alert.alert(
+            'Get Direction',
+            `${place_name}`,
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {text: 'OK', onPress: () =>this.props.navigation.navigate('Map-Web', {
+                    latitude : initialPosition.latitude, 
+                    longitude : initialPosition.longitude, 
+                    direction
+                })},
+            ],
+            {cancelable: false},
+        );
     }
 
     requestLocationPermission = async () => {
@@ -70,12 +86,14 @@ class Map extends React.Component {
     }
 
     renderMarker = () => {
-        return this.props.area.map(({id, coordinates, place_name, car_cost, motor_cost, car_slot, motor_slot}) => {
+        return this.props.area.map(({id, coordinates, place_name, car_cost, motor_cost, car_slot, motor_slot, direction}) => {
             return <Marker
                 key = {id}
                 coordinate = {{latitude : coordinates ? coordinates.latitude : 0, longitude : coordinates ? coordinates.longitude : 0}}
             >
-                <Callout onPress = { _ => this.onCalloutClick({latitued : coordinates.latitude, longitude : coordinates.longitude})}>
+                <Callout 
+                    onPress = { _ => this.onCalloutClick(direction, place_name)}
+                >
                     <View style = {{height : 100, width : 200, borderRadius : 50}}>
                         <Text>{place_name ? place_name : 'place name'}</Text>
                         <Text>{`Car price IDK ${car_cost}/10 minutes, Slot : ${car_slot}`}</Text>
@@ -90,6 +108,7 @@ class Map extends React.Component {
         const { initialPosition } = this.state
         const { navigation } = this.props
         console.log('area : ', this.props.area)
+        console.log(initialPosition)
         return (
             <View style = {mapStyles.container}>
                 <MapView
