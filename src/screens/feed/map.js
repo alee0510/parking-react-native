@@ -32,6 +32,11 @@ class Map extends React.Component {
         }
     }
 
+    onCalloutClick = (location) => {
+        console.log(location)
+        console.log(this.state.initialPosition)
+    }
+
     requestLocationPermission = async () => {
         try {
             console.log('request get location')
@@ -65,12 +70,17 @@ class Map extends React.Component {
     }
 
     renderMarker = () => {
-        return this.props.area.map(item => {
+        return this.props.area.map(({id, coordinates, place_name, car_cost, motor_cost, car_slot, motor_slot}) => {
             return <Marker
-                coordinate = {{latitude : item.coordinates.latitude, longitude : item.coordinates.longitude}}
+                key = {id}
+                coordinate = {{latitude : coordinates ? coordinates.latitude : 0, longitude : coordinates ? coordinates.longitude : 0}}
             >
-                <Callout>
-                    <Text>Hello</Text>
+                <Callout onPress = { _ => this.onCalloutClick({latitued : coordinates.latitude, longitude : coordinates.longitude})}>
+                    <View style = {{height : 100, width : 200, borderRadius : 50}}>
+                        <Text>{place_name ? place_name : 'place name'}</Text>
+                        <Text>{`Car price IDK ${car_cost}/10 minutes, Slot : ${car_slot}`}</Text>
+                        <Text>{`Motor price IDK ${motor_cost}/10 minutes, Slot : ${motor_slot}`}</Text>
+                    </View>
                 </Callout>
             </Marker>
         })
