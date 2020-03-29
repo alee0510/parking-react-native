@@ -1,4 +1,4 @@
-### This project is used for Final Project exam at Purwadhika Start-Up and Codding School
+# This project is used for Final Project exam at Purwadhika Start-Up and Codding School
 this app build using react-native framework
 all artwork inside Home card is credited to https://www.behance.net/tagirova_kate
 
