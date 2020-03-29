@@ -14,7 +14,7 @@ all artwork inside Home card is credited to https://www.behance.net/tagirova_kat
 - etc.
 
 ## for testing purpose please use this account
-username : lollinet
-password : lollicon
+- username : lollinet
+- password : lollicon
 
 ### NOTE : Register feature is limited due to credit for OTP auth. So it better to use testing account
